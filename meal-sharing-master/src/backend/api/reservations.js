@@ -4,7 +4,7 @@ const { as } = require("../database");
 const router = express.Router();
 const knex = require("../database");
 
-//GET	Returns all reservations 
+//GET	Returns all reservations  
 router.get("/", async (request, response) => {
   try {
     const reservations = await knex("reservations");
@@ -14,7 +14,7 @@ router.get("/", async (request, response) => {
   }
 });
 
-//POST	Adds a new reservation 
+//POST	Adds a new reservation  
 router.post("/", async (request, response) => {
   try {
     const reservations = await knex("reservations").insert(request.body);
@@ -24,7 +24,7 @@ router.post("/", async (request, response) => {
   }
 });
 
-// 	GET	Returns reservation by id 
+// 	GET	Returns reservation by id  
 router.get("/:id", async (request, response) => {
   const reservations = await knex("reservations");
   const id = parseInt(request.params.id);
@@ -40,11 +40,11 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-//PUT	Updates the reservation by id 
+//PUT	Updates the reservation by id  
 router.put("/:id", async (request, response) => {
   try {
     const reservationById = parseInt(request.params.id);
-    // knex syntax for selecting things. Look up the documentation for knex for further info
+    // knex syntax for selecting things. Look up the documentation for knex for further info 
     const reservation = await knex("reservations")
       .where({ id: reservationById })
       .update(request.body);
@@ -54,7 +54,7 @@ router.put("/:id", async (request, response) => {
   }
 });
 
-//Deletes the reservation by id 
+//Deletes the reservation by id  
 router.delete("/:id", async (request, response) => {
   try {
     const reservationById = parseInt(request.params.id);

@@ -4,15 +4,15 @@ const { as } = require("../database");
 const router = express.Router();
 const knex = require("../database");
 
-//GET	Returns all meals 
+//GET	Returns all meals  
 router.get("/", async (request, response) => {
   try {
-    // knex syntax for selecting things. Look up the documentation for knex for further info
+    // knex syntax for selecting things. Look up the documentation for knex for further info 
     const titles = await knex("meals").select("title");
     const meals = await knex("meals");
     let filteredMeals = meals;
 
-    // implementation of filtered meals with  Max pric 
+    // implementation of filtered meals with  Max pric  
     if ("maxPrice" in request.query) {
       const maxPrice = parseInt(request.query.maxPrice);
       if (isNaN(maxPrice)) {
@@ -23,7 +23,7 @@ router.get("/", async (request, response) => {
       filteredMeals = filteredMeals.filter((meal) => meal.price <= maxPrice);
     }
 
-    // implementation of filtered meals with  title 
+    // implementation of filtered meals with  title  
     if ("title" in request.query) {
       const title = request.query.title.toLowerCase();
       filteredMeals = filteredMeals.filter((meal) => {
@@ -31,7 +31,7 @@ router.get("/", async (request, response) => {
       });
     }
 
-    // implementation of filtered meals with  limit 
+    // implementation of filtered meals with  limit  
     if ("limit" in request.query) {
       const limit = parseInt(request.query.limit);
       if (isNaN(limit)) {
@@ -40,7 +40,7 @@ router.get("/", async (request, response) => {
       filteredMeals.length = limit;
     }
 
-    //Get meals that has been created after the date 
+    //Get meals that has been created after the date  
     if ("createdAfter" in request.query) {
       const createdAfter = request.query.createdAfter;
       filteredMeals = await knex("meals").where(
@@ -50,7 +50,7 @@ router.get("/", async (request, response) => {
       );
     }
 
-    //Get meals that still has available reservations
+    //Get meals that still has available reservations 
     if ("availableReservations" in request.query) {
       const availableReservations =
         request.query.availableReservations == "true";
@@ -82,7 +82,7 @@ HAVING max_reservation > total_reservations;
   }
 });
 
-// POST	Adds a new meal 
+// POST	Adds a new meal  
 router.post("/", async (request, response) => {
   const meals = await knex("meals").insert({
     title: "Kabab",
@@ -95,12 +95,12 @@ router.post("/", async (request, response) => {
   response.json(meals);
 });
 
-//PUT	Updates the meal by id 
+//PUT	Updates the meal by id  
 router.put("/:id", async (request, response) => {
   try {
     const mealById = parseInt(request.params.id);
 
-    // knex syntax for selecting things. Look up the documentation for knex for further info
+    // knex syntax for selecting things. Look up the documentation for knex for further info 
     const meal = await knex("meals").where({ id: mealById }).update({
       title: request.body.title,
       description: request.body.description,
@@ -115,7 +115,7 @@ router.put("/:id", async (request, response) => {
   }
 });
 
-//DELETE	Deletes the meal by id 
+//DELETE	Deletes the meal by id  
 router.delete("/:id", async (request, response) => {
   try {
     const mealById = parseInt(request.params.id);
@@ -126,7 +126,7 @@ router.delete("/:id", async (request, response) => {
   }
 });
 
-// 	GET	Returns meal by id 
+// 	GET	Returns meal by id  
 router.get("/:id", async (request, response) => {
   const meals = await knex("meals");
   const id = parseInt(request.params.id);
