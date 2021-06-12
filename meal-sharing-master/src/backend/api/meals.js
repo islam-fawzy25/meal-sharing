@@ -4,15 +4,14 @@ const { as } = require("../database");
 const router = express.Router();
 const knex = require("../database");
 
-//GET	Returns all meals  
+//GET	Returns all meals
 router.get("/", async (request, response) => {
   try {
-    // knex syntax for selecting things. Look up the documentation for knex for further info 
-    const titles = await knex("meals").select("title");
-    const meals = await knex("meals");
-    let filteredMeals = meals;
+    // knex syntax for selecting things. Look up the documentation for knex for further info
+    //  const meals  = await knex("meals");
 
-    // implementation of filtered meals with  Max pric  
+    let filteredMeals = "";
+    // implementation of filtered meals with  Max pric
     if ("maxPrice" in request.query) {
       const maxPrice = parseInt(request.query.maxPrice);
       if (isNaN(maxPrice)) {
@@ -20,27 +19,28 @@ router.get("/", async (request, response) => {
           .status(400)
           .send({ error: "Max Price must be integers" });
       }
-      filteredMeals = filteredMeals.filter((meal) => meal.price <= maxPrice);
+      filteredMeals = await knex("meals").where("price", "<=", maxPrice);
     }
 
-    // implementation of filtered meals with  title  
     if ("title" in request.query) {
       const title = request.query.title.toLowerCase();
-      filteredMeals = filteredMeals.filter((meal) => {
-        return meal.title.toLocaleLowerCase().includes(title);
-      });
+      filteredMeals = await knex("meals").where(
+        "meals.title",
+        "like",
+        "%" + title + "%"
+      );
     }
 
-    // implementation of filtered meals with  limit  
+    // implementation of filtered meals with  limit
     if ("limit" in request.query) {
       const limit = parseInt(request.query.limit);
       if (isNaN(limit)) {
         return response.status(400).send("Limit must be integer");
       }
-      filteredMeals.length = limit;
+      filteredMeals = await knex("meals").limit(limit);
     }
 
-    //Get meals that has been created after the date  
+    //Get meals that has been created after the date
     if ("createdAfter" in request.query) {
       const createdAfter = request.query.createdAfter;
       filteredMeals = await knex("meals").where(
@@ -50,12 +50,12 @@ router.get("/", async (request, response) => {
       );
     }
 
-    //Get meals that still has available reservations 
+    //Get meals that still has available reservations
     if ("availableReservations" in request.query) {
       const availableReservations =
         request.query.availableReservations == "true";
       if (availableReservations) {
-        filteredMeals = await knex
+        filteredMeals = await knex("meals")
           .raw(
             `
     SELECT 
@@ -82,25 +82,25 @@ HAVING max_reservation > total_reservations;
   }
 });
 
-// POST	Adds a new meal  
+// POST	Adds a new meal
 router.post("/", async (request, response) => {
   const meals = await knex("meals").insert({
-    title: "Kabab",
-    description: "Maionated small pice of meat ",
-    location: "Cairo,Egypt",
-    max_reservation: 10,
-    price: 120,
-    created_date: new Date(),
+    title: request.body.title,
+    description: request.body.description,
+    location: request.body.location,
+    max_reservation: request.body.max_reservation,
+    price: request.body.price,
+    created_date: request.body.created_date,
   });
   response.json(meals);
 });
 
-//PUT	Updates the meal by id  
+//PUT	Updates the meal by id
 router.put("/:id", async (request, response) => {
   try {
     const mealById = parseInt(request.params.id);
 
-    // knex syntax for selecting things. Look up the documentation for knex for further info 
+    // knex syntax for selecting things. Look up the documentation for knex for further info
     const meal = await knex("meals").where({ id: mealById }).update({
       title: request.body.title,
       description: request.body.description,
@@ -115,7 +115,7 @@ router.put("/:id", async (request, response) => {
   }
 });
 
-//DELETE	Deletes the meal by id  
+//DELETE	Deletes the meal by id
 router.delete("/:id", async (request, response) => {
   try {
     const mealById = parseInt(request.params.id);
@@ -126,7 +126,7 @@ router.delete("/:id", async (request, response) => {
   }
 });
 
-// 	GET	Returns meal by id  
+// 	GET	Returns meal by id
 router.get("/:id", async (request, response) => {
   const meals = await knex("meals");
   const id = parseInt(request.params.id);
