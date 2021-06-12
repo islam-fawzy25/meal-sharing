@@ -8,9 +8,9 @@ const knex = require("../database");
 router.get("/", async (request, response) => {
   try {
     // knex syntax for selecting things. Look up the documentation for knex for further info
-    //  const meals  = await knex("meals");
+      const meals  = await knex("meals");
 
-    let filteredMeals = "";
+    let filteredMeals = meals;
     // implementation of filtered meals with  Max pric
     if ("maxPrice" in request.query) {
       const maxPrice = parseInt(request.query.maxPrice);
