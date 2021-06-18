@@ -1,12 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Error fall here</h1>
-</body>
-</html>
+Html Webpack Plugin:
+<pre>
+  Error: html-webpack-plugin could not minify the generated output.
+  In production mode the html minifcation is enabled by default.
+  If you are not generating a valid html output please disable it manually.
+  You can do so by adding the following setting to your HtmlWebpackPlugin config:
+  |
+  |    minify: false
+  |
+  See https://github.com/jantimon/html-webpack-plugin#options for details.
+  For parser dedicated bugs please create an issue here:
+  https://danielruf.github.io/html-minifier-terser/
+  Parse Error: <<<<<<< HEAD 
+      <meta 
+        property="og:url" 
+        content="https://chattie-production.herokuapp.com/" 
+      /> 
+      <meta property="og:title" content="Chattie - Chat with everyone" /> 
+      <meta 
+        property="og:description" 
+        content="Chattie is a chat app that lets you talk to anyone in the world 🚀" 
+      /> 
+      <meta 
+        property="og:image" 
+        content="https://raw.githubusercontent.com/HackYourFuture-CPH/chattie/develop/public/social.  png" 
+  ======= 
+      <meta property="og:title" content="Meal Sharing App" /> 
+      <meta 
+        property="og:description" 
+        content="Website api for sharing meals together. Invite your best friends or your family for   dinner!" 
+  >>>>>>> master 
+      /> 
+      <!-- Twitter --> 
+      <meta property="twitter:card" content="summary_large_image" /> 
+  <<<<<<< HEAD 
+      <meta 
+        property="twitter:url" 
+        content="https://chattie-production.herokuapp.com/" 
+      /> 
+      <meta property="twitter:title" content="Chattie - Chat with everyone" /> 
+      <meta 
+        property="twitter:description" 
+        content="Chattie is a chat app that lets you talk to anyone in the world 🚀" 
+      /> 
+      <meta 
+        property="twitter:image" 
+        content="https://raw.githubusercontent.com/HackYourFuture-CPH/chattie/develop/public/social.  png" 
+  ======= 
+      <meta property="twitter:title" content="Meal Sharing App" /> 
+      <meta 
+        property="twitter:description" 
+        content="Website api for sharing meals together. Invite your best friends or your family for   dinner!" 
+  >>>>>>> master 
+      /> 
+    <link rel="icon" href="favicon.ico"></head> 
+    <body> 
+      <noscript>You need to enable JavaScript to run this app.</noscript> 
+      <div id="root"></div> 
+      <!-- 
+        This HTML file is a template. 
+        If you open it directly in the browser, you will see an empty page. 
+        You can add webfonts, meta tags, or analytics to this file. 
+        The build step will place the bundled scripts into the <body> tag. 
+        To begin the development, run `npm start` or `yarn start`. 
+        To create a production bundle, use `npm run build` or `yarn build`. 
+      --> 
+    <script src="bundle.js"></script></body> 
+  </html>
+  
+  - htmlparser.js:244 new HTMLParser
+    [meal-sharing]/[html-minifier-terser]/src/htmlparser.js:244:13
+  
+  - htmlminifier.js:993 minify
+    [meal-sharing]/[html-minifier-terser]/src/htmlminifier.js:993:3
+  
+  - htmlminifier.js:1354 Object.exports.minify
+    [meal-sharing]/[html-minifier-terser]/src/htmlminifier.js:1354:16
+  
+  - index.js:1019 HtmlWebpackPlugin.minifyHtml
+    [meal-sharing]/[html-webpack-plugin]/index.js:1019:46
+  
+  - index.js:435 HtmlWebpackPlugin.postProcessHtml
+    [meal-sharing]/[html-webpack-plugin]/index.js:435:40
+  
+  - index.js:260 
+    [meal-sharing]/[html-webpack-plugin]/index.js:260:25
+  
+</pre>
