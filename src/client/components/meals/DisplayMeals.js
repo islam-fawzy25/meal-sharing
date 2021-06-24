@@ -1,41 +1,52 @@
-import React, { useEffect, useState } from "react";
-import {  Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const DisplayMeals = ({
- 
-  meal,
-  available,
-  setAvailable,
-  availableMeals,
-  idMeal,
-}) => {
+import { Link } from "react-router-dom";
+import { Data } from "../../App";
+
+const DisplayMeals = ({ meal }) => {
+  const { available, setAvailable, availableMeals, idMeal } = useContext(Data);
   const id = `/meals/${meal.id}`;
-// i need help here to know how to make available state changes with if condition ??!!
   const availableMealsById = async () => {
-    await availableMeals.map((meal) => {
-      if (meal.id !== idMeal.id) {
-        return setAvailable(!available);
-      } else {
-        return null;
-      }
+    const availability = await availableMeals.map((meal) => {
+      return meal.id;
     });
+    const result = await availability.includes(idMeal.id);
+    console.log(available);
+    return setAvailable(result);
   };
-
-  useEffect(() => {
-    availableMealsById();
-  }, []);
+  // useEffect(() => {
+  //   availableMealsById();
+  // }, [available]);
 
   return (
-    <div>
-      <span>
-        {meal.title}
-        <li>{meal.price}</li>
-        <Link to={id}>
-          <button>More info</button>{" "}
-        </Link>
-        <hr></hr>
-      </span>
-    </div>
+    <Card style={{ width: "18rem" }}>
+      <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+      <Card.Body>
+        <Card.Title>{meal.title}</Card.Title>
+        <Card.Title>{meal.price} Kr</Card.Title>
+
+        {/* <Card.Text>
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </Card.Text> */}
+      </Card.Body>
+
+      <Card.Body>
+        <Card.Link>
+          <Link
+            to={id}
+            role="button"
+            onClick={() => {
+              availableMealsById();
+            }}
+          >
+            Meal info
+          </Link>
+        </Card.Link>
+      </Card.Body>
+    </Card>
   );
 };
 

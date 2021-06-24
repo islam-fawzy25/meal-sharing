@@ -2,11 +2,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 const AddNewMeal = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [location,setLocation] = useState('')
-  const [maxReservation, setMaxReservation] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [location, setLocation] = useState();
+  const [maxReservation, setMaxReservation] = useState();
+  const [price, setPrice] = useState();
 
   const newMeal = async () => {
     try {
@@ -19,7 +19,7 @@ const AddNewMeal = () => {
         body: JSON.stringify({
           title: title,
           description: description,
-          location:location,
+          location: location,
           maxReservation: maxReservation,
           price: price,
         }),
@@ -29,9 +29,9 @@ const AddNewMeal = () => {
     }
   };
 
-  useEffect(() => {
-    newMeal();
-  }, []);
+  // useEffect(() => {
+  //   newMeal();
+  // }, []);
 
   return (
     <>
@@ -41,6 +41,8 @@ const AddNewMeal = () => {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="title"
         type="text"
+        minLength="2"
+        required
       />
       <hr />
       <input
@@ -48,6 +50,8 @@ const AddNewMeal = () => {
         onChange={(e) => setDescription(e.target.value)}
         placeholder="description"
         type="text"
+        minLength="8"
+        required
       />
       <hr />
       <input
@@ -55,6 +59,8 @@ const AddNewMeal = () => {
         onChange={(e) => setLocation(e.target.value)}
         placeholder="Location"
         type="text"
+        minLength="4"
+        required
       />
       <hr />
       <label id="maxReservation">Maximum Reservation: </label>
@@ -65,6 +71,8 @@ const AddNewMeal = () => {
         onChange={(e) => setMaxReservation(e.target.value)}
         placeholder="max reservation"
         type="number"
+        minLength="1"
+        required
       />
       <hr />
       <label id="pric">Price: </label> <br />
@@ -74,6 +82,8 @@ const AddNewMeal = () => {
         onChange={(e) => setPrice(e.target.value)}
         placeholder="price"
         type="number"
+        minLength="1"
+        required
       />
       <hr />
       <button onClick={newMeal}> Add </button>

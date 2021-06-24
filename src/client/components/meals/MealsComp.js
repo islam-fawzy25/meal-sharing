@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import DisplayMeals from "./DisplayMeals";
-
-const MealsComponent = ({
+import { Data } from "../../App";
+const MealsComponent = () => {
+const {
   meals,
   setMeals,
   available,
@@ -9,20 +10,15 @@ const MealsComponent = ({
   availableMeals,
   setAvailableMeals,
   idMeal,
-  setIdMeal
-}) => {
+  setIdMeal,
+  availableMealsById
+} = useContext(Data)
   return (
     <div>
       {meals.map((meal) => (
         <div key={meal.id}>
           <DisplayMeals
             meal={meal}
-            available={available}
-            setAvailable={setAvailable}
-            availableMeals={availableMeals}
-            setAvailableMeals={setAvailableMeals}
-            idMeal={idMeal}
-            setIdMeal={setIdMeal}
           />
         </div>
       ))}

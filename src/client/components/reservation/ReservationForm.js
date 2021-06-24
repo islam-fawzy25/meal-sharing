@@ -1,17 +1,11 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import FetchAvaliableReservations from "./AvailableReservations";
-
-const ReservationForm = ({
-  idMeal,
-  setAvailableMeals,
-  availableMeals,
-  available,
-  setAvailable,
-}) => {
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+import { Data } from "../../App";
+const ReservationForm = () => {
+  const { available, idMeal } = useContext(Data);
+  const [phone, setPhone] = useState();
+  const [email, setEmail] = useState();
+  const [name, setName] = useState();
 
   const newReservation = async () => {
     try {
@@ -61,14 +55,7 @@ const ReservationForm = ({
       />
       <hr />
       <button onClick={newReservation}>Make Reservation</button>
-      <FetchAvaliableReservations
-        newReservation={newReservation}
-        availableMeals={availableMeals}
-        setAvailableMeals={setAvailableMeals}
-        idMeal={idMeal}
-        available={available}
-        setAvailable={setAvailable}
-      />
+      <FetchAvaliableReservations />
     </div>
   );
 };
