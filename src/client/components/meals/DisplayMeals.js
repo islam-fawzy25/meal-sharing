@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -8,17 +8,16 @@ import { Data } from "../../App";
 const DisplayMeals = ({ meal }) => {
   const { available, setAvailable, availableMeals, idMeal } = useContext(Data);
   const id = `/meals/${meal.id}`;
+
   const availableMealsById = async () => {
-    const availability = await availableMeals.map((meal) => {
-      return meal.id;
+    await availableMeals.filter((meals) => {
+      if (meals.id === meal.id) {
+        return setAvailable(true);
+      } else {
+        return setAvailable(false);
+      }
     });
-    const result = await availability.includes(idMeal.id);
-    console.log(available);
-    return setAvailable(result);
   };
-  // useEffect(() => {
-  //   availableMealsById();
-  // }, [available]);
 
   return (
     <Card style={{ width: "18rem" }}>
