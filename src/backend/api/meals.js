@@ -91,7 +91,7 @@ router.post("/", async (request, response) => {
     location: request.body.location,
     max_reservation: request.body.maxReservation,
     price: request.body.price,
-    created_date: "2021-06-16",
+    created_date: new Date(request.body.created_date),
   });
   response.json(meals);
   console.log(meals);

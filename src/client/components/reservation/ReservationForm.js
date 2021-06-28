@@ -32,6 +32,9 @@ const ReservationForm = () => {
   }, []);
 
   return (
+    <div>
+        <FetchAvaliableReservations />
+    
     <div style={{ visibility: available ? "visible" : "hidden" }}>
       <input
         type="text"
@@ -55,7 +58,7 @@ const ReservationForm = () => {
       />
       <hr />
       <button onClick={newReservation}>Make Reservation</button>
-      <FetchAvaliableReservations />
+    </div>
     </div>
   );
 };

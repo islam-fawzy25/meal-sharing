@@ -22,6 +22,7 @@ const AddNewMeal = () => {
           location: location,
           maxReservation: maxReservation,
           price: price,
+          created_date:new Date(),
         }),
       });
     } catch (error) {

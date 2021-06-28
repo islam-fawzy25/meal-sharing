@@ -8,7 +8,6 @@ import { Data } from "../../App";
 const DisplayMeals = ({ meal }) => {
   const { available, setAvailable, availableMeals, idMeal } = useContext(Data);
   const id = `/meals/${meal.id}`;
-
   const availableMealsById = async () => {
     await availableMeals.filter((meals) => {
       if (meals.id === meal.id) {
@@ -17,6 +16,8 @@ const DisplayMeals = ({ meal }) => {
         return setAvailable(false);
       }
     });
+    console.log(availableMeals);
+
   };
 
   return (

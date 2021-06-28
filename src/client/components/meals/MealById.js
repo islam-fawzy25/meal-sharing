@@ -8,7 +8,6 @@ const MealById = () => {
   const { meals, idMeal, setIdMeal } =useContext(Data)
   const param = useParams();
 
-
   useEffect(()=>{(async()=>{
     const mealByID = await meals.find((meal) => meal.id == Number(param.id));
     setIdMeal(mealByID);
@@ -16,14 +15,6 @@ const MealById = () => {
   
   },[])
   return (
-    // <div>
-    //   <h3>{idMeal.title}</h3>
-    //   <li>{idMeal.price} .Kr</li>
-    //   <p>{idMeal.description}</p>
-    //   <div>Location: {idMeal.location}</div>
-    //   <br />
-    // </div>
-
     <Card style={{ width: "18rem" }}>
     <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
     <Card.Body>

@@ -26,7 +26,7 @@ router.post("/", async (request, response) => {
       id: Math.max(0, ...resrvationId.map((item) => item.id)) + 1,
       number_of_guests: 1,
       meal_id: request.body.mealId,
-      created_date: "2021-06-16", // here i have to make today date method
+      created_date: new Date(request.body.created_date), // here i have to make today date method
       contact_phonenumber: request.body.phonenumber,
       contact_name: request.body.name,
       contact_email: request.body.email,
