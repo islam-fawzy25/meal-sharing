@@ -8,7 +8,7 @@ const knex = require("../database");
 router.get("/", async (request, response) => {
   try {
     // knex syntax for selecting things. Look up the documentation for knex for further info
-      const meals  = await knex("meals");
+    const meals = await knex("meals");
 
     let filteredMeals = meals;
     // implementation of filtered meals with  Max pric
@@ -52,10 +52,10 @@ router.get("/", async (request, response) => {
 
     //Get meals that still has available reservations
     if ("availableReservations" in request.query) {
-      const availableReservations =
+      let availableReservations =
         request.query.availableReservations == "true";
       if (availableReservations) {
-        filteredMeals = await knex("meals")
+        let availableMeal = await knex
           .raw(
             `
     SELECT 
@@ -69,11 +69,10 @@ FROM
     reservations ON reservations.meal_id = meals.id
 GROUP BY meals.id
 HAVING max_reservation > total_reservations;
-    
     `
           )
           .then((res) => response.send(res[0]));
-        return;
+        response.json(availableMeal);
       }
     }
     response.json(filteredMeals);
@@ -84,15 +83,18 @@ HAVING max_reservation > total_reservations;
 
 // POST	Adds a new meal
 router.post("/", async (request, response) => {
+  const idMeal = await knex("meals")
   const meals = await knex("meals").insert({
+    id: Math.max(0, ...idMeal.map((item) => item.id)) + 1,
     title: request.body.title,
     description: request.body.description,
     location: request.body.location,
-    max_reservation: request.body.max_reservation,
+    max_reservation: request.body.maxReservation,
     price: request.body.price,
-    created_date: request.body.created_date,
+    created_date: new Date(request.body.created_date),
   });
   response.json(meals);
+  console.log(meals);
 });
 
 //PUT	Updates the meal by id
