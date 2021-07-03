@@ -9,19 +9,21 @@ const  {
     available,
     idMeal,
   } = useContext(Data)
-
+// !!! it's better here to use function not component right ???? 
+// reusable function with url parameter
   const getAvailableMeals = async () => {
     const fetchFun = await fetch(
-      "http://localhost:5000/api/meals?availableReservations=true"
+      "/api/meals?availableReservations=true"
     );
     const response = await fetchFun.json();
+    console.log(response);
     setAvailableMeals(response);
   };
 
   useEffect(() => {
     getAvailableMeals();
   }, []);
-
+console.log( availableMeals);
   return <></>;
 };
 

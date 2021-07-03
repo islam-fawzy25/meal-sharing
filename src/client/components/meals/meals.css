@@ -1,0 +1,17 @@
+.mealCardContainer {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: darkcyan;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items:flex-start;
+ 
+}
+
+.mealCard {
+  color: crimson;
+
+  margin: 5%;
+}

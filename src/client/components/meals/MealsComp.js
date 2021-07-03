@@ -1,25 +1,16 @@
 import React, { useContext } from "react";
 import DisplayMeals from "./DisplayMeals";
 import { Data } from "../../App";
+import "./meals.css";
+
+// Looping inside meals array and send meal object to DisplayMeals component
 const MealsComponent = () => {
-const {
-  meals,
-  setMeals,
-  available,
-  setAvailable,
-  availableMeals,
-  setAvailableMeals,
-  idMeal,
-  setIdMeal,
-  availableMealsById
-} = useContext(Data)
+  const { meals } = useContext(Data);
   return (
-    <div>
+    <div className="mealCardContainer">
       {meals.map((meal) => (
         <div key={meal.id}>
-          <DisplayMeals
-            meal={meal}
-          />
+          <DisplayMeals meal={meal} />
         </div>
       ))}
     </div>
