@@ -1,0 +1,12 @@
+.reservationForm {
+  border: rgb(12, 12, 49) 2px solid;
+  border-radius: 10%;
+  background-color: darkgrey;
+  width: 50%;
+  margin: 25px 0 25px 25px;
+  align-items: center;
+}
+
+.reservationForm{
+  padding: 5%;
+}

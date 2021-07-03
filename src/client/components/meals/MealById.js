@@ -1,34 +1,31 @@
 import { useParams } from "react-router-dom";
-import React ,{useEffect ,useContext }from "react";
+import React, { useEffect, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Data } from "../../App";
+import ReservationForm from "../reservation/ReservationForm";
 
 const MealById = () => {
-  const { meals, idMeal, setIdMeal } =useContext(Data)
+  const { meals, idMeal, setIdMeal, available } = useContext(Data);
   const param = useParams();
-
-  useEffect(()=>{(async()=>{
-    const mealByID = await meals.find((meal) => meal.id == Number(param.id));
-    setIdMeal(mealByID);
-  })()
-  
-  },[])
+  //!!!!! which one better to use stat or variable for render meal by id !!!!
+  useEffect(() => {
+    (async () => {
+      const mealByID = await meals.find((meal) => meal.id == Number(param.id));
+      setIdMeal(mealByID);
+    })();
+  }, []);
   return (
     <Card style={{ width: "18rem" }}>
-    <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
-    <Card.Body>
-      <Card.Title>{idMeal.title}</Card.Title>
-      <Card.Title>{idMeal.price} Kr</Card.Title>
-      <Card.Text>
-      {idMeal.description}
-        </Card.Text>
+      <Card.Img variant="top" src="burgerTable.png" />
+      <Card.Body>
+        <Card.Title>{idMeal.title}</Card.Title>
+        <Card.Title>{idMeal.price} Kr</Card.Title>
+        <Card.Text>{idMeal.description}</Card.Text>
         <Card.Title>Location: {idMeal.location}</Card.Title>
-
-    </Card.Body>
-
-   
-  </Card>
+      </Card.Body>
+      <Card.Body></Card.Body>
+    </Card>
   );
 };
 

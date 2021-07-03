@@ -24,15 +24,17 @@ router.post("/", async (request, response) => {
     const resrvationId = await knex("reservations");
     let reservations = await knex("reservations").insert({
       id: Math.max(0, ...resrvationId.map((item) => item.id)) + 1,
-      number_of_guests: 1,
+      number_of_guests: request.body.resNumber,
       meal_id: request.body.mealId,
-      created_date: new Date(request.body.created_date), // here i have to make today date method
+      created_date: new Date(request.body.created_date), 
       contact_phonenumber: request.body.phonenumber,
       contact_name: request.body.name,
       contact_email: request.body.email,
     });
     response.json(reservations);
   } catch (error) {
+    // i have to check if not working
+    response.status(400).send({error:'Reservation faild try a gain '})
     throw error;
   }
 });

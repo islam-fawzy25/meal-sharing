@@ -6,8 +6,12 @@ import NavBar from "./components/structures/Nav";
 import Title from "./components/structures/Title";
 import ReservationForm from "./components/reservation/ReservationForm";
 import AddNewMeal from "./components/meals/AddNewMeal";
-
+import FetchAvaliableReservations from "./components/reservation/AvailableReservations";
 export const Data = createContext();
+import "./App.css";
+
+////// is it good idea to define all stats here and pass it by context or
+// we can do better method like custom hook
 
 function App() {
   const [meals, setMeals] = useState([]);
@@ -17,11 +21,12 @@ function App() {
 
   const fetchMeals = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/meals");
+      const response = await fetch("/api/meals");
       if (!response.ok) {
         `'Error :' ${response.status}`;
       } else {
         const data = await response.json();
+        console.log(data);
         setMeals(data);
       }
     } catch (error) {
@@ -50,6 +55,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Title />
+            <FetchAvaliableReservations />
           </Route>
           <Route path="/meals/:id">
             <MealById />

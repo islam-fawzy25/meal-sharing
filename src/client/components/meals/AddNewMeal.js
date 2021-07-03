@@ -10,7 +10,7 @@ const AddNewMeal = () => {
 
   const newMeal = async () => {
     try {
-      await fetch("http://localhost:5000/api/meals", {
+      await fetch("/api/meals", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         headers: {
@@ -37,6 +37,9 @@ const AddNewMeal = () => {
   return (
     <>
       <h3>Add your meal here</h3>
+      <form>
+
+    
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -67,27 +70,30 @@ const AddNewMeal = () => {
       <label id="maxReservation">Maximum Reservation: </label>
       <br />
       <input
-        for="maxReservation"
+        htmlFor="maxReservation"
         value={maxReservation}
         onChange={(e) => setMaxReservation(e.target.value)}
         placeholder="max reservation"
         type="number"
-        minLength="1"
+        min="1"
         required
       />
       <hr />
       <label id="pric">Price: </label> <br />
       <input
-        for="price"
+       htmlFor="price"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
         placeholder="price"
         type="number"
-        minLength="1"
+        minLength="2"
+        min="10"
+
         required
       />
       <hr />
       <button onClick={newMeal}> Add </button>
+      </form >
     </>
   );
 };
