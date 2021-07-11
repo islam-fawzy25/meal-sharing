@@ -17,15 +17,19 @@ const MealById = () => {
   }, []);
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src="burgerTable.png" />
+      <Card.Img variant="top" src="" />
       <Card.Body>
         <Card.Title>{idMeal.title}</Card.Title>
         <Card.Title>{idMeal.price} Kr</Card.Title>
         <Card.Text>{idMeal.description}</Card.Text>
         <Card.Title>Location: {idMeal.location}</Card.Title>
       </Card.Body>
-      <Card.Body></Card.Body>
+      <Card.Body>
+     
+      </Card.Body>
+  
     </Card>
+ 
   );
 };
 

@@ -7,8 +7,11 @@ import Title from "./components/structures/Title";
 import ReservationForm from "./components/reservation/ReservationForm";
 import AddNewMeal from "./components/meals/AddNewMeal";
 import FetchAvaliableReservations from "./components/reservation/AvailableReservations";
-export const Data = createContext();
 import "./App.css";
+import FooterComponent from "./components/structures/Footer.component";
+import About from './components/structures/About'
+
+export const Data = createContext();
 
 ////// is it good idea to define all stats here and pass it by context or
 // we can do better method like custom hook
@@ -52,6 +55,7 @@ function App() {
     >
       <Router>
         <NavBar />
+       
         <Switch>
           <Route exact path="/">
             <Title />
@@ -65,8 +69,13 @@ function App() {
             <MealsComponent />
             <AddNewMeal />
           </Route>
+          <Route  path="/about">
+            < About />
+          </Route>
         </Switch>
+        <FooterComponent></FooterComponent>
       </Router>
+     
     </Data.Provider>
   );
 }
