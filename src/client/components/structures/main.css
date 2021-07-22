@@ -1,5 +1,18 @@
 body{
     background-color:darkslategrey ;
-   
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
   
   }
+
+  .footer{
+    background-color:slategray;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+   
+  }
+
+  /* // i need to fix position issue for footer  still stuck in the middle of home and about  pages */
