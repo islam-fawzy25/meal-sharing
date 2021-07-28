@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MealsComponent from "./components/meals/MealsComp";
 import MealById from "./components/meals/MealById";
 import NavBar from "./components/structures/Nav";
-import Title from "./components/structures/Title";
+import Home from "./components/structures/Home";
 import ReservationForm from "./components/reservation/ReservationForm";
 import AddNewMeal from "./components/meals/AddNewMeal";
 import FetchAvaliableReservations from "./components/reservation/AvailableReservations";
@@ -58,7 +58,7 @@ function App() {
        
         <Switch>
           <Route exact path="/">
-            <Title />
+            <Home />
             <FetchAvaliableReservations />
           </Route>
           <Route path="/meals/:id">

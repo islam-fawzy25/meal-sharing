@@ -2,7 +2,7 @@
   height: 100%;
   display: flex;
   justify-content: space-around;
-  background-color: darkcyan;
+  background-color: white;
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
@@ -10,8 +10,26 @@
  
 }
 
-.mealCard {
-  color: crimson;
-
+.meal-card {
+  color:black;
   margin: 5%;
+}
+
+.meal-by-id{
+display: flex;
+margin: 30px;
+
+}
+
+.add-new-meal-container{
+ color:black;
+ width: 20%;
+ border:black 2px solid;
+ margin-left: 20px;
+ border-radius: 20px;
+}
+
+.add-new-meal-fourm{
+padding: 20px;
+ 
 }

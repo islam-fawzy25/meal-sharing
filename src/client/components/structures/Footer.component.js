@@ -4,9 +4,14 @@ import React from "react";
 
  const Footer =()=>{
     return(
+        <>
+        <Card>
         <Card.Footer className='footer'>
         Designed by 
         </Card.Footer>
+        </Card>
+       
+        </>
     )
 }
 

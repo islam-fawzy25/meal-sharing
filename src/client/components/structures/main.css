@@ -1,18 +1,22 @@
-body{
-    background-color:darkslategrey ;
-   min-height: 100vh;
-   display: flex;
-   flex-direction: column;
-  
-  }
+body {
+  background-color:white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
 
-  .footer{
-    background-color:slategray;
-    bottom: 0px;
-    width: 100%;
-    text-align: center;
-    margin-top: auto;
-   
-  }
+.footer {
+  background-color:rgb(63, 62, 62);
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
 
-  /* // i need to fix position issue for footer  still stuck in the middle of home and about  pages */
+.title{
+  padding: 30px;
+  text-align: center;
+}
+
+/* // i need to fix position issue for footer  still stuck in the middle of home and about  pages */

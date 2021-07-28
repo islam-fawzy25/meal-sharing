@@ -27,7 +27,7 @@ const DisplayMeals = ({ meal }) => {
     <div >
 
    
-    <div className="mealCard">
+    <div className="meal-card">
       <Card style={{ width: "18rem" }} >
         <Card.Img  src="https://elements-video-cover-images-0.imgix.net/files/70a32ca9-6cae-4a1b-becc-22ce70cc1bf9/inline_image_preview.jpg?auto=compress&crop=edges&fit=crop&fm=jpeg&h=800&w=1200&s=d9e23f0660caef7c1bdccb6fc26b2bbe" />
         <Card.Body>
