@@ -1,81 +1,83 @@
-const { request, response } = require("express");
+
 const express = require("express");
-const { as } = require("../database");
+const { from, sum, as } = require("../database");
 const router = express.Router();
 const knex = require("../database");
 
 //GET	Returns all meals
 router.get("/", async (request, response) => {
-  try {
-    // knex syntax for selecting things. Look up the documentation for knex for further info
-    const meals = await knex("meals");
+  let meals = knex("meals");
 
-    let filteredMeals = meals;
-    // implementation of filtered meals with  Max pric
-    if ("maxPrice" in request.query) {
-      const maxPrice = parseInt(request.query.maxPrice);
-      if (isNaN(maxPrice)) {
-        return response
-          .status(400)
-          .send({ error: "Max Price must be integers" });
-      }
-      filteredMeals = await knex("meals").where("price", "<=", maxPrice);
+  // knex syntax for selecting things. Look up the documentation for knex for further info
+
+  // implementation of filtered meals with  Max pric
+  if ("maxPrice" in request.query) {
+    const maxPrice = parseInt(request.query.maxPrice);
+    if (isNaN(maxPrice)) {
+      return response.status(400).send({ error: "Max Price must be integers" });
     }
+    meals = meals.where("price", "<=", maxPrice);
+  }
 
-    if ("title" in request.query) {
-      const title = request.query.title.toLowerCase();
-      filteredMeals = await knex("meals").where(
-        "meals.title",
-        "like",
-        "%" + title + "%"
-      );
+  if ("title" in request.query) {
+    const title = request.query.title.toLowerCase();
+    meals = meals.where("meals.title", "like", "%" + title + "%");
+  }
+
+  // implementation of filtered meals with  limit
+  if ("limit" in request.query) {
+    const limit = parseInt(request.query.limit);
+    if (isNaN(limit)) {
+      return response.status(400).send("Limit must be integer");
     }
+    meals = meals.limit(limit);
+  }
 
-    // implementation of filtered meals with  limit
-    if ("limit" in request.query) {
-      const limit = parseInt(request.query.limit);
-      if (isNaN(limit)) {
-        return response.status(400).send("Limit must be integer");
-      }
-      filteredMeals = await knex("meals").limit(limit);
-    }
+  //Get meals that has been created after the date
+  if ("createdAfter" in request.query) {
+    const createdAfter = request.query.createdAfter;
+    meals = meals.where("created_date", ">", createdAfter);
+  }
 
-    //Get meals that has been created after the date
-    if ("createdAfter" in request.query) {
-      const createdAfter = request.query.createdAfter;
-      filteredMeals = await knex("meals").where(
-        "created_date",
-        ">",
-        createdAfter
-      );
-    }
+  //Get meals that still has available reservations
+  if ("availableReservations" in request.query) {
+    let availableReservations = request.query.availableReservations == "true";
+    if (availableReservations) {
+     meals = await knex
+        // .select([
+        //   // sum('reservations.number_of_guests') as total_reservations,
+        //   // "COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations",
+        //   " meals.max_reservation",
+        //   " meals.title",
+        //   "  meals.id",
+        // ])
+        // .leftJoin("reservations", "reservations.meal_id", "=", "meals.id")
+        // .groupBy("meals.id")
+        // .having("max_reservation", ">", sum ('reservations.number_of_guests'))
 
-    //Get meals that still has available reservations
-    if ("availableReservations" in request.query) {
-      let availableReservations =
-        request.query.availableReservations == "true";
-      if (availableReservations) {
-        let availableMeal = await knex
-          .raw(
+                .raw(
+                  `
+            SELECT
+            COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations,
+            meals.max_reservation,
+            meals.title,
+            meals.id
+        FROM
+            meals
+                LEFT JOIN
+            reservations ON reservations.meal_id = meals.id
+        GROUP BY meals.id
+        HAVING max_reservation > total_reservations;
             `
-    SELECT 
-    COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations,
-    meals.max_reservation,
-    meals.title,
-    meals.id
-FROM
-    meals
-        LEFT JOIN
-    reservations ON reservations.meal_id = meals.id
-GROUP BY meals.id
-HAVING max_reservation > total_reservations;
-    `
-          )
-          .then((res) => response.send(res[0]));
-        response.json(availableMeal);
-      }
+                )
+        .then((res) => response.send(res[0]));
+      //  response.json(availableMeal);
     }
-    response.json(filteredMeals);
+  }
+
+  try {
+    const recordMeals = await meals;
+    response.json(recordMeals);
   } catch (error) {
     throw error;
   }
@@ -83,7 +85,7 @@ HAVING max_reservation > total_reservations;
 
 // POST	Adds a new meal
 router.post("/", async (request, response) => {
-  const idMeal = await knex("meals")
+  const idMeal = await knex("meals");
   const meals = await knex("meals").insert({
     id: Math.max(0, ...idMeal.map((item) => item.id)) + 1,
     title: request.body.title,

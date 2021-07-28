@@ -35,7 +35,8 @@ const AddNewMeal = () => {
   // }, []);
 
   return (
-    <>
+    < div className='add-new-meal-container'>
+      <div className='add-new-meal-fourm'>
       <h3>Add your meal here</h3>
       <form>
 
@@ -94,7 +95,8 @@ const AddNewMeal = () => {
       <hr />
       <button onClick={newMeal}> Add </button>
       </form >
-    </>
+      </div>
+    </div>
   );
 };
 

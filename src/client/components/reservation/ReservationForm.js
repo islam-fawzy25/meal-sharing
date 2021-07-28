@@ -69,28 +69,27 @@ const ReservationForm = () => {
             style={{ visibility: available ? "visible" : "hidden" }}
           >
             <Form>
-              <Form.Row>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label>User name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your name"
-                    onChange={(e) => setName(e.target.value)}
-                    minLength="2"
-                    required
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    minLength="8"
-                    required
-                  />
-                </Form.Group>
-              </Form.Row>
+              <Form.Group controlId="formGridAddress1">
+                <Form.Label>User name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your name"
+                  onChange={(e) => setName(e.target.value)}
+                  minLength="2"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formGridAddress1">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  minLength="8"
+                  required
+                />
+              </Form.Group>
 
               <Form.Group controlId="formGridAddress1">
                 <Form.Label>Phone number</Form.Label>
@@ -140,7 +139,7 @@ const ReservationForm = () => {
           </div>
         </div>
       ) : (
-        <h1> no available reservation </h1>
+        <h1 className='no-reservation-message'> no available reservation </h1>
       )}
     </>
   );
