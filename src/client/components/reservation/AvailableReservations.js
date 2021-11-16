@@ -1,30 +1,31 @@
 import React, { useState, useEffect ,useContext} from "react";
 import { Data } from "../../App";
-
+import useFetch from "../UseFetch";
 const FetchAvaliableReservations = () => {
 const  {
     setAvailableMeals,
     availableMeals,
-    setAvailable,
-    available,
-    idMeal,
+ 
   } = useContext(Data)
-// !!! it's better here to use function not component right ???? 
-// reusable function with url parameter
-  const getAvailableMeals = async () => {
-    const fetchFun = await fetch(
-      "/api/meals?availableReservations=true"
-    );
-    const response = await fetchFun.json();
-    console.log(response);
-    setAvailableMeals(response);
-  };
+
+
+  const {data,error,ispending}=useFetch("/api/meals?availableReservations=true")
 
   useEffect(() => {
-    getAvailableMeals();
-  }, []);
-console.log( availableMeals);
-  return <></>;
+    // getAvailableMeals();
+       setAvailableMeals(data);
+
+  }, [data]);
+
+  return (
+
+    <div>
+  {error && <div>{error}</div>}
+  {ispending && <div>Loading...</div>}
+
+    </div>
+  )
+
 };
 
 export default FetchAvaliableReservations;

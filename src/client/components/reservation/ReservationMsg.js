@@ -10,9 +10,11 @@ function ReservationMsg() {
   }
 
   return (
+    <>
     <button type="button" onClick={handleClick}>
       Go home
     </button>
+    </>
   );
 }
 
