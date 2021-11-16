@@ -90,37 +90,6 @@ router.post("/", async (request, response) => {
   response.json(meals);
 });
 
-//PUT	Updates the meal by id
-router.put("/:id", async (request, response) => {
-  try {
-    const mealById = parseInt(request.params.id);
-
-    // knex syntax for selecting things. Look up the documentation for knex for further info
-    const meal = await knex("meals").where({ id: mealById }).update({
-      title: request.body.title,
-      description: request.body.description,
-      location: request.body.location,
-      max_reservation: request.body.max_reservation,
-      price: request.body.price,
-      created_date: request.body.created_date,
-    });
-    response.json(meal);
-  } catch (error) {
-    throw error;
-  }
-});
-
-//DELETE	Deletes the meal by id
-router.delete("/:id", async (request, response) => {
-  try {
-    const mealById = parseInt(request.params.id);
-    const meal = await knex("meals").where({ id: mealById }).delete();
-    response.json(meal);
-  } catch (error) {
-    throw error;
-  }
-});
-
 // 	GET	Returns meal by id
 router.get("/:id", async (request, response) => {
   const meals = await knex("meals");

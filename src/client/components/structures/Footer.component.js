@@ -7,7 +7,7 @@ import React from "react";
         <>
         <Card>
         <Card.Footer className='footer'>
-        Designed by 
+        Designed by <a href="https://www.linkedin.com/in/islam-fawzy/">Islam Fawzy</a>
         </Card.Footer>
         </Card>
        
