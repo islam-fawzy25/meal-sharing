@@ -39,67 +39,63 @@ const AddNewMeal = () => {
 
   return (
     <>
-      {!isAddNewMeal && < div className='add-new-meal-container'>
-        <div className='add-new-meal-fourm'>
-          <h3>Add your meal here</h3>
-          <form onSubmit={newMeal}>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="title"
-              type="text"
-              minLength="2"
-              required
-            />
-            <hr />
-            <input
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="description"
-              type="text"
-              minLength="8"
-              required
-            />
-            <hr />
-            <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location"
-              type="text"
-              minLength="4"
-              required
-            />
-            <hr />
-            <label id="maxReservation">Maximum Reservation: </label>
-            <br />
-            <input
-              htmlFor="maxReservation"
-              value={maxReservation}
-              onChange={(e) => setMaxReservation(e.target.value)}
-              placeholder="max reservation"
-              type="number"
-              min="1"
-              required
-            />
-            <hr />
-            <label id="pric">Price: </label> <br />
-            <input
-              htmlFor="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="price"
-              type="number"
-              minLength="2"
-              min="10"
-              required
-            />
-            <hr />
-            <button > Add </button>
-          </form >
+      {!isAddNewMeal &&
+        < div className='add-new-meal-container'>
+          <div className='add-new-meal-fourm'>
+            <h3>Add your meal here</h3>
+            <form onSubmit={newMeal}>
+              <input
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="title"
+                type="text"
+                minLength="2"
+                required
+              />
+              <hr />
+              <textarea
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="description"
+                rows="4"
+                cols="10"
+                required
+              />
+              <hr />
+              <input
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Location"
+                type="text"
+                minLength="4"
+                required
+              />
+              <hr />
+              <label id="maxReservation">Maximum Reservation: </label>
+              <br />
+              <input
+                htmlFor="maxReservation"
+                onChange={(e) => setMaxReservation(e.target.value)}
+                placeholder="max reservation"
+                type="number"
+                min="1"
+                required
+              />
+              <hr />
+              <label id="pric">Price: </label> <br />
+              <input
+                htmlFor="price"
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="price"
+                type="number"
+                minLength="2"
+                min="10"
+                required
+              />
+              <hr />
+              <button > Add </button>
+            </form >
+          </div>
         </div>
-      </div>
       }
-      {isAddNewMeal && <div className="add-meal-message">Thanks for reservation</div>}
+      {isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal </div>}
     </>
 
   );

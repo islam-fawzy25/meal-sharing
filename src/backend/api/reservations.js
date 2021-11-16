@@ -33,7 +33,6 @@ router.post("/", async (request, response) => {
     });
     response.json(reservations);
   } catch (error) {
-    // i have to check if not working
     response.status(400).send({error:'Reservation faild try a gain '})
     throw error;
   }
@@ -52,33 +51,6 @@ router.get("/:id", async (request, response) => {
   } else {
     const reservationById = reservations.filter((obj) => obj.id === id);
     return response.json(reservationById);
-  }
-});
-
-//PUT	Updates the reservation by id
-router.put("/:id", async (request, response) => {
-  try {
-    const reservationById = parseInt(request.params.id);
-    // knex syntax for selecting things. Look up the documentation for knex for further info
-    const reservation = await knex("reservations")
-      .where({ id: reservationById })
-      .update(request.body);
-    response.json(reservation);
-  } catch (error) {
-    throw error;
-  }
-});
-
-//Deletes the reservation by id
-router.delete("/:id", async (request, response) => {
-  try {
-    const reservationById = parseInt(request.params.id);
-    const reservation = await knex("reservations")
-      .where({ id: reservationById })
-      .delete();
-    response.json(reservation);
-  } catch (error) {
-    throw error;
   }
 });
 
