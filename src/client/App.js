@@ -10,11 +10,9 @@ import FetchAvaliableReservations from "./components/reservation/AvailableReserv
 import "./App.css";
 import FooterComponent from "./components/structures/Footer.component";
 import About from './components/structures/About'
+import useFetch from "./components/UseFetch";
 
 export const Data = createContext();
-
-////// is it good idea to define all stats here and pass it by context or
-// we can do better method like custom hook
 
 function App() {
   const [meals, setMeals] = useState([]);
@@ -22,24 +20,12 @@ function App() {
   const [availableMeals, setAvailableMeals] = useState([]);
   const [available, setAvailable] = useState();
 
-  const fetchMeals = async () => {
-    try {
-      const response = await fetch("/api/meals");
-      if (!response.ok) {
-        `'Error :' ${response.status}`;
-      } else {
-        const data = await response.json();
-        console.log(data);
-        setMeals(data);
-      }
-    } catch (error) {
-      throw error;
-    }
-  };
-  useEffect(() => {
-    fetchMeals();
-  }, []);
+const {data,error,isPending}=useFetch("/api/meals");
 
+  useEffect(() => {
+    setMeals(data);
+  }, [data]);
+  
   return (
     <Data.Provider
       value={{

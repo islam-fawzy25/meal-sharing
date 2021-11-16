@@ -7,10 +7,12 @@ const AddNewMeal = () => {
   const [location, setLocation] = useState();
   const [maxReservation, setMaxReservation] = useState();
   const [price, setPrice] = useState();
+  const [isAddNewMeal, setIsAddNewMeal] = useState();
 
-  const newMeal = async () => {
+  const newMeal = async (e) => {
     try {
-      await fetch("/api/meals", {
+      e.preventDefault();
+      const response = await fetch("/api/meals", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         headers: {
@@ -22,9 +24,10 @@ const AddNewMeal = () => {
           location: location,
           maxReservation: maxReservation,
           price: price,
-          created_date:new Date(),
+          created_date: new Date(),
         }),
       });
+      setIsAddNewMeal(response.ok)
     } catch (error) {
       throw error;
     }
@@ -35,68 +38,70 @@ const AddNewMeal = () => {
   // }, []);
 
   return (
-    < div className='add-new-meal-container'>
-      <div className='add-new-meal-fourm'>
-      <h3>Add your meal here</h3>
-      <form>
-
-    
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="title"
-        type="text"
-        minLength="2"
-        required
-      />
-      <hr />
-      <input
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="description"
-        type="text"
-        minLength="8"
-        required
-      />
-      <hr />
-      <input
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        placeholder="Location"
-        type="text"
-        minLength="4"
-        required
-      />
-      <hr />
-      <label id="maxReservation">Maximum Reservation: </label>
-      <br />
-      <input
-        htmlFor="maxReservation"
-        value={maxReservation}
-        onChange={(e) => setMaxReservation(e.target.value)}
-        placeholder="max reservation"
-        type="number"
-        min="1"
-        required
-      />
-      <hr />
-      <label id="pric">Price: </label> <br />
-      <input
-       htmlFor="price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        placeholder="price"
-        type="number"
-        minLength="2"
-        min="10"
-
-        required
-      />
-      <hr />
-      <button onClick={newMeal}> Add </button>
-      </form >
+    <>
+      {!isAddNewMeal && < div className='add-new-meal-container'>
+        <div className='add-new-meal-fourm'>
+          <h3>Add your meal here</h3>
+          <form onSubmit={newMeal}>
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="title"
+              type="text"
+              minLength="2"
+              required
+            />
+            <hr />
+            <input
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="description"
+              type="text"
+              minLength="8"
+              required
+            />
+            <hr />
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Location"
+              type="text"
+              minLength="4"
+              required
+            />
+            <hr />
+            <label id="maxReservation">Maximum Reservation: </label>
+            <br />
+            <input
+              htmlFor="maxReservation"
+              value={maxReservation}
+              onChange={(e) => setMaxReservation(e.target.value)}
+              placeholder="max reservation"
+              type="number"
+              min="1"
+              required
+            />
+            <hr />
+            <label id="pric">Price: </label> <br />
+            <input
+              htmlFor="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="price"
+              type="number"
+              minLength="2"
+              min="10"
+              required
+            />
+            <hr />
+            <button > Add </button>
+          </form >
+        </div>
       </div>
-    </div>
+      }
+      {isAddNewMeal && <div className="add-meal-message">Thanks for reservation</div>}
+    </>
+
   );
 };
 

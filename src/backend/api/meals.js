@@ -6,57 +6,50 @@ const knex = require("../database");
 
 //GET	Returns all meals
 router.get("/", async (request, response) => {
-  let meals = knex("meals");
-
-  // knex syntax for selecting things. Look up the documentation for knex for further info
-
+  try {
+   
   // implementation of filtered meals with  Max pric
   if ("maxPrice" in request.query) {
     const maxPrice = parseInt(request.query.maxPrice);
     if (isNaN(maxPrice)) {
       return response.status(400).send({ error: "Max Price must be integers" });
     }
-    meals = meals.where("price", "<=", maxPrice);
+    const meals = await knex('meals').where("price", "<=", maxPrice);
+    response.send(meals)
+    return
   }
 
   if ("title" in request.query) {
     const title = request.query.title.toLowerCase();
-    meals = meals.where("meals.title", "like", "%" + title + "%");
+   const meals = await knex('meals').where("meals.title", "like", "%" + title + "%");
+   response.send(meals)
+   return
   }
 
   // implementation of filtered meals with  limit
   if ("limit" in request.query) {
     const limit = parseInt(request.query.limit);
     if (isNaN(limit)) {
-      return response.status(400).send("Limit must be integer");
+     response.status(400).send("Limit must be integer");
     }
-    meals = meals.limit(limit);
+    const meals = await knex('meals').limit(limit);
+    response.send(meals)
+    return
   }
 
   //Get meals that has been created after the date
   if ("createdAfter" in request.query) {
     const createdAfter = request.query.createdAfter;
-    meals = meals.where("created_date", ">", createdAfter);
+  const meals = await knex('meals').where("created_date", ">", createdAfter);
+  response.send(meals)
+return
   }
 
   //Get meals that still has available reservations
   if ("availableReservations" in request.query) {
     let availableReservations = request.query.availableReservations == "true";
     if (availableReservations) {
-     meals = await knex
-        // .select([
-        //   // sum('reservations.number_of_guests') as total_reservations,
-        //   // "COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations",
-        //   " meals.max_reservation",
-        //   " meals.title",
-        //   "  meals.id",
-        // ])
-        // .leftJoin("reservations", "reservations.meal_id", "=", "meals.id")
-        // .groupBy("meals.id")
-        // .having("max_reservation", ">", sum ('reservations.number_of_guests'))
-
-                .raw(
-                  `
+    const meals = await knex.raw(`
             SELECT
             COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations,
             meals.max_reservation,
@@ -68,16 +61,15 @@ router.get("/", async (request, response) => {
             reservations ON reservations.meal_id = meals.id
         GROUP BY meals.id
         HAVING max_reservation > total_reservations;
-            `
-                )
+            `)
         .then((res) => response.send(res[0]));
-      //  response.json(availableMeal);
+return
     }
+   
   }
-
-  try {
-    const recordMeals = await meals;
-    response.json(recordMeals);
+  const meals = await knex('meals')
+  response.send(meals)
+  return
   } catch (error) {
     throw error;
   }
@@ -96,7 +88,6 @@ router.post("/", async (request, response) => {
     created_date: new Date(request.body.created_date),
   });
   response.json(meals);
-  console.log(meals);
 });
 
 //PUT	Updates the meal by id

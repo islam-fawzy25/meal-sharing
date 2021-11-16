@@ -1,18 +1,27 @@
 .reservationForm {
   border: rgb(12, 12, 49) 2px solid;
   border-radius: 10%;
-  width: 30%;
+  width: 60%;
   margin: 25px 0 25px 25px;
   align-items: center;
- 
-}
-
-.reservationForm {
   padding: 5%;
+}
+.reservationForm-container{
+width: 30%;
+}
+.reservationForm-container-true{
+
+visibility: hidden;
 }
 
 .no-reservation-message{
  
+  text-align: center;
+  margin: 5px;
+ margin-bottom: 350px;
+}
+
+.reservation-message{
   text-align: center;
   margin: 5px;
  margin-bottom: 350px;
