@@ -33,10 +33,6 @@ const AddNewMeal = () => {
     }
   };
 
-  // useEffect(() => {
-  //   newMeal();
-  // }, []);
-
   return (
     <>
       {!isAddNewMeal &&
@@ -97,7 +93,6 @@ const AddNewMeal = () => {
       }
       {isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal </div>}
     </>
-
   );
 };
 

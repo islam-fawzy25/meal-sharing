@@ -19,4 +19,8 @@ body {
   text-align: center;
 }
 
-/* // i need to fix position issue for footer  still stuck in the middle of home and about  pages */
+.about-container{
+  display:flex;
+flex-direction: row-reverse;
+padding:  10%;
+}

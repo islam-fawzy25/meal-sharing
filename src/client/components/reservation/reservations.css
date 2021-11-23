@@ -1,15 +1,17 @@
-.reservationForm {
-  border: rgb(12, 12, 49) 2px solid;
+.reservation-form {
+  border: rgb(0, 0, 104) 2px solid;
   border-radius: 10%;
-  width: 60%;
-  margin: 25px 0 25px 25px;
-  align-items: center;
-  padding: 5%;
+  width: 50%;
+  /* margin: 25px 0 25px 25px; */
+ padding-left: 10%;
+  background-color: rgba(26, 23, 65, 0.212);
 }
-.reservationForm-container{
-width: 30%;
+.reservation-form-container{
+width: 800px;
+height: 500px;
+
 }
-.reservationForm-container-true{
+.reservation-form-container-true{
 
 visibility: hidden;
 }

@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
-import DisplayMeals from "./DisplayMeals";
+import React, { useContext} from "react";
+import DisplayMeals from "./MealsCard";
 import { Data } from "../../App";
 import "./meals.css";
+import useFetch from "../UseFetch";
 
 // Looping inside meals array and send meal object to DisplayMeals component
 const MealsComponent = () => {
   const { meals } = useContext(Data);
+
   return (
     <div className="mealCardContainer">
       {meals.map((meal) => (
