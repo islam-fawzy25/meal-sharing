@@ -7,26 +7,31 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items:flex-start;
- 
+  padding: 5%;
 }
 
-.meal-card {
-  color:black;
-  margin: 5%;
-}
 
 .meal-by-id{
-display: flex;
-margin: 30px;
+  margin-left: 10%;
+padding-top: 2%;
+width: 30%;
 
 }
-
+.card1{
+  background-color: rgb(41, 22, 92);
+  color: azure;
+}
+.card-image{
+  width: 300px;
+  height: 300px;
+}
 .add-new-meal-container{
  color:black;
  width: 20%;
  border:black 2px solid;
- margin-left: 20px;
+ margin: 30px;
  border-radius: 20px;
+
 }
 
 .add-new-meal-fourm{
@@ -36,5 +41,6 @@ padding: 20px;
 .add-meal-message{
   text-align: center;
   margin: 5px;
- margin-bottom: 350px;
+ margin-bottom: 650px;
+
 }

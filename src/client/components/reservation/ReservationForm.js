@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Data } from "../../App";
 import "./reservations.css";
+import ReservationMsg from "./ReservationMsg";
 
 const ReservationForm = () => {
   const { available, idMeal, availableMeals } = useContext(Data);
@@ -35,15 +36,11 @@ const ReservationForm = () => {
     }
   };
 
-  useEffect(() => {
-    newReservation();
-  }, []);
-
   return (
     <>
       {available && !isReserv &&
-        <div className={`reservationForm-container`} >
-          <div className="reservationForm" >
+        <div className={`reservation-form-container`} >
+          <div className="reservation-form" >
             <form onSubmit={newReservation}>
               <input
                 onChange={(e) => setName(e.target.value)}
@@ -84,15 +81,17 @@ const ReservationForm = () => {
                 required
               />
               <hr />
-              <button > Add </button>
+              <button > Book your seat</button>
             </form >
           </div>
         </div>
-
       }
       {!available && <h1 className='no-reservation-message'> no available reservation </h1>
       }
-      {isReserv && <div className="reservation-message">Thanks for reservation</div>}
+      {isReserv && <div className="reservation-message">
+        <div >Thanks for reservation</div> <br/>
+        <ReservationMsg />
+      </div>}
     </>
   );
 };
