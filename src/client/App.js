@@ -17,15 +17,15 @@ function App() {
   const [idMeal, setIdMeal] = useState({});
   const [available, setAvailable] = useState();
   const [availableMeals, setAvailableMeals] = useState([]);
+  const [availableSeats, setAvailableSeats] = useState();
 
   const { data: availableReservation } = useFetch("/api/meals?availableReservations=true")
   const { data: mealsData } = useFetch("/api/meals");
 
-  useEffect(() => {    
-
-       setAvailableMeals(availableReservation);
-       setMeals(mealsData);
-  }, [{mealsData,availableReservation }]);
+  useEffect(() => {
+    setAvailableMeals(availableReservation);
+    setMeals(mealsData);
+  }, [{ mealsData, availableReservation }]);
 
   return (
     <Data.Provider
@@ -38,6 +38,8 @@ function App() {
         setAvailable,
         availableMeals,
         setAvailableMeals,
+        availableSeats,
+        setAvailableSeats
       }}
     >
       <Router>
@@ -46,11 +48,11 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/meals/:id">
-            <MealById />
-          </Route>
           <Route exact path="/meals">
             <MealsComponent />
+          </Route>
+          <Route path="/meals/:id">
+            <MealById />
           </Route>
           <Route path="/about">
             < About />
@@ -59,7 +61,7 @@ function App() {
             <AddNewMeal />
           </Route>
         </Switch>
-        <FooterComponent></FooterComponent>
+        <FooterComponent />
       </Router>
 
     </Data.Provider>

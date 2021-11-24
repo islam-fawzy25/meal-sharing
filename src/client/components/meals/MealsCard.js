@@ -1,4 +1,4 @@
-import React, {useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
@@ -7,10 +7,10 @@ import "./mealsCard.css";
 import imagesArray from "./mealsImages";
 
 // Rendering each meal  in detail into /path:id page
-const MealsCard = ({ meal}) => {
+const MealsCard = ({ meal }) => {
   const [mealImg, setMealImg] = useState();
 
-  const {  setAvailable, availableMeals } = useContext(Data);
+  const { setAvailable, availableMeals } = useContext(Data);
 
   const id = `/meals/${meal.id}`;
 
@@ -24,22 +24,20 @@ const MealsCard = ({ meal}) => {
       setAvailable(false);
     }
   };
- 
 
- 
-  const setImag =async ()=>{
+
+  const setImag = async () => {
     const isImage = await imagesArray.find(imag => imag.id == meal.id)
-    if(!isImage){
-     return setMealImg( "https://images.unsplash.com/photo-1635452065975-c0bc1af6bb48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80")
+    if (!isImage) {
+      return setMealImg("https://images.unsplash.com/photo-1635452065975-c0bc1af6bb48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80")
     }
     return setMealImg(isImage.image)
-    } 
+  }
 
- useEffect(()=>{
-     setImag()
- }
-,[]
- )
+  useEffect(() => {
+    setImag()
+  }
+    , [])
 
   return (
     <div >
@@ -56,7 +54,7 @@ const MealsCard = ({ meal}) => {
               <Link to={id}>
                 <button
                   onClick={() => {
-                    availableMealsById();                   
+                    availableMealsById();
                   }}
                 >
                   Meal info

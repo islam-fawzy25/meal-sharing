@@ -4,16 +4,21 @@ import "./reservations.css";
 import GoHome from "./GoHomeComponent";
 
 const ReservationForm = () => {
-  const { available, idMeal } = useContext(Data);
+  const { available, idMeal, availableSeats } = useContext(Data);
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [date, setDate] = useState();
   const [resNumber, setResNumber] = useState();
   const [isReserv, setIsReserv] = useState();
-console.log(idMeal);
+  
+
   const newReservation = async (e) => {
     try {
+      // check if number of reservations is availabil or not 
+      // if (availableSeats<resNumber) {
+        
+      // }
       e.preventDefault();
       const response = await fetch("/api/reservations", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.

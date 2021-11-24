@@ -4,13 +4,11 @@ import React from "react";
 function GoHome() {
   const history = useHistory();
 
-  function handleClick() {
-    history.push(`/${endpoint}`);
-  }
-
   return (
     <>
-      <button type="button" onClick={handleClick}>
+      <button type="button" onClick={() => {
+        history.push(`/`)
+      }}>
         Go home
       </button>
     </>

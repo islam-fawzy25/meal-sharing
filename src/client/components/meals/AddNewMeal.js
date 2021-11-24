@@ -94,7 +94,7 @@ const AddNewMeal = () => {
         </div>
       }
       {isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
-      <GoHome/>
+      <GoHome />
        </div>}
     </>
   );
