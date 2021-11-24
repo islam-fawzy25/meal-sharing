@@ -44,7 +44,7 @@ const MealsCard = ({ meal}) => {
   return (
     <div >
       <div className="meal-card">
-        <Card style={{ width: "18rem" }} >
+        <Card style={{ width: "19rem" }} >
           <Card.Img className="meal-card-image" src={mealImg} />
           <Card.Body>
             <Card.Title>{meal.title}</Card.Title>
