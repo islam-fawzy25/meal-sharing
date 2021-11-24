@@ -1,5 +1,7 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
+import "./addNewMeal.css"
+import GoHome from "../reservation/GoHomeComponent";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
@@ -52,7 +54,7 @@ const AddNewMeal = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="description"
                 rows="4"
-                cols="10"
+                cols="23"
                 required
               />
               <hr />
@@ -91,7 +93,9 @@ const AddNewMeal = () => {
           </div>
         </div>
       }
-      {isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal </div>}
+      {isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
+      <GoHome/>
+       </div>}
     </>
   );
 };

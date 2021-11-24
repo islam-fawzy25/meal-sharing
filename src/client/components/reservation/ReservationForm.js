@@ -1,17 +1,17 @@
 import React, { useState, useContext } from "react";
 import { Data } from "../../App";
 import "./reservations.css";
-import ReservationMsg from "./ReservationMsg";
+import GoHome from "./GoHomeComponent";
 
 const ReservationForm = () => {
-  const { available, idMeal, availableMeals } = useContext(Data);
+  const { available, idMeal } = useContext(Data);
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [date, setDate] = useState();
   const [resNumber, setResNumber] = useState();
   const [isReserv, setIsReserv] = useState();
-
+console.log(idMeal);
   const newReservation = async (e) => {
     try {
       e.preventDefault();
@@ -90,7 +90,7 @@ const ReservationForm = () => {
       }
       {isReserv && <div className="reservation-message">
         <div >Thanks for reservation</div> <br/>
-        <ReservationMsg />
+        <GoHome/>
       </div>}
     </>
   );
