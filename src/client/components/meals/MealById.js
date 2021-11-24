@@ -3,13 +3,12 @@ import React, { useEffect, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Data } from "../../App";
-import { useState } from "react";
 import ReservationForm from "../reservation/ReservationForm";
 
 const MealById = () => {
-  const { meals, idMeal, setIdMeal, availableMeals } = useContext(Data);
+  const { meals, idMeal, setIdMeal, availableMeals,availableSeats, setAvailableSeats } = useContext(Data);
   const param = useParams();
-  const [availableSeats, setAvailableSeats] = useState();
+  
 
   useEffect(() => {
     (async () => {
@@ -26,10 +25,10 @@ const MealById = () => {
         {/* <Card.Img className="card-image" variant="top" src={ }/> */}
         <Card.Body>
           <Card.Title>{idMeal.title}</Card.Title>
-          <Card.Title>{idMeal.price} Kr</Card.Title>
           <Card.Text>{idMeal.description}</Card.Text>
           <Card.Title>Location: {idMeal.location}</Card.Title>
           <Card.Title>Available seats: {availableSeats}</Card.Title>
+          <Card.Title>{idMeal.price} Kr</Card.Title>
         </Card.Body>
         <Card.Body>
           <ReservationForm />
