@@ -1,7 +1,8 @@
 import React from "react";
-import {  useState } from "react";
+import { useState } from "react";
 import "./addNewMeal.css"
 import GoHome from "../reservation/GoHomeComponent";
+import postData from "../usePost";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
@@ -9,26 +10,13 @@ const AddNewMeal = () => {
   const [location, setLocation] = useState();
   const [maxReservation, setMaxReservation] = useState();
   const [price, setPrice] = useState();
+  const [date, setDate] = useState(new Date())
   const [isAddNewMeal, setIsAddNewMeal] = useState();
 
   const newMeal = async (e) => {
     try {
       e.preventDefault();
-      const response = await fetch("/api/meals", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: title,
-          description: description,
-          location: location,
-          maxReservation: maxReservation,
-          price: price,
-          created_date: new Date(),
-        }),
-      });
+      const response = await postData("/api/meals", { title, description, location, maxReservation, price, date })
       setIsAddNewMeal(response.ok)
     } catch (error) {
       throw error;
@@ -39,8 +27,9 @@ const AddNewMeal = () => {
     <>
       {!isAddNewMeal &&
         < div className='add-new-meal-container'>
+          <h3>Add your meal here</h3>
+
           <div className='add-new-meal-fourm'>
-            <h3>Add your meal here</h3>
             <form onSubmit={newMeal}>
               <input
                 onChange={(e) => setTitle(e.target.value)}
@@ -94,8 +83,8 @@ const AddNewMeal = () => {
         </div>
       }
       {isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
-      <GoHome />
-       </div>}
+        <GoHome />
+      </div>}
     </>
   );
 };

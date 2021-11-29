@@ -1,22 +1,22 @@
 .add-new-meal-container{
-    color:black;
-    width: 35%;
-    margin: 30px;
- display: flexbox;
-   
+    color:rgb(41, 23, 209);
+    margin: 10%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
    }
    
    .add-new-meal-fourm{
-   padding: 20px;
-   background-color: rgba(20, 10, 155, 0.842);
-   border: rgb(0, 0, 104) 2px solid;
+   padding: 10%;
+   background-color: rgba(121, 167, 228, 0.842);
    border-radius: 20px;
-   padding-left: 25%;
-
+   display: flex;
+   width: max-content;
    }
+   
    .add-meal-message{
-     text-align: center;
-     margin: 5px;
+    text-align: center;
+    margin: 5px;
     margin-bottom: 650px;
    
    }

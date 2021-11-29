@@ -1,5 +1,5 @@
 import React, { useContext} from "react";
-import DisplayMeals from "./MealsCard";
+import MealsCard from "./MealsCard";
 import { Data } from "../../App";
 import "./meals.css";
 import useFetch from "../UseFetch";
@@ -12,7 +12,7 @@ const MealsComponent = () => {
     <div className="mealCardContainer">
       {meals.map((meal) => (
         <div key={meal.id}>
-          <DisplayMeals meal={meal} />
+          <MealsCard meal={meal} />
         </div>
       ))}
     </div>
