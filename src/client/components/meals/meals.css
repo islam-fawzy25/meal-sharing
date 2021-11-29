@@ -2,7 +2,7 @@
   height: 100%;
   display: flex;
   justify-content: space-around;
-  background-color: rgba(65, 66, 66, 0);
+  background-color: rgba(94, 165, 165, 0);
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
@@ -19,8 +19,14 @@ width: 30%;
 }
 .card1{
   color: rgba(60, 60, 61, 0.863);
+  
 }
 .card-image{
   width: 250px;
+  height: 300px;
+}
+
+.meal-card-image{
+  width: 300px;
   height: 300px;
 }

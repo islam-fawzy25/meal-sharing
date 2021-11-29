@@ -1,10 +1,8 @@
 .reservation-form {
-  border: rgb(0, 0, 104) 2px solid;
   border-radius: 10%;
   width: 50%;
-  /* margin: 25px 0 25px 25px; */
  padding-left: 10%;
-  background-color: rgba(20, 10, 155, 0.842);
+ background-color: rgba(121, 167, 228, 0.842);
 }
 .reservation-form-container{
 width: 800px;

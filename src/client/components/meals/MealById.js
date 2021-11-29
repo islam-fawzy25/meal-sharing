@@ -6,23 +6,22 @@ import { Data } from "../../App";
 import ReservationForm from "../reservation/ReservationForm";
 
 const MealById = () => {
-  const { meals, idMeal, setIdMeal, availableMeals,availableSeats, setAvailableSeats } = useContext(Data);
+  const { meals, idMeal, setIdMeal, availableMeals, availableSeats, setAvailableSeats } = useContext(Data);
   const param = useParams();
-  
 
   useEffect(() => {
     (async () => {
       const mealByID = await meals.find((meal) => meal.id == Number(param.id));
       await setIdMeal(mealByID);
       const showHowManySeatsAvailable = await availableMeals.find(meal => meal.id == Number(param.id));
-      await setAvailableSeats(showHowManySeatsAvailable.max_reservation - Number(showHowManySeatsAvailable.total_reservations));
+      const totalAvailableSeats = await showHowManySeatsAvailable.max_reservation - Number(showHowManySeatsAvailable.total_reservations)
+      await setAvailableSeats(totalAvailableSeats);
     })();
-  }, [availableMeals]);
+  }, [{ availableMeals, availableSeats }]);
 
   return (
     <div className='meal-by-id'>
       <Card style={{ width: "40rem" }} className="card1">
-        {/* <Card.Img className="card-image" variant="top" src={ }/> */}
         <Card.Body>
           <Card.Title>{idMeal.title}</Card.Title>
           <Card.Text>{idMeal.description}</Card.Text>

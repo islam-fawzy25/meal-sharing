@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Data } from "../../App";
 import "./reservations.css";
 import GoHome from "./GoHomeComponent";
+import postData from "../usePost";
 
 const ReservationForm = () => {
   const { available, idMeal, availableSeats } = useContext(Data);
@@ -9,32 +10,18 @@ const ReservationForm = () => {
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [date, setDate] = useState();
-  const [resNumber, setResNumber] = useState();
+  const [guestsNumber, setGuestsNumber] = useState();
+  const mealId = idMeal.id
   const [isReserv, setIsReserv] = useState();
-  
 
   const newReservation = async (e) => {
     try {
       // check if number of reservations is availabil or not 
-      // if (availableSeats<resNumber) {
-        
-      // }
+      // if (availableSeats<resNumber) {  
+      // }   
+
       e.preventDefault();
-      const response = await fetch("/api/reservations", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          phonenumber: phone,
-          name: name,
-          email: email,
-          mealId: idMeal.id,
-          created_date: date,
-          resNumber: resNumber,
-        }),
-      });
+      const response = await postData("/api/reservations", { phone, name, email, mealId, date, guestsNumber })
       setIsReserv(response.ok);
     } catch (error) {
       throw error;
@@ -80,7 +67,7 @@ const ReservationForm = () => {
               />
               <hr />
               <input
-                onChange={(e) => setResNumber(e.target.value)}
+                onChange={(e) => setGuestsNumber(e.target.value)}
                 placeholder="Number of reservation"
                 type="number"
                 required
@@ -94,8 +81,8 @@ const ReservationForm = () => {
       {!available && <h1 className='no-reservation-message'> no available reservation </h1>
       }
       {isReserv && <div className="reservation-message">
-        <div >Thanks for reservation</div> <br/>
-        <GoHome/>
+        <div >Thanks for reservation</div> <br />
+        <GoHome />
       </div>}
     </>
   );

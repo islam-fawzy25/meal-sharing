@@ -9,7 +9,6 @@ import "./App.css";
 import FooterComponent from "./components/structures/Footer.component";
 import About from './components/structures/About'
 import useFetch from "./components/UseFetch";
-
 export const Data = createContext();
 
 function App() {
