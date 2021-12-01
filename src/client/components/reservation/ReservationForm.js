@@ -12,7 +12,7 @@ const ReservationForm = () => {
   const [date, setDate] = useState();
   const [guestsNumber, setGuestsNumber] = useState();
   const mealId = idMeal.id
-  const [isReserv, setIsReserv] = useState();
+  const [isReserv, setIsReserv] = useState(true);
 
   const newReservation = async (e) => {
     try {
@@ -20,9 +20,9 @@ const ReservationForm = () => {
       // if (availableSeats<resNumber) {  
       // }   
 
-      e.preventDefault();
       const response = await postData("/api/reservations", { phone, name, email, mealId, date, guestsNumber })
       setIsReserv(response.ok);
+      return e.preventDefault();
     } catch (error) {
       throw error;
     }
@@ -30,7 +30,7 @@ const ReservationForm = () => {
 
   return (
     <>
-      {available && !isReserv &&
+      {available && isReserv &&
         <div className={`reservation-form-container`} >
           <div className="reservation-form" >
             <form onSubmit={newReservation}>
@@ -80,7 +80,7 @@ const ReservationForm = () => {
       }
       {!available && <h1 className='no-reservation-message'> no available reservation </h1>
       }
-      {isReserv && <div className="reservation-message">
+      {!isReserv && <div className="reservation-message">
         <div >Thanks for reservation</div> <br />
         <GoHome />
       </div>}

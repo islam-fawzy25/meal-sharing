@@ -8,16 +8,20 @@ import ReservationForm from "../reservation/ReservationForm";
 const MealById = () => {
   const { meals, idMeal, setIdMeal, availableMeals, availableSeats, setAvailableSeats } = useContext(Data);
   const param = useParams();
+  //needs to fix error max_res not found
+  const showHowManySeatsAvailable = async () => {
+    const meal = await availableMeals.find(meal => meal.id == Number(param.id));
+    const totalAvailableSeats = await meal.max_reservation - Number(meal.total_reservations)
+    await setAvailableSeats(totalAvailableSeats);
+  }
 
   useEffect(() => {
     (async () => {
       const mealByID = await meals.find((meal) => meal.id == Number(param.id));
       await setIdMeal(mealByID);
-      const showHowManySeatsAvailable = await availableMeals.find(meal => meal.id == Number(param.id));
-      const totalAvailableSeats = await showHowManySeatsAvailable.max_reservation - Number(showHowManySeatsAvailable.total_reservations)
-      await setAvailableSeats(totalAvailableSeats);
+      await showHowManySeatsAvailable()
     })();
-  }, [{ availableMeals, availableSeats }]);
+  }, [{ availableMeals, availableSeats, idMeal }]);
 
   return (
     <div className='meal-by-id'>
