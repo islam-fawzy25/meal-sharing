@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React,{ useState, useEffect  } from "react";
 import "./addNewMeal.css"
 import GoHome from "../reservation/GoHomeComponent";
 import postData from "../usePost";
@@ -11,13 +10,14 @@ const AddNewMeal = () => {
   const [maxReservation, setMaxReservation] = useState();
   const [price, setPrice] = useState();
   const [date, setDate] = useState(new Date())
-  const [isAddNewMeal, setIsAddNewMeal] = useState();
+  const [isAddNewMeal, setIsAddNewMeal] = useState(true);
 
   const newMeal = async (e) => {
     try {
-      e.preventDefault();
+      
       const response = await postData("/api/meals", { title, description, location, maxReservation, price, date })
-      setIsAddNewMeal(response.ok)
+     setIsAddNewMeal(response.ok)
+     return e.preventDefault();
     } catch (error) {
       throw error;
     }
@@ -25,7 +25,7 @@ const AddNewMeal = () => {
 
   return (
     <>
-      {!isAddNewMeal &&
+      {isAddNewMeal &&
         < div className='add-new-meal-container'>
           <h3>Add your meal here</h3>
 
@@ -82,7 +82,7 @@ const AddNewMeal = () => {
           </div>
         </div>
       }
-      {isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
+      {!isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
         <GoHome />
       </div>}
     </>

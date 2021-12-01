@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     setAvailableMeals(availableReservation);
     setMeals(mealsData);
-  }, [{ mealsData, availableReservation }]);
+  }, [{ mealsData, availableReservation, meals, availableSeats }]);
 
   return (
     <Data.Provider
