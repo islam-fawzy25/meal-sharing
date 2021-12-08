@@ -1,12 +1,10 @@
 
-
+  .meal-card{
+    margin-bottom: 10%;
+    }
  
-  .meal-by-id{
-    margin-left: 10%;
-    padding-top: 2%;
-    width: 30%;
     
-    }
-    .card1{
-    border: none;
-    }
+  .meal-card-image{
+   width: 300px;
+   height: 300px;
+   }
