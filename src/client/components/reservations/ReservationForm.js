@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Data } from "../../App";
 import "./reservations.css";
-import GoHome from "./GoHomeComponent";
+import GoHome from "../GoHomeComponent";
 import postData from "../usePost";
 
 const ReservationForm = () => {

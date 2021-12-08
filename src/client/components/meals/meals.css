@@ -1,4 +1,4 @@
-.mealCardContainer {
+.meal-card-container {
   height: 100%;
   display: flex;
   justify-content: space-around;
@@ -10,23 +10,23 @@
   padding: 5%;
 }
 
-
 .meal-by-id{
-margin-left: 10%;
-padding-top: 2%;
-width: 30%;
+margin: 10%;
+width:max-content;
+display: flex;
+justify-content: center;
 
 }
-.card1{
-  color: rgba(60, 60, 61, 0.863);
-  
+.meal-by-id-card{
+  border: none;
+ 
 }
 .card-image{
   width: 250px;
   height: 300px;
 }
 
-.meal-card-image{
-  width: 300px;
-  height: 300px;
+.meal-by-id-reservation-form{
+  width:max-content;
+
 }

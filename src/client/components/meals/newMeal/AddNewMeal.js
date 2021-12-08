@@ -1,7 +1,7 @@
 import React,{ useState, useEffect  } from "react";
 import "./addNewMeal.css"
-import GoHome from "../reservation/GoHomeComponent";
-import postData from "../usePost";
+import GoHome from "../../GoHomeComponent";
+import postData from "../../usePost";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();

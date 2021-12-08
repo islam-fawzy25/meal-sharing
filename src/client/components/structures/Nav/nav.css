@@ -1,0 +1,33 @@
+.nav-bar-container{
+  background-color:rgb(63, 62, 62);
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
+  .nav-buttons-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+ 
+  .nav-button:hover{
+  background-color:rgb(183, 208, 216);
+  }
+  
+  .nav-link{
+    color: azure ;  
+    font-size: x-large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+
+  .nav-link:hover{
+   color:rgb(14, 29, 240);
+ }
+  
+ .logo{
+ height: 50px;
+ margin-left: 10px ;
+}
+  

@@ -3,7 +3,8 @@ import React, { useEffect, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Data } from "../../App";
-import ReservationForm from "../reservation/ReservationForm";
+import ReservationForm from "../reservations/ReservationForm";
+import "./meals.css"
 
 const MealById = () => {
   const { meals, idMeal, setIdMeal, availableMeals, availableSeats, setAvailableSeats } = useContext(Data);
@@ -25,15 +26,15 @@ const MealById = () => {
 
   return (
     <div className='meal-by-id'>
-      <Card style={{ width: "40rem" }} className="card1">
+      <Card className="meal-by-id-card">
         <Card.Body>
           <Card.Title>{idMeal.title}</Card.Title>
           <Card.Text>{idMeal.description}</Card.Text>
           <Card.Title>Location: {idMeal.location}</Card.Title>
           <Card.Title>Available seats: {availableSeats}</Card.Title>
           <Card.Title>{idMeal.price} Kr</Card.Title>
-        </Card.Body>
-        <Card.Body>
+        </Card.Body>   
+        <Card.Body className="meal-by-id-reservation-form" >
           <ReservationForm />
         </Card.Body>
       </Card>

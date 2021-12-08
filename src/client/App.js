@@ -2,13 +2,14 @@ import React, { useEffect, useState, createContext } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MealsComponent from "./components/meals/MealsComp";
 import MealById from "./components/meals/MealById";
-import NavBar from "./components/structures/Nav";
-import Home from "./components/structures/Home";
-import AddNewMeal from "./components/meals/AddNewMeal";
+import NavBar from "./components/structures/Nav/Nav";
+import Home from "./components/structures/home/Home";
+import AddNewMeal from "./components/meals/newMeal/AddNewMeal";
 import "./App.css";
-import FooterComponent from "./components/structures/Footer.component";
-import About from './components/structures/About'
+import FooterComponent from "./components/structures/footer/Footer.component";
+import About from './components/structures/about/About'
 import useFetch from "./components/UseFetch";
+
 export const Data = createContext();
 
 function App() {
