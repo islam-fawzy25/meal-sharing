@@ -91,18 +91,26 @@ router.post("/", async (request, response) => {
 });
 
 // 	GET	Returns meal by id
+// router.get("/:id", async (request, response) => {
+//   const meals = await knex("meals");
+//   const id = parseInt(request.params.id);
+//   let mealById = meals;
+//   if (isNaN(id)) {
+//     return response.status(400).send({ error: "IDs must be integer" });
+//   } else if (meals[id - 1] === undefined) {
+//     return response.status(400).send("This ID No matching any meal ids ");
+//   } else {
+//     mealById = mealById.filter((obj) => obj.id === id);
+//     return response.json(mealById);
+//   }
+// });
 router.get("/:id", async (request, response) => {
-  const meals = await knex("meals");
-  const id = parseInt(request.params.id);
-  let mealById = meals;
-  if (isNaN(id)) {
-    return response.status(400).send({ error: "IDs must be integer" });
-  } else if (meals[id - 1] === undefined) {
-    return response.status(400).send("This ID No matching any meal ids ");
-  } else {
-    mealById = mealById.filter((obj) => obj.id === id);
-    return response.json(mealById);
+  try {
+    const iD = Number(request.params.id);
+    const selectedMeal = await knex("meals").where("id", iD);
+    response.send(selectedMeal[0]);
+  } catch (error) {
+    throw error;
   }
-});
-
+})
 module.exports = router;

@@ -4,11 +4,12 @@ import MealsComponent from "./components/meals/MealsComp";
 import MealById from "./components/meals/MealById";
 import NavBar from "./components/structures/Nav/Nav";
 import Home from "./components/structures/home/Home";
-import AddNewMeal from "./components/meals/newMeal/AddNewMeal";
+import AddNewMeal from "./components/meals/NewMeal/AddNewMeal";
 import "./App.css";
 import FooterComponent from "./components/structures/footer/Footer.component";
 import About from './components/structures/about/About'
 import useFetch from "./components/UseFetch";
+import MealsPage from "./containers/MealsPage/MealsPage.container";
 
 export const Data = createContext();
 
@@ -49,7 +50,8 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/meals">
-            <MealsComponent />
+            {/* <MealsComponent /> */}
+<MealsPage></MealsPage>
           </Route>
           <Route path="/meals/:id">
             <MealById />
