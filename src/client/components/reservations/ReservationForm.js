@@ -3,6 +3,7 @@ import { Data } from "../../App";
 import "./reservations.css";
 import GoHome from "../GoHomeComponent";
 import postData from "../usePost";
+import { fetchFromDb } from "../../containers/fetch/fetch";
 
 const ReservationForm = () => {
   const { available, idMeal, availableSeats } = useContext(Data);
@@ -22,6 +23,7 @@ const ReservationForm = () => {
 
       const response = await postData("/api/reservations", { phone, name, email, mealId, date, guestsNumber })
       setIsReserv(response.ok);
+     // const data = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
       return e.preventDefault();
     } catch (error) {
       throw error;

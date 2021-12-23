@@ -1,7 +1,8 @@
-import React,{ useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import "./addNewMeal.css"
 import GoHome from "../../GoHomeComponent";
 import postData from "../../usePost";
+import { fetchFromDb } from "../../../containers/fetch/fetch";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
@@ -14,10 +15,14 @@ const AddNewMeal = () => {
 
   const newMeal = async (e) => {
     try {
+
+      //   const response = await postData("/api/meals", { title, description, location, maxReservation, price, date })
+      //  setIsAddNewMeal(response.ok)
+
+      const data =await fetchFromDb("/meals", "post", { title, description, location, maxReservation, price, date })
+      // setIsAddNewMeal(false)
       
-      const response = await postData("/api/meals", { title, description, location, maxReservation, price, date })
-     setIsAddNewMeal(response.ok)
-     return e.preventDefault();
+      return e.preventDefault();
     } catch (error) {
       throw error;
     }

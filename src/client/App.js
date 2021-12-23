@@ -46,22 +46,15 @@ function App() {
       <Router>
         <NavBar />
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/meals">
-            {/* <MealsComponent /> */}
-<MealsPage></MealsPage>
-          </Route>
-          <Route path="/meals/:id">
-            <MealById />
-          </Route>
-          <Route path="/about">
-            < About />
-          </Route>
-          <Route path="/joinus">
-            <AddNewMeal />
-          </Route>
+          <Route exact path="/" component={Home} />
+
+          <Route exact path="/meals" component={MealsPage} />
+
+          <Route path="/meals/:id" component={MealById} />
+
+          <Route path="/about" component={About} />
+
+          <Route path="/joinus" component={AddNewMeal} />
         </Switch>
         <FooterComponent />
       </Router>
