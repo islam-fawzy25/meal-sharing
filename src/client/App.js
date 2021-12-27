@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MealById from "./components/meals/MealById";
 import NavBar from "./components/structures/Nav/Nav";
 import Home from "./components/structures/home/Home";
 import AddNewMeal from "./components/meals/newMeal/AddNewMeal";
@@ -8,6 +7,7 @@ import "./App.css";
 import FooterComponent from "./components/structures/footer/Footer.component";
 import About from './components/structures/about/About'
 import MealsPage from "./containers/MealsPage/MealsPage.container";
+import SingleMealPage from "./containers/SingleMealPage/SingleMeal.container";
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
 
           <Route exact path="/meals" component={MealsPage} />
 
-          <Route path="/meals/:id" component={MealById} />
+          <Route path="/meals/:id" component={SingleMealPage} />
 
           <Route path="/about" component={About} />
 
