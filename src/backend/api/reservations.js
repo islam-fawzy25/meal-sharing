@@ -1,12 +1,8 @@
-// const { request, response } = require("express");
 const express = require("express");
 const { as } = require("../database");
 const router = express.Router();
 const knex = require("../database");
-router.use(express.json());
-var cors = require("cors");
 
-router.use(cors());
 
 //GET	Returns all reservations
 router.get("/", async (request, response) => {
@@ -18,24 +14,25 @@ router.get("/", async (request, response) => {
   }
 });
 
-//POST	Adds a new reservation
+//POST	Add a new reservation
 router.post("/", async (request, response) => {
-  try {
-    const resrvationId = await knex("reservations");
-    let reservations = await knex("reservations").insert({
-      id: Math.max(0, ...resrvationId.map((item) => item.id)) + 1,
-      number_of_guests: request.body.guestsNumber,
-      meal_id: request.body.mealId,
-      created_date: new Date(request.body.date), 
-      contact_phonenumber: request.body.phone,
-      contact_name: request.body.name,
-      contact_email: request.body.email,
-    });
-    response.json(reservations);
-  } catch (error) {
-    response.status(400).send({error:'Reservation faild try a gain '})
-    throw error;
-  }
+   try {
+  const resrvationId = await knex("reservations");
+  const reservations = await knex("reservations").insert({
+    id: Math.max(0, ...resrvationId.map((item) => item.id)) + 1,
+    number_of_guests: request.body.guestsNumber,
+    meal_id: request.body.mealId,
+    created_date: new Date(request.body.date),
+    contact_phonenumber: request.body.phone,
+    contact_name: request.body.name,
+    contact_email: request.body.email,
+  });
+  response.json(reservations);
+  console.log("resv");
+   } catch (error) {
+     response.status(400).send({error:'Reservation faild try a gain '})
+     throw error;
+   }
 });
 
 // 	GET	Returns reservation by id

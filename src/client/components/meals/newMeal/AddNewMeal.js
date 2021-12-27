@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./addNewMeal.css"
-import GoHome from "../../GoHomeComponent";
-import postData from "../../usePost";
-import { fetchFromDb } from "../../../containers/fetch/fetch";
+import { fetchFromDb } from "../../../helper/fetch/fetch";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
@@ -15,13 +13,7 @@ const AddNewMeal = () => {
 
   const newMeal = async (e) => {
     try {
-
-      //   const response = await postData("/api/meals", { title, description, location, maxReservation, price, date })
-      //  setIsAddNewMeal(response.ok)
-
-      const data =await fetchFromDb("/meals", "post", { title, description, location, maxReservation, price, date })
-      // setIsAddNewMeal(false)
-      
+       await fetchFromDb("/meals", "post", { title, description, location, maxReservation, price, date })
       return e.preventDefault();
     } catch (error) {
       throw error;
@@ -87,9 +79,11 @@ const AddNewMeal = () => {
           </div>
         </div>
       }
-      {!isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
+             {/* Miss functionality for this part */}
+
+      {/* {!isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
         <GoHome />
-      </div>}
+      </div>} */}
     </>
   );
 };

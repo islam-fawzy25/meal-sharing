@@ -1,0 +1,11 @@
+.meal-card-container {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(94, 165, 165, 0);
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items:flex-start;
+    padding: 5%;
+  }

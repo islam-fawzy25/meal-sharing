@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { fetchFromDb } from "../fetch/fetch";
-import MealsCard from "../../components/meals/MealsCard";
+import "./mealsPage.css"
+import { fetchFromDb } from "../../helper/fetch/fetch";
+import MealsCard from "../../components/meals/mealsCard/MealsCard";
 
 export default function MealsPage() {
     const [meals, setMeals] = useState([]);
+
 
     const getMeals = async () => {
         try {
@@ -17,15 +19,16 @@ export default function MealsPage() {
             await getMeals();
         })();
     }, []);
+
     return (
         <>
-    <div className="meal-card-container">
-      {meals.map((meal) => (
-        <div key={meal.id}>
-          <MealsCard meal={meal} />
-        </div>
-      ))}
-    </div>
+            <div className="meal-card-container">
+                {meals.map((meal) => (
+                    <div key={meal.id}>
+                        <MealsCard meal={meal} />
+                    </div>
+                ))}
+            </div>
         </>
     )
 }
