@@ -1,27 +1,21 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Data } from "../../App";
+import React, { useState } from "react";
 import "./reservations.css";
-import GoHome from "../GoHomeComponent";
-import postData from "../usePost";
+import { fetchFromDb } from "../../helper/fetch/fetch";
+import { useParams } from "react-router-dom";
 
 const ReservationForm = () => {
-  const { available, idMeal, availableSeats } = useContext(Data);
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [date, setDate] = useState();
   const [guestsNumber, setGuestsNumber] = useState();
-  const mealId = idMeal.id
-  const [isReserv, setIsReserv] = useState(true);
+
+  const param = useParams()
+  const mealId = Number(param.id)
 
   const newReservation = async (e) => {
-    try {
-      // check if number of reservations is availabil or not 
-      // if (availableSeats<resNumber) {  
-      // }   
-
-      const response = await postData("/api/reservations", { phone, name, email, mealId, date, guestsNumber })
-      setIsReserv(response.ok);
+    try { 
+      await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
       return e.preventDefault();
     } catch (error) {
       throw error;
@@ -30,10 +24,11 @@ const ReservationForm = () => {
 
   return (
     <>
-      {available && isReserv &&
         <div className={`reservation-form-container`} >
           <div className="reservation-form" >
-            <form onSubmit={newReservation}>
+            <form onSubmit={() => {
+              newReservation()
+            }}>
               <input
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
@@ -77,13 +72,14 @@ const ReservationForm = () => {
             </form >
           </div>
         </div>
-      }
-      {!available && <h1 className='no-reservation-message'> no available reservation </h1>
+      
+       {/* need functionality for this parts */}
+      {/* {!available && <h1 className='no-reservation-message'> no available reservation </h1>
       }
       {!isReserv && <div className="reservation-message">
         <div >Thanks for reservation</div> <br />
         <GoHome />
-      </div>}
+      </div>} */}
     </>
   );
 };
