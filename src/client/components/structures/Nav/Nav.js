@@ -28,9 +28,11 @@ const NavBar = () => {
       </div>
 
       <div className="icon" onClick={() => { setVisible(!visible) }}>
+        <div>
         <ReorderIcon />
-      </div>
-      {visible && (
+        </div>
+        <div>
+        {visible && (
         <div className="nav-list-section" >
           <div >
             <Link to="/" className="nav-link"> Home</Link>
@@ -46,6 +48,11 @@ const NavBar = () => {
           </div>
         </div>
       )}
+        </div>
+
+       
+      </div>
+    
     </div>
   );
 };
