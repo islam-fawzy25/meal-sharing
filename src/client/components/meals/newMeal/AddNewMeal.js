@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./addNewMeal.css"
 import { fetchFromDb } from "../../../helper/fetch/fetch";
+import { Button } from "react-bootstrap";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
@@ -13,7 +14,7 @@ const AddNewMeal = () => {
 
   const newMeal = async (e) => {
     try {
-       await fetchFromDb("/meals", "post", { title, description, location, maxReservation, price, date })
+      await fetchFromDb("/meals", "post", { title, description, location, maxReservation, price, date })
       return e.preventDefault();
     } catch (error) {
       throw error;
@@ -74,12 +75,16 @@ const AddNewMeal = () => {
                 required
               />
               <hr />
-              <button > Add </button>
+              <div className="d-grid gap-2">
+                <Button variant="secondary" size="lg">
+                  Add New Meal
+                </Button>
+              </div>
             </form >
           </div>
         </div>
       }
-             {/* Miss functionality for this part */}
+      {/* Miss functionality for this part */}
 
       {/* {!isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
         <GoHome />

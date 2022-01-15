@@ -12,7 +12,7 @@
 
 .meal-by-id{
 margin: 10%;
-width:max-content;
+width:auto;
 display: flex;
 justify-content: center;
 

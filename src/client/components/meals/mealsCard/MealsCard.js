@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./mealsCard.css";
 import imagesArray from "../../../helper/mealsImages";
+import { Button } from "react-bootstrap";
 
 // Rendering each meal  in detail into /path:id page
 const MealsCard = ({ meal }) => {
@@ -20,7 +21,7 @@ const MealsCard = ({ meal }) => {
   }
 
   useEffect(() => {
-    (async()=>{
+    (async () => {
       await setImag()
     })()
   }
@@ -39,7 +40,9 @@ const MealsCard = ({ meal }) => {
           <Card.Body>
             <Card.Link>
               <Link to={`/meals/${meal.id}`}>
-                  Meal info 
+                <Button variant="secondary">
+                  Meal info
+                </Button>
               </Link>
             </Card.Link>
           </Card.Body>
