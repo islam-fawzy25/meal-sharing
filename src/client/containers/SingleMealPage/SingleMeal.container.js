@@ -34,7 +34,6 @@ export default function SingleMealPage() {
         <>
             <MealById mealById={mealById} />
             <ReservationForm />
-
         </>
     )
 }
