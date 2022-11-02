@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "./singlePage.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import ReservationForm from "../../components/reservations/ReservationForm";
-import MealById from "../../components/meals/MealById";
+import MealById from "../../components/meals/mealById/MealById";
 
 export default function SingleMealPage() {
     const [mealById, setMealById] = useState({})

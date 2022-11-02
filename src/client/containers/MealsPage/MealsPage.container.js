@@ -6,11 +6,11 @@ import MealsCard from "../../components/meals/mealsCard/MealsCard";
 export default function MealsPage() {
     const [meals, setMeals] = useState([]);
 
-
     const getMeals = async () => {
         try {
             const data = await fetchFromDb("/meals", "get")
             setMeals(data)
+            console.log(data);
         } catch (err) { throw err }
     }
 

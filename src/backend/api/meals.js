@@ -68,7 +68,7 @@ return
    
   }
   const meals = await knex('meals')
-  response.send(meals)
+  response.status(200).send(meals)
   return
   } catch (error) {
     throw error;
@@ -82,6 +82,7 @@ router.post("/", async (request, response) => {
     id: Math.max(0, ...idMeal.map((item) => item.id)) + 1,
     title: request.body.title,
     description: request.body.description,
+    imageUrl:request.body.imageUrl,
     location: request.body.location,
     max_reservation: request.body.maxReservation,
     price: request.body.price,
