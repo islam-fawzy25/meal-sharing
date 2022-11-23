@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./addNewMeal.css"
 import { fetchFromDb } from "../../../helper/fetch/fetch";
 import { Button } from "react-bootstrap";
@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  const [imageUrl, setImageUrl] = useState();
   const [location, setLocation] = useState();
   const [maxReservation, setMaxReservation] = useState();
   const [price, setPrice] = useState();
@@ -14,12 +15,28 @@ const AddNewMeal = () => {
 
   const newMeal = async (e) => {
     try {
-      await fetchFromDb("/meals", "post", { title, description, location, maxReservation, price, date })
-      return e.preventDefault();
+      e.preventDefault();
+
+      const res = await fetchFromDb("/meals", "post",
+        { title, description, location, maxReservation, price, date, imageUrl }
+      )
+      if(res.ok)console.log("OOOOKKKK");
+      console.log("clicked" + title);
+      console.log(res);
+      eraseInputs()
     } catch (error) {
-      throw error;
+      throw res.statusText;
     }
   };
+
+  const eraseInputs = () => {
+    setTitle("")
+    setDescription("")
+    setImageUrl("")
+    setLocation("")
+    setMaxReservation("")
+    setPrice("")
+  }
 
   return (
     <>
@@ -28,8 +45,9 @@ const AddNewMeal = () => {
           <h3>Add your meal here</h3>
 
           <div className='add-new-meal-fourm'>
-            <form onSubmit={newMeal}>
+            <form onSubmit={newMeal} >
               <input
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="title"
                 type="text"
@@ -38,6 +56,7 @@ const AddNewMeal = () => {
               />
               <hr />
               <textarea
+              value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="description"
                 rows="4"
@@ -46,8 +65,18 @@ const AddNewMeal = () => {
               />
               <hr />
               <input
+              value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Location"
+                type="text"
+                minLength="4"
+                required
+              />
+              <hr />
+              <input
+              value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="Image Url"
                 type="text"
                 minLength="4"
                 required
@@ -57,6 +86,7 @@ const AddNewMeal = () => {
               <br />
               <input
                 htmlFor="maxReservation"
+                value={maxReservation}
                 onChange={(e) => setMaxReservation(e.target.value)}
                 placeholder="max reservation"
                 type="number"
@@ -67,6 +97,7 @@ const AddNewMeal = () => {
               <label id="pric">Price: </label> <br />
               <input
                 htmlFor="price"
+                value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="price"
                 type="number"
@@ -76,7 +107,7 @@ const AddNewMeal = () => {
               />
               <hr />
               <div className="d-grid gap-2">
-                <Button variant="secondary" size="lg">
+                <Button type="submit" variant="secondary" size="lg">
                   Add New Meal
                 </Button>
               </div>

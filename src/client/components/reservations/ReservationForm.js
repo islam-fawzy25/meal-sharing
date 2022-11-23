@@ -14,10 +14,20 @@ const ReservationForm = () => {
   const param = useParams()
   const mealId = Number(param.id)
 
+  const eraseReservationInputs = () => {
+    setDate("")
+    setEmail("")
+    setGuestsNumber("")
+    setName("")
+    setPhone("")
+  }
+
   const newReservation = async (e) => {
     try {
-      await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
-      return e.preventDefault();
+      e.preventDefault();
+      const response = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
+      console.log(response);
+      eraseReservationInputs()
     } catch (error) {
       throw error;
     }
@@ -27,10 +37,9 @@ const ReservationForm = () => {
     <>
       <div className={`reservation-form-container`} >
         <div className="reservation-form" >
-          <form onSubmit={() => {
-            newReservation()
-          }}>
+          <form onSubmit={newReservation}>
             <input
+              value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
               type="text"
@@ -39,6 +48,7 @@ const ReservationForm = () => {
             />
             <hr />
             <input
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter email"
               type="text"
@@ -47,6 +57,7 @@ const ReservationForm = () => {
             />
             <hr />
             <input
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter your number"
               type="text"
@@ -56,6 +67,7 @@ const ReservationForm = () => {
             <hr />
             <br />
             <input
+              value={date}
               onChange={(e) => setDate(e.target.value)}
               type="date"
               required
@@ -63,6 +75,7 @@ const ReservationForm = () => {
             />
             <hr />
             <input
+              value={guestsNumber}
               onChange={(e) => setGuestsNumber(e.target.value)}
               placeholder="Number of reservation"
               type="number"
@@ -70,7 +83,7 @@ const ReservationForm = () => {
             />
             <hr />
             <div className="d-grid gap-2">
-              <Button variant="secondary" size="lg">
+              <Button type="submit" variant="secondary" size="lg">
                 Book your seat
               </Button>
             </div>

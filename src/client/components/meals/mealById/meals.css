@@ -1,0 +1,32 @@
+.meal-card-container {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: rgba(94, 165, 165, 0);
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items:flex-start;
+  padding: 5%;
+}
+
+.meal-by-id{
+margin: 10%;
+width:auto;
+display: flex;
+justify-content: center;
+
+}
+.meal-by-id-card{
+  border: none;
+ 
+}
+.card-image{
+  width: 250px;
+  height: 300px;
+}
+
+.meal-by-id-reservation-form{
+  width:max-content;
+
+}
