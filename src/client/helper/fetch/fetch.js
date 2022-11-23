@@ -1,6 +1,6 @@
 
 export async function fetchFromDb(endpoint, fetchMethod, postBody = {}) {
- 
+ // should i make two custom hooks one for fetch and one for post 
   
     const fetchOptions = {
       method: fetchMethod,
