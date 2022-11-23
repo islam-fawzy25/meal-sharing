@@ -12,9 +12,9 @@ const MealsCard = ({ meal }) => {
     <div >
       <div className="meal-card">
         <Card style={{ width: "19rem" }} >
-          <Card.Img className="meal-card-image" src={meal.imageUrl} />
+          <Card.Img className="meal-card-image" src={meal.img_url} />
           <Card.Body>
-            <Card.Title>{meal.title}</Card.Title>
+            <Card.Title><b>{meal.title}</b></Card.Title>
             <Card.Title>{meal.price} Kr</Card.Title>
           </Card.Body>
 
