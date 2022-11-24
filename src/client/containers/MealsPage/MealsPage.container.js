@@ -10,7 +10,6 @@ export default function MealsPage() {
         try {
             const data = await fetchFromDb("/meals", "get")
             setMeals(data)
-            console.log(data);
         } catch (err) { throw err }
     }
 

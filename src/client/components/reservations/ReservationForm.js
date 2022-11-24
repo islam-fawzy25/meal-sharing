@@ -3,6 +3,7 @@ import "./reservations.css";
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import GoHome from "../../helper/GoHomeComponent"
 
 const ReservationForm = () => {
   const [phone, setPhone] = useState();
@@ -10,6 +11,7 @@ const ReservationForm = () => {
   const [name, setName] = useState();
   const [date, setDate] = useState();
   const [guestsNumber, setGuestsNumber] = useState();
+  const [isReserved, setIsReserved] = useState(false);
 
   const param = useParams()
   const mealId = Number(param.id)
@@ -27,7 +29,11 @@ const ReservationForm = () => {
       e.preventDefault();
       const response = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
       console.log(response);
-      eraseReservationInputs()
+      if(response.ok){
+        setIsReserved(true)
+        eraseReservationInputs()
+
+      }
     } catch (error) {
       throw error;
     }
@@ -91,13 +97,13 @@ const ReservationForm = () => {
         </div>
       </div>
 
-      {/* need functionality for this parts */}
-      {/* {!available && <h1 className='no-reservation-message'> no available reservation </h1>
-      }
-      {!isReserv && <div className="reservation-message">
+       {/* need functionality for this parts 
+    {!available && <h1 className='no-reservation-message'> no available reservation </h1>
+      } */}
+      {isReserved && <div className="reservation-message">
         <div >Thanks for reservation</div> <br />
         <GoHome />
-      </div>} */}
+      </div>} 
     </>
   );
 };

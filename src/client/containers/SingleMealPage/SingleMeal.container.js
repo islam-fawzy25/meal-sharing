@@ -7,21 +7,33 @@ import MealById from "../../components/meals/mealById/MealById";
 
 export default function SingleMealPage() {
     const [mealById, setMealById] = useState({})
+    const [availableReservations, setAvailableReservations] = useState([])
+    const [isAvailable, setIsAvailable] = useState(false)
     const param = useParams();
 
     const getMealById = async () => {
         try {
             const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
             setMealById(data)
+        
+
         } catch (err) { throw err }
     }
+    const getAvailableReservation = async () => {
+        try {
+            const data = await fetchFromDb("/meals?availableReservations=true", "get")
+                //  const filteredData =await data.filter((obj)=> {
+                //     obj.id == Number(mealById.id);
+                 
 
-    useEffect(() => {
-        (async () => {
-            await getMealById()
-        })();
-    }, []);
+                //     console.log(obj.id ==Number(mealById.id) );
+                //  });
+            setAvailableReservations(data)
+            console.log(data);
+          console.log(filteredData)
 
+        } catch (err) { throw err }
+    }
     //Idea for showing how many available seats in each meal 
     // const showHowManySeatsAvailable = async () => {
     //   try {
@@ -30,6 +42,14 @@ export default function SingleMealPage() {
     //     await setAvailableSeats(totalAvailableSeats);
     //   } catch (err) { throw err }
     // }
+    useEffect(() => {
+        (async () => {
+            await getMealById();
+            await getAvailableReservation();
+        })();
+    }, []);
+
+
     return (
         <>
             <MealById mealById={mealById} />
