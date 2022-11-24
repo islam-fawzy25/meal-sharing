@@ -102,4 +102,31 @@ router.get("/:id", async (request, response) => {
   }
 })
 
+router.get("/availableReservationsForSingleMeal/:id", async (request, response) => {
+  try {
+    const mealId = Number(request.params.id);
+    // const selectedMeal = await knex("meals").where("id", mealId);
+    // response.send(selectedMeal[0]);
+
+    const meals = await knex.raw(`
+    SELECT
+    COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations,
+    meals.max_reservation,
+    meals.title,
+    meals.id
+FROM
+    meals
+        LEFT JOIN
+    reservations ON reservations.meal_id = meals.id
+GROUP BY meals.id
+HAVING max_reservation > total_reservations;
+    `)
+.then((res) =>{
+const availableReservationsForsingleMeals =res[0].filter(obj=>obj.id==mealId)
+  response.send(availableReservationsForsingleMeals)
+});
+  } catch (error) {
+    throw error;
+  }
+})
 module.exports = router;

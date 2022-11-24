@@ -8,52 +8,48 @@ import MealById from "../../components/meals/mealById/MealById";
 export default function SingleMealPage() {
     const [mealById, setMealById] = useState({})
     const [availableReservations, setAvailableReservations] = useState([])
-    const [isAvailable, setIsAvailable] = useState(false)
+    const [isAvailable, setIsAvailable] = useState(true)
     const param = useParams();
 
     const getMealById = async () => {
         try {
             const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
             setMealById(data)
-        
+
 
         } catch (err) { throw err }
     }
-    const getAvailableReservation = async () => {
+    const getAvailableReservationByMealId = async () => {
         try {
-            const data = await fetchFromDb("/meals?availableReservations=true", "get")
-                //  const filteredData =await data.filter((obj)=> {
-                //     obj.id == Number(mealById.id);
-                 
+            const data = await fetchFromDb(`/meals/availableReservationsForSingleMeal/${Number(param.id)}`, "get")
+            //    console.log(data[0].max_reservation - parseInt(data[0].total_reservations))
+            await console.log(data[0]);
+            if (data[0] == undefined) {
+                 setIsAvailable(false)
+                 setAvailableReservations(0)
+            }
+            if(data[0] != undefined){
+                setAvailableReservations((data[0].max_reservation) - parseInt(data[0].total_reservations))
 
-                //     console.log(obj.id ==Number(mealById.id) );
-                //  });
-            setAvailableReservations(data)
-            console.log(data);
-          console.log(filteredData)
+            }
 
         } catch (err) { throw err }
     }
-    //Idea for showing how many available seats in each meal 
-    // const showHowManySeatsAvailable = async () => {
-    //   try {
-    //     const meal = await availableMeals.find(meal => meal.id == Number(param.id));
-    //     const totalAvailableSeats = await meal.max_reservation - Number(meal.total_reservations)
-    //     await setAvailableSeats(totalAvailableSeats);
-    //   } catch (err) { throw err }
-    // }
+    console.log(availableReservations);
+
     useEffect(() => {
         (async () => {
             await getMealById();
-            await getAvailableReservation();
+            await getAvailableReservationByMealId();
         })();
     }, []);
 
 
     return (
         <>
-            <MealById mealById={mealById} />
-            <ReservationForm />
+            <MealById mealById={mealById} availableReservations={availableReservations} />
+            {isAvailable && <ReservationForm />}
+            {!isAvailable && <div>No avalialble reservaions</div>}
         </>
     )
 }
