@@ -5,42 +5,33 @@ import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import GoHome from "../../helper/GoHomeComponent"
 
-const ReservationForm = () => {
-  const [phone, setPhone] = useState();
-  const [email, setEmail] = useState();
-  const [name, setName] = useState();
-  const [date, setDate] = useState();
-  const [guestsNumber, setGuestsNumber] = useState();
-  const [isReserved, setIsReserved] = useState(false);
+const ReservationForm = ({newReservation,phone, setPhone,
+  email, setEmail,
+  name, setName,
+  date,setDate,
+  guestsNumber, setGuestsNumber,
+  isReserved, setIsReserved
+}) => {
 
-  const param = useParams()
-  const mealId = Number(param.id)
+  // Get today date to disable user for making reservations on date < todaydate
+  const newDate = new Date()
+  const DD = newDate.getDate().toString()
+  const MM = (newDate.getMonth() + 1).toString()
+  const YYYY = newDate.getFullYear().toString()
+  const todayDate = YYYY + "-" + MM + "-" + DD
 
-  const eraseReservationInputs = () => {
-    setDate("")
-    setEmail("")
-    setGuestsNumber("")
-    setName("")
-    setPhone("")
-  }
 
-  const newReservation = async (e) => {
-    try {
-      e.preventDefault();
-      const response = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
-      console.log(response);
-      if(response.ok){
-        setIsReserved(true)
-        eraseReservationInputs()
+  console.log(todayDate);
 
-      }
-    } catch (error) {
-      throw error;
-    }
-  };
+
 
   return (
     <>
+          {isReserved && <div className="reservation-message">
+        <div >Thanks for reservation</div> <br />
+        <GoHome />
+      </div>}
+      {!isReserved && 
       <div className={`reservation-form-container`} >
         <div className="reservation-form" >
           <form onSubmit={newReservation}>
@@ -50,6 +41,8 @@ const ReservationForm = () => {
               placeholder="Enter your name"
               type="text"
               minLength="2"
+              maxLength="25"
+
               required
             />
             <hr />
@@ -57,8 +50,7 @@ const ReservationForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter email"
-              type="text"
-              minLength="8"
+              type="email"
               required
             />
             <hr />
@@ -68,6 +60,7 @@ const ReservationForm = () => {
               placeholder="Enter your number"
               type="text"
               minLength="6"
+              maxLength="15"
               required
             />
             <hr />
@@ -77,7 +70,8 @@ const ReservationForm = () => {
               onChange={(e) => setDate(e.target.value)}
               type="date"
               required
-              pattern="\d{4}-\d{2}-\d{2}"
+              min={new Date()}
+            // pattern="\d{4}-\d{2}-\d{2}"
             />
             <hr />
             <input
@@ -85,6 +79,8 @@ const ReservationForm = () => {
               onChange={(e) => setGuestsNumber(e.target.value)}
               placeholder="Number of reservation"
               type="number"
+              min="1"
+              // max="1" it should be the available reservations number
               required
             />
             <hr />
@@ -96,14 +92,11 @@ const ReservationForm = () => {
           </form >
         </div>
       </div>
-
-       {/* need functionality for this parts 
+    }
+      {/* need functionality for this parts 
     {!available && <h1 className='no-reservation-message'> no available reservation </h1>
       } */}
-      {isReserved && <div className="reservation-message">
-        <div >Thanks for reservation</div> <br />
-        <GoHome />
-      </div>} 
+
     </>
   );
 };

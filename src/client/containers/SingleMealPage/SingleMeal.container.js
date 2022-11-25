@@ -19,36 +19,79 @@ export default function SingleMealPage() {
 
         } catch (err) { throw err }
     }
+
     const getAvailableReservationByMealId = async () => {
         try {
             const data = await fetchFromDb(`/meals/availableReservationsForSingleMeal/${Number(param.id)}`, "get")
             //    console.log(data[0].max_reservation - parseInt(data[0].total_reservations))
             await console.log(data[0]);
             if (data[0] == undefined) {
-                 setIsAvailable(false)
-                 setAvailableReservations(0)
+                setIsAvailable(false)
+                setAvailableReservations(0)
             }
-            if(data[0] != undefined){
+            if (data[0] != undefined) {
                 setAvailableReservations((data[0].max_reservation) - parseInt(data[0].total_reservations))
-
             }
 
         } catch (err) { throw err }
     }
-    console.log(availableReservations);
+    // reservation form
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
+    const [name, setName] = useState();
+    const [date, setDate] = useState();
+    const [guestsNumber, setGuestsNumber] = useState();
+    const [isReserved, setIsReserved] = useState(false);
+
+    const mealId = Number(param.id)
+
+    const eraseReservationInputs = () => {
+        setDate("")
+        setEmail("")
+        setGuestsNumber("")
+        setName("")
+        setPhone("")
+    }
+
+    const newReservation = async (e) => {
+        try {
+            e.preventDefault();
+            const response = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
+            console.log(response);
+            if (response.ok) {
+                setIsReserved(true)
+                eraseReservationInputs()
+            }
+        } catch (error) {
+            throw error;
+        }
+    };
 
     useEffect(() => {
         (async () => {
             await getMealById();
             await getAvailableReservationByMealId();
         })();
-    }, []);
-
+    }, [isReserved]);
 
     return (
         <>
             <MealById mealById={mealById} availableReservations={availableReservations} />
-            {isAvailable && <ReservationForm />}
+            {isAvailable && <ReservationForm
+                newReservation={newReservation}
+                phone={phone}
+                setPhone={setPhone}
+                email={email}
+                setEmail={setEmail}
+                name={name}
+                setName={setName}
+                date={date}
+                setDate={setDate}
+                guestsNumber={guestsNumber}
+                setGuestsNumber={setGuestsNumber}
+                isReserved={isReserved}
+                setIsReserved={setIsReserved}
+            />}
             {!isAvailable && <div>No avalialble reservaions</div>}
         </>
     )
