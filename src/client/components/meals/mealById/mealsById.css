@@ -1,0 +1,12 @@
+.meal-by-id{
+margin: 10%;
+width:auto;
+display: flex;
+justify-content: center;
+
+}
+.meal-by-id-card{
+  border: none;
+
+}
+

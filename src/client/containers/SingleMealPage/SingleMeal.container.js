@@ -66,7 +66,7 @@ export default function SingleMealPage() {
             throw error;
         }
     };
-
+    const  handleOnClick =()=>{setIsReserved(false)}
     useEffect(() => {
         (async () => {
             await getMealById();
@@ -91,6 +91,7 @@ export default function SingleMealPage() {
                 setGuestsNumber={setGuestsNumber}
                 isReserved={isReserved}
                 setIsReserved={setIsReserved}
+                handleOnClick={handleOnClick}
             />}
             {!isAvailable && <div>No avalialble reservaions</div>}
         </>

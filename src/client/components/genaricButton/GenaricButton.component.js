@@ -1,17 +1,15 @@
 import { useHistory } from "react-router-dom";
 import React from "react";
 
-function GoHome() {
-  const history = useHistory();
-
+function GenaricButton({title,handleOnClick}) {
   return (
     <>
       <button type="button" onClick={() => {
-        history.push(`/`)
+        handleOnClick()
       }}>
-        Go home
+       {title}
       </button>
     </>
   );
 }
-export default GoHome;
+export default GenaricButton;

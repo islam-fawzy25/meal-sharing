@@ -3,14 +3,15 @@ import "./reservations.css";
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import GoHome from "../../helper/GoHomeComponent"
+import GenaricButton from "../genaricButton/GenaricButton.component"
 
 const ReservationForm = ({newReservation,phone, setPhone,
   email, setEmail,
   name, setName,
   date,setDate,
   guestsNumber, setGuestsNumber,
-  isReserved, setIsReserved
+  isReserved, setIsReserved,
+  handleOnClick
 }) => {
 
   // Get today date to disable user for making reservations on date < todaydate
@@ -26,13 +27,12 @@ const ReservationForm = ({newReservation,phone, setPhone,
 
 
   return (
-    <>
+    <div className={`reservation-form-container`} >
           {isReserved && <div className="reservation-message">
         <div >Thanks for reservation</div> <br />
-        <GoHome />
+        <GenaricButton title="Make new reservation" handleOnClick={handleOnClick}/>
       </div>}
       {!isReserved && 
-      <div className={`reservation-form-container`} >
         <div className="reservation-form" >
           <form onSubmit={newReservation}>
             <input
@@ -91,13 +91,12 @@ const ReservationForm = ({newReservation,phone, setPhone,
             </div>
           </form >
         </div>
-      </div>
     }
       {/* need functionality for this parts 
     {!available && <h1 className='no-reservation-message'> no available reservation </h1>
       } */}
 
-    </>
+    </div>
   );
 };
 
