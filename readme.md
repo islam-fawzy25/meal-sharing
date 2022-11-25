@@ -30,6 +30,17 @@
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
+
+<h3>Improvments</h3>
+<p>Backend :<br> 
+- Add unit testing by jest and TDD
+ </p>
+
+<p>Frontend :<br>
+ - Add Typescript and Eslint <br> 
+ - Implement review feature in front-end <br> 
+ -  
+</p>
 ## 🧐 About <a name = "about"></a>
 
 Link to deployed website: 
