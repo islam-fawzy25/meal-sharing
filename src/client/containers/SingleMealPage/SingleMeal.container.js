@@ -75,9 +75,12 @@ export default function SingleMealPage() {
     }, [isReserved]);
 
     return (
-        <>
+        <div className="single-meal-container">
+        <div className="meal-card">
             <MealById mealById={mealById} availableReservations={availableReservations} />
-            {isAvailable && <ReservationForm
+          
+            </div>
+              {isAvailable && <ReservationForm
                 newReservation={newReservation}
                 phone={phone}
                 setPhone={setPhone}
@@ -94,6 +97,6 @@ export default function SingleMealPage() {
                 handleOnClick={handleOnClick}
             />}
             {!isAvailable && <div>No avalialble reservaions</div>}
-        </>
+        </div>
     )
 }

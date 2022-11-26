@@ -1,6 +1,6 @@
 .add-new-meal-container{
     color:rgb(41, 23, 209);
-    margin: 10%;
+    margin: 1%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -14,9 +14,16 @@
    width: max-content;
    }
    
-   .add-meal-message{
-    text-align: center;
-    margin: 5px;
-    margin-bottom: 650px;
-   
-   }
+   .new-meal-created-message{
+
+    display:flex;
+    justify-content:center;
+    flex-direction: column;
+margin-top: 300px;
+margin-bottom: 300px;
+}
+
+
+.create-new-meal{
+    width: 50%;
+}

@@ -1,12 +1,22 @@
-.meal-by-id{
-margin: 10%;
-width:auto;
-display: flex;
-justify-content: center;
 
-}
 .meal-by-id-card{
   border: none;
 
 }
+.meal-by-id-card-body{
+  display: flex;
+  flex-direction: column;
+}
+.meal-by-id-title{
+text-align: center;
+margin-bottom: 50px;
+}
+.meal-by-id-image{
+align-self: center;
+  width: 50%;
+  height: 50%;
 
+}
+.meal-by-id-description{
+  padding-top: 50px;
+}

@@ -35,6 +35,7 @@ const ReservationForm = ({newReservation,phone, setPhone,
       {!isReserved && 
         <div className="reservation-form" >
           <form onSubmit={newReservation}>
+            <h3>Make reservation</h3>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}

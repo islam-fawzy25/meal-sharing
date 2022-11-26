@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./addNewMeal.css"
 import { fetchFromDb } from "../../../helper/fetch/fetch";
 import { Button } from "react-bootstrap";
+import GenaricButton from "../../genaricButton/GenaricButton.component";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
@@ -11,7 +12,7 @@ const AddNewMeal = () => {
   const [maxReservation, setMaxReservation] = useState();
   const [price, setPrice] = useState();
   const [date, setDate] = useState(new Date())
-  const [isAddNewMeal, setIsAddNewMeal] = useState(true);
+  const [newMealCreated, setNewMealCreated] = useState(false);
 
   const newMeal = async (e) => {
     try {
@@ -20,12 +21,15 @@ const AddNewMeal = () => {
       const res = await fetchFromDb("/meals", "post",
         { title, description, location, maxReservation, price, date, imageUrl }
       )
-      if(res.ok)console.log("OOOOKKKK");
-      console.log("clicked" + title);
       console.log(res);
-      eraseInputs()
+       if(res.ok){
+         setNewMealCreated(true)
+         eraseInputs()
+return
+      }
+      return
     } catch (error) {
-      throw res.statusText;
+      throw error;
     }
   };
 
@@ -37,13 +41,35 @@ const AddNewMeal = () => {
     setMaxReservation("")
     setPrice("")
   }
+  const handleOnClick =()=>{
+    setNewMealCreated(false)
+  }
+
+
+  // useEffect(()=>{
+  //   (async()=>{
+
+  //   })()
+  // },[])
+
 
   return (
     <>
-      {isAddNewMeal &&
+    {   
+    newMealCreated &&
+    <div className="new-meal-created-message">
+        <div >Your new meal was created successfully
+
+          </div> <br />
+          <div className="create-new-meal"> 
+          <GenaricButton title="Create new meal" handleOnClick={handleOnClick}/>
+
+          </div>
+      </div>
+    }
+      {!newMealCreated &&
         < div className='add-new-meal-container'>
           <h3>Add your meal here</h3>
-
           <div className='add-new-meal-fourm'>
             <form onSubmit={newMeal} >
               <input

@@ -2,13 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./components/structures/Nav/Nav";
 import Home from "./components/structures/home/Home";
-import AddNewMeal from "./components/meals/newMeal/AddNewMeal";
 import "./App.css";
 import FooterComponent from "./components/structures/footer/Footer.component";
 import About from './components/structures/about/About'
 import MealsPage from "./containers/MealsPage/MealsPage.container";
 import SingleMealPage from "./containers/SingleMealPage/SingleMeal.container";
-
+import JoinUS from "./containers/Join-us/JoinUs.container";
 
 function App() {
   return (
@@ -23,7 +22,7 @@ function App() {
 
           <Route path="/about" component={About} />
 
-          <Route path="/joinus" component={AddNewMeal} />
+          <Route path="/joinus" component={JoinUS} />
         </Switch>
         <FooterComponent />
       </Router>
