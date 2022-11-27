@@ -14,16 +14,15 @@
    width: max-content;
    }
    
-   .new-meal-created-message{
-
+   .new-meal-created-message-container{
     display:flex;
-    justify-content:center;
-    flex-direction: column;
-margin-top: 300px;
-margin-bottom: 300px;
+    justify-content:space-evenly;
+    margin: 10%;
+    font-size: x-large
+
+}
+.new-meal-created-message{
 }
 
-
 .create-new-meal{
-    width: 50%;
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import NavBar from "./components/structures/Nav/Nav";
-import Home from "./components/structures/home/Home";
+import NavBar from "./components/navBar/Nav";
+import Home from "./containers/home/Home.container";
 import "./App.css";
-import FooterComponent from "./components/structures/footer/Footer.component";
-import About from './components/structures/about/About'
+import FooterComponent from "./components/footer/Footer.component";
+import About from './containers/about/About.container'
 import MealsPage from "./containers/MealsPage/MealsPage.container";
 import SingleMealPage from "./containers/SingleMealPage/SingleMeal.container";
 import JoinUS from "./containers/Join-us/JoinUs.container";

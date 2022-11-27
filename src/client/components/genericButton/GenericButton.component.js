@@ -1,10 +1,11 @@
 import { useHistory } from "react-router-dom";
 import React from "react";
+import "./generic-button.css"
 
 function GenaricButton({title,handleOnClick}) {
   return (
     <>
-      <button type="button" onClick={() => {
+      <button className="generic-button" type="button" onClick={() => {
         handleOnClick()
       }}>
        {title}

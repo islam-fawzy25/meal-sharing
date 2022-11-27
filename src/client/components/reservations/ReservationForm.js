@@ -3,12 +3,12 @@ import "./reservations.css";
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import GenaricButton from "../genaricButton/GenaricButton.component"
+import GenaricButton from "../genericButton/GenericButton.component"
 
-const ReservationForm = ({newReservation,phone, setPhone,
+const ReservationForm = ({ newReservation, phone, setPhone,
   email, setEmail,
   name, setName,
-  date,setDate,
+  date, setDate,
   guestsNumber, setGuestsNumber,
   isReserved, setIsReserved,
   handleOnClick
@@ -28,11 +28,11 @@ const ReservationForm = ({newReservation,phone, setPhone,
 
   return (
     <div className={`reservation-form-container`} >
-          {isReserved && <div className="reservation-message">
+      {isReserved && <div className="reservation-message">
         <div >Thanks for reservation</div> <br />
-        <GenaricButton title="Make new reservation" handleOnClick={handleOnClick}/>
+        <GenaricButton title="Make new reservation" handleOnClick={handleOnClick} />
       </div>}
-      {!isReserved && 
+      {!isReserved &&
         <div className="reservation-form" >
           <form onSubmit={newReservation}>
             <h3>Make reservation</h3>
@@ -92,7 +92,7 @@ const ReservationForm = ({newReservation,phone, setPhone,
             </div>
           </form >
         </div>
-    }
+      }
       {/* need functionality for this parts 
     {!available && <h1 className='no-reservation-message'> no available reservation </h1>
       } */}

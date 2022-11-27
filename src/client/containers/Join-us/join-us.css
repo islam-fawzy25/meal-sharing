@@ -1,6 +1,7 @@
 .join-us-container{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 .why-you-join-us{
     margin: 5%;

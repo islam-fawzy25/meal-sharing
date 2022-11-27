@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./addNewMeal.css"
 import { fetchFromDb } from "../../../helper/fetch/fetch";
 import { Button } from "react-bootstrap";
-import GenaricButton from "../../genaricButton/GenaricButton.component";
+import GenaricButton from "../../genericButton/GenericButton.component";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();
@@ -22,10 +22,10 @@ const AddNewMeal = () => {
         { title, description, location, maxReservation, price, date, imageUrl }
       )
       console.log(res);
-       if(res.ok){
-         setNewMealCreated(true)
-         eraseInputs()
-return
+      if (res.ok) {
+        setNewMealCreated(true)
+        eraseInputs()
+        return
       }
       return
     } catch (error) {
@@ -41,7 +41,7 @@ return
     setMaxReservation("")
     setPrice("")
   }
-  const handleOnClick =()=>{
+  const handleOnClick = () => {
     setNewMealCreated(false)
   }
 
@@ -55,18 +55,15 @@ return
 
   return (
     <>
-    {   
-    newMealCreated &&
-    <div className="new-meal-created-message">
-        <div >Your new meal was created successfully
-
-          </div> <br />
-          <div className="create-new-meal"> 
-          <GenaricButton title="Create new meal" handleOnClick={handleOnClick}/>
-
+      {
+        newMealCreated &&
+        <div className="new-meal-created-message-container">
+          <div className="new-meal-created-message">Your new meal was created successfully </div> <br />
+          <div className="create-new-meal">
+            <GenaricButton title="Create new meal" handleOnClick={handleOnClick} />
           </div>
-      </div>
-    }
+        </div>
+      }
       {!newMealCreated &&
         < div className='add-new-meal-container'>
           <h3>Add your meal here</h3>
@@ -82,7 +79,7 @@ return
               />
               <hr />
               <textarea
-              value={description}
+                value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="description"
                 rows="4"
@@ -91,7 +88,7 @@ return
               />
               <hr />
               <input
-              value={location}
+                value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Location"
                 type="text"
@@ -100,7 +97,7 @@ return
               />
               <hr />
               <input
-              value={imageUrl}
+                value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="Image Url"
                 type="text"
