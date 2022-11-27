@@ -1,5 +1,5 @@
 const express = require("express");
-const { on } = require("../database");
+const { on, count } = require("../database");
 const router = express.Router();
 const knex = require("../database");
 
@@ -36,9 +36,17 @@ router.get("/:id", async (request, response) => {
             response.status(400).json({ error: "Reviews Id must be an integer" })
             return
         }
-        const reviewWithId = await knex("reviews").select("meal_id")
-            .groupBy("meal_id").sum("stars AS total_stars").where("reviews.meal_id", "=", reviewsId)
-        response.json(reviewWithId);
+        const reviewWithId = await knex.raw(`
+        SELECT  
+        COALESCE(SUM(stars), 0) AS total_stars,
+        meal_id,
+    count( meal_id) As total_reviewers
+           FROM 
+           reviews 
+           Where meal_id= ${reviewsId}
+           GROUP BY  meal_id;
+        `)
+        response.json(reviewWithId[0]);
     } catch (error) {
         response.status(500).send({ error: "Internal Server Error." });
     }
