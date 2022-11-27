@@ -36,8 +36,8 @@ router.get("/:id", async (request, response) => {
             response.status(400).json({ error: "Reviews Id must be an integer" })
             return
         }
-        const reviewWithId = await knex("reviews")
-            .where("reviews.id", "=", reviewsId)
+        const reviewWithId = await knex("reviews").select("meal_id")
+            .groupBy("meal_id").sum("stars AS total_stars").where("reviews.meal_id", "=", reviewsId)
         response.json(reviewWithId);
     } catch (error) {
         response.status(500).send({ error: "Internal Server Error." });

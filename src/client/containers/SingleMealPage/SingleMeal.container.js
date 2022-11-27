@@ -4,6 +4,7 @@ import "./singlePage.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import ReservationForm from "../../components/reservations/ReservationForm";
 import MealById from "../../components/meals/mealById/MealById";
+import SimpleRating from "../../components/reviews/postReview/controllredRating.component"
 
 export default function SingleMealPage() {
     const [mealById, setMealById] = useState({})
@@ -79,6 +80,9 @@ export default function SingleMealPage() {
         <div className="meal-card">
             <MealById mealById={mealById} availableReservations={availableReservations} />
           
+            </div>
+            <div>
+            <SimpleRating ratingValue={ratingValue}/>
             </div>
               {isAvailable && <ReservationForm
                 newReservation={newReservation}

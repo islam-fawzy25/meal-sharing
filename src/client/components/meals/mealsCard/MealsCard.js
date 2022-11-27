@@ -4,16 +4,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./mealsCard.css";
 import { Button } from "react-bootstrap";
-
+import SimpleRating from "../../reviews/getReviews/rating.component"
 // Rendering each meal  in detail into /path:id page
-const MealsCard = ({ meal }) => {
-  console.log(meal.title);
+const MealsCard = ({ meal ,children}) => {
+
+
   return (
     <div >
       <div className="meal-card">
         <Card style={{ width: "19rem" }} >
           <Card.Img className="meal-card-image" src={meal.img_url} />
           <Card.Body>
+          <Card.Title>
+          {children}
+          </Card.Title>
             <Card.Title><b>{meal.title}</b></Card.Title>
             <Card.Title>{meal.price} Kr</Card.Title>
           </Card.Body>
