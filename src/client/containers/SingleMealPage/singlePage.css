@@ -5,11 +5,13 @@
 .single-meal-container{
     display: flex;
     margin-top: 50px;
-    margin-bottom: 10%;
+    margin-bottom: 500px;
 }
 
 .meal-card{
     width: 70%;
+    margin-bottom: 10%;
+
 }
 .rating-component{
     display: flex;

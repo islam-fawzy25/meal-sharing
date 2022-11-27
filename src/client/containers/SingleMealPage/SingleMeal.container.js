@@ -7,10 +7,13 @@ import MealById from "../../components/meals/mealById/MealById";
 import SimpleRating from "../../components/reviews/getReviews/rating.component"
 
 export default function SingleMealPage() {
+    const param = useParams();
     const [mealById, setMealById] = useState({})
     const [availableReservations, setAvailableReservations] = useState([])
     const [isAvailable, setIsAvailable] = useState(true)
-    const param = useParams();
+// implement the functionality for is avalilable regarding the new data from 
+// new daily available reservation endpoint
+    
 
     const getMealById = async () => {
         try {
@@ -21,12 +24,11 @@ export default function SingleMealPage() {
 
     const getAvailableReservationByMealId = async () => {
         try {
-            const data = await fetchFromDb(`/meals/availableReservationsForSingleMeal/${Number(param.id)}`, "get")
+            const data = await fetchFromDb(`/meals/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
             //    console.log(data[0].max_reservation - parseInt(data[0].total_reservations))
             await console.log(data[0]);
             if (data[0] == undefined) {
-                setIsAvailable(false)
-                setAvailableReservations(0)
+                setAvailableReservations(mealById.max_reservation)
             }
             if (data[0] != undefined) {
                 setAvailableReservations((data[0].max_reservation) - parseInt(data[0].total_reservations))
@@ -34,6 +36,7 @@ export default function SingleMealPage() {
 
         } catch (err) { throw err }
     }
+
     // reservation form
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
@@ -55,7 +58,6 @@ export default function SingleMealPage() {
         try {
             e.preventDefault();
             const response = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
-            console.log(response);
             if (response.ok) {
                 setIsReserved(true)
                 eraseReservationInputs()
@@ -66,6 +68,7 @@ export default function SingleMealPage() {
     };
 
     const  handleOnClick =()=>{setIsReserved(false)}
+
     useEffect(() => {
         (async () => {
             await getMealById();
@@ -78,7 +81,7 @@ export default function SingleMealPage() {
         <div className="meal-card">
             <MealById mealById={mealById} availableReservations={availableReservations} >
                 <div className="rating-component">
-                <SimpleRating mealId={mealById.id} />
+                <SimpleRating mealId={Number(param.id)} />
                 </div>
                 </MealById>
             </div>

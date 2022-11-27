@@ -16,7 +16,7 @@ const MealById = ({mealById,children,availableReservations}) => {
           <Card.Text className="meal-by-id-description">{mealById.description}</Card.Text>
           <Card.Title>Location: {mealById.location}</Card.Title>
           <Card.Title>Price: {mealById.price} Kr</Card.Title>
-          <Card.Title>Avaliable: {availableReservations} meals</Card.Title>
+          <Card.Title>Avaliable for today: {availableReservations} meals</Card.Title>
         </Card.Body>
       </Card>
   );
