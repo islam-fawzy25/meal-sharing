@@ -4,7 +4,7 @@ import "./singlePage.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import ReservationForm from "../../components/reservations/ReservationForm";
 import MealById from "../../components/meals/mealById/MealById";
-import SimpleRating from "../../components/reviews/postReview/controllredRating.component"
+import SimpleRating from "../../components/reviews/getReviews/rating.component"
 
 export default function SingleMealPage() {
     const [mealById, setMealById] = useState({})
@@ -16,8 +16,6 @@ export default function SingleMealPage() {
         try {
             const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
             setMealById(data)
-
-
         } catch (err) { throw err }
     }
 
@@ -43,7 +41,6 @@ export default function SingleMealPage() {
     const [date, setDate] = useState();
     const [guestsNumber, setGuestsNumber] = useState();
     const [isReserved, setIsReserved] = useState(false);
-
     const mealId = Number(param.id)
 
     const eraseReservationInputs = () => {
@@ -67,6 +64,7 @@ export default function SingleMealPage() {
             throw error;
         }
     };
+
     const  handleOnClick =()=>{setIsReserved(false)}
     useEffect(() => {
         (async () => {
@@ -78,12 +76,13 @@ export default function SingleMealPage() {
     return (
         <div className="single-meal-container">
         <div className="meal-card">
-            <MealById mealById={mealById} availableReservations={availableReservations} />
-          
+            <MealById mealById={mealById} availableReservations={availableReservations} >
+                <div className="rating-component">
+                <SimpleRating mealId={mealById.id} />
+                </div>
+                </MealById>
             </div>
-            <div>
-            <SimpleRating ratingValue={ratingValue}/>
-            </div>
+         
               {isAvailable && <ReservationForm
                 newReservation={newReservation}
                 phone={phone}

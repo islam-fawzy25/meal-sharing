@@ -4,7 +4,6 @@ import { fetchFromDb } from "../../helper/fetch/fetch";
 import MealsCard from "../../components/meals/mealsCard/MealsCard";
 import SimpleRating from "../../components/reviews/getReviews/rating.component"
 
-
 export default function MealsPage() {
     const [meals, setMeals] = useState([]);
 
@@ -14,7 +13,6 @@ export default function MealsPage() {
             setMeals(data)
         } catch (err) { throw err }
     }
-
 
     useEffect(() => {
         (async () => {

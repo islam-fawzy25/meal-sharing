@@ -7,11 +7,16 @@
     margin-top: 50px;
     margin-bottom: 10%;
 }
+
 .meal-card{
     width: 70%;
 }
-.reservation-form{
+.rating-component{
+    display: flex;
+    justify-content: center;
 
+}
+.reservation-form{
     width: max-content;
     margin: 10%;
 }
