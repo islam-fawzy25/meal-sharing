@@ -15,13 +15,19 @@ router.get("/", async (request, response) => {
 
 router.post("/", async (request, response) => {
     try {
+        const todayDate = new Date().toISOString().split(["T"])
+        const getTodayDate = todayDate[0]
+        const reviewsId = await knex("reviews")
         const insertedReviews = await knex("reviews")
             .insert({
-                title: request.body.title,
-                description: request.body.description,
-                meal_id: request.body.meal_id,
-                stars: request.body.stars,
-                created_date: new Date(request.body.date),
+                id: Math.max(0, ...reviewsId.map((item) => item.id)) + 1,
+                title: request.body.reviewTitle,
+                description: request.body.reviewDescription,
+                meal_id: request.body.mealId,
+                stars: request.body.reviewStars,
+                created_date: getTodayDate,
+                user_name: request.body.reviewUserName,
+                user_email: request.body.reviewUserEmail
             })
         response.json(insertedReviews);
     } catch (error) {

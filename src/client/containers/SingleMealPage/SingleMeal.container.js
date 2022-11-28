@@ -8,10 +8,20 @@ import { fetchFromDb } from "../../helper/fetch/fetch";
 import ReservationForm from "../../components/Reservations/ReservationForm.component";
 import MealById from "../../components/Meals/MealById/MealById.component";
 import SimpleRating from "../../components/Reviews/getReviews/rating.component"
+import PostReviewForm from "../../components/Reviews/postReview/reviewPostForm/ReviewPostForm.component"
 
 export default function SingleMealPage() {
     const param = useParams();
+    const mealId = Number(param.id)
     const [mealById, setMealById] = useState({})
+
+    // reservation form
+    const [phone, setPhone] = useState();
+    const [email, setEmail] = useState();
+    const [name, setName] = useState();
+    const [date, setDate] = useState();
+    const [guestsNumber, setGuestsNumber] = useState();
+    const [isReserved, setIsReserved] = useState(false);
     const [availableReservations, setAvailableReservations] = useState([])
     const [isAvailable, setIsAvailable] = useState(true)
 
@@ -35,14 +45,6 @@ export default function SingleMealPage() {
         } catch (err) { throw err }
     }
 
-    // reservation form
-    const [phone, setPhone] = useState();
-    const [email, setEmail] = useState();
-    const [name, setName] = useState();
-    const [date, setDate] = useState();
-    const [guestsNumber, setGuestsNumber] = useState();
-    const [isReserved, setIsReserved] = useState(false);
-    const mealId = Number(param.id)
 
     const eraseReservationInputs = () => {
         setDate("")
@@ -66,6 +68,42 @@ export default function SingleMealPage() {
     };
 
     const handleOnClick = () => { setIsReserved(false) }
+    // Review form
+    const [reviewTitle, setReviewTitle] = useState();
+    const [reviewDescription, setReviewDescription] = useState();
+    const [reviewUserEmail, setReviewUserEmail] = useState();
+    const [reviewUserName, setReviewUserName] = useState();
+    const [reviewDate, setReviewDate] = useState();
+    const [reviewStars, setReviewStars] = useState();
+    const [isReviewed, setIsReviewed] = useState(false);
+
+    const newReview = async (e) => {
+        try {
+            e.preventDefault();
+         
+
+            const response = await fetchFromDb("/reviews", "post", {
+                reviewTitle, reviewDescription,
+                reviewUserEmail, mealId, reviewUserName, reviewStars
+            })
+            console.log(response);
+
+            if (response.ok) {
+                setIsReviewed(true)
+                eraseReviewsInputs()
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+    const eraseReviewsInputs = () => {
+        setReviewTitle("")
+        setReviewDescription("")
+        setReviewUserEmail("")
+        setReviewUserName("")
+        setReviewStars("")
+    }
+    const handleReviewOnClick = () => { setIsReviewed(false) }
 
     useEffect(() => {
         (async () => {
@@ -84,25 +122,46 @@ export default function SingleMealPage() {
                     </div>
                 </MealById>
             </div>
-
-            {isAvailable && <ReservationForm
-                newReservation={newReservation}
-                phone={phone}
-                setPhone={setPhone}
-                email={email}
-                setEmail={setEmail}
-                name={name}
-                setName={setName}
-                date={date}
-                setDate={setDate}
-                guestsNumber={guestsNumber}
-                setGuestsNumber={setGuestsNumber}
-                isReserved={isReserved}
-                setIsReserved={setIsReserved}
-                handleOnClick={handleOnClick}
-                availableReservations={availableReservations}
-            />}
-            {!isAvailable && <div>No avalialble reservaions</div>}
+            <div>
+                <div>
+                    {isAvailable && <ReservationForm
+                        newReservation={newReservation}
+                        phone={phone}
+                        setPhone={setPhone}
+                        email={email}
+                        setEmail={setEmail}
+                        name={name}
+                        setName={setName}
+                        date={date}
+                        setDate={setDate}
+                        guestsNumber={guestsNumber}
+                        setGuestsNumber={setGuestsNumber}
+                        isReserved={isReserved}
+                        setIsReserved={setIsReserved}
+                        handleOnClick={handleOnClick}
+                        availableReservations={availableReservations}
+                    />}
+                    {!isAvailable && <div>No avalialble reservaions</div>}
+                </div>
+                <div>
+                    <PostReviewForm
+                        isReviewed={isReviewed}
+                        setIsReviewed={setIsReviewed}
+                        handleReviewOnClick={handleReviewOnClick}
+                        newReview={newReview}
+                        reviewTitle={reviewTitle}
+                        setReviewTitle={setReviewTitle}
+                        reviewDescription={reviewDescription}
+                        setReviewDescription={setReviewDescription}
+                        reviewUserEmail={reviewUserEmail}
+                        setReviewUserEmail={setReviewUserEmail}
+                        reviewUserName={reviewUserName}
+                        setReviewUserName={setReviewUserName}
+                        reviewStars={reviewStars}
+                        setReviewStars={setReviewStars}
+                    />
+                </div>
+            </div>
         </div>
     )
 }

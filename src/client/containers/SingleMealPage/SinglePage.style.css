@@ -9,8 +9,10 @@
 }
 
 .meal-card{
-    width: 70%;
+
+    width: 60%;
     margin-bottom: 10%;
+    margin-right: 10%;
 
 }
 .rating-component{
