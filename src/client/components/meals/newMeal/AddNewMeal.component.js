@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./AddNewMeal.style.css"
 import { fetchFromDb } from "../../../helper/fetch/fetch";
 import { Button } from "react-bootstrap";
-import GenaricButton from "../../genericButton/GenericButton.component";
+import GenaricButton from "../../GenericButton/GenericButton.component";
 
 const AddNewMeal = () => {
   const [title, setTitle] = useState();

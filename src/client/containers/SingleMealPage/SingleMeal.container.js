@@ -5,9 +5,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./SinglePage.style.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
-import ReservationForm from "../../components/reservations/ReservationForm.component";
-import MealById from "../../components/meals/mealById/MealById.component";
-import SimpleRating from "../../components/reviews/getReviews/rating.component"
+import ReservationForm from "../../components/Reservations/ReservationForm.component";
+import MealById from "../../components/Meals/MealById/MealById.component";
+import SimpleRating from "../../components/Reviews/getReviews/rating.component"
 
 export default function SingleMealPage() {
     const param = useParams();
@@ -65,7 +65,7 @@ export default function SingleMealPage() {
         }
     };
 
-    const  handleOnClick =()=>{setIsReserved(false)}
+    const handleOnClick = () => { setIsReserved(false) }
 
     useEffect(() => {
         (async () => {
@@ -73,19 +73,19 @@ export default function SingleMealPage() {
             await getAvailableReservationByMealId();
 
         })();
-    }, [setIsReserved,isReserved]);
+    }, [setIsReserved, isReserved]);
 
     return (
         <div className="single-meal-container">
-        <div className="meal-card">
-            <MealById mealById={mealById} availableReservations={availableReservations} >
-                <div className="rating-component">
-                <SimpleRating mealId={Number(param.id)} />
-                </div>
+            <div className="meal-card">
+                <MealById mealById={mealById} availableReservations={availableReservations} >
+                    <div className="rating-component">
+                        <SimpleRating mealId={Number(param.id)} />
+                    </div>
                 </MealById>
             </div>
-         
-              {isAvailable && <ReservationForm
+
+            {isAvailable && <ReservationForm
                 newReservation={newReservation}
                 phone={phone}
                 setPhone={setPhone}

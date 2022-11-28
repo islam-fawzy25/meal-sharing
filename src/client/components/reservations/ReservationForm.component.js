@@ -3,7 +3,7 @@ import "./ReservationsForm.style.css";
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import GenaricButton from "../genericButton/GenericButton.component"
+import GenaricButton from "../GenericButton/GenericButton.component"
 
 const ReservationForm = ({ newReservation, phone, setPhone,
   email, setEmail,
@@ -15,7 +15,7 @@ const ReservationForm = ({ newReservation, phone, setPhone,
   availableReservations
 }) => {
 
-  
+
   const newDate = new Date()
   const DD = newDate.getDate().toString()
   const MM = (newDate.getMonth() + 1).toString()
@@ -64,7 +64,7 @@ const ReservationForm = ({ newReservation, phone, setPhone,
             <br />
             <input
               value={date}
-              onChange={(e)=> setDate(e.target.value)}
+              onChange={(e) => setDate(e.target.value)}
               type="date"
               required
               min={todayDate}
@@ -76,12 +76,12 @@ const ReservationForm = ({ newReservation, phone, setPhone,
               placeholder="Number of reservation"
               type="number"
               min="1"
-               max={availableReservations} 
+              max={availableReservations}
               required
             />
             <hr />
             <div className="d-grid gap-2 ">
-              <Button  type="submit" variant="secondary" size="lg">
+              <Button type="submit" variant="secondary" size="lg">
                 Book your seat
               </Button>
             </div>
