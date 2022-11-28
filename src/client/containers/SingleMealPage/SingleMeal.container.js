@@ -1,3 +1,6 @@
+// new feature// new endpoint for checking the available reservation for choosen date
+// if not available reservation return error message frontend and avalible number of meals on that day
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./singlePage.css"
@@ -11,9 +14,6 @@ export default function SingleMealPage() {
     const [mealById, setMealById] = useState({})
     const [availableReservations, setAvailableReservations] = useState([])
     const [isAvailable, setIsAvailable] = useState(true)
-// implement the functionality for is avalilable regarding the new data from 
-// new daily available reservation endpoint
-    
 
     const getMealById = async () => {
         try {
@@ -25,15 +25,13 @@ export default function SingleMealPage() {
     const getAvailableReservationByMealId = async () => {
         try {
             const data = await fetchFromDb(`/meals/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
-            //    console.log(data[0].max_reservation - parseInt(data[0].total_reservations))
-            await console.log(data[0]);
             if (data[0] == undefined) {
-                setAvailableReservations(mealById.max_reservation)
+                const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
+                setAvailableReservations(data.max_reservation)
             }
             if (data[0] != undefined) {
                 setAvailableReservations((data[0].max_reservation) - parseInt(data[0].total_reservations))
             }
-
         } catch (err) { throw err }
     }
 
@@ -73,8 +71,9 @@ export default function SingleMealPage() {
         (async () => {
             await getMealById();
             await getAvailableReservationByMealId();
+
         })();
-    }, [isReserved]);
+    }, [setIsReserved,isReserved]);
 
     return (
         <div className="single-meal-container">
@@ -101,6 +100,7 @@ export default function SingleMealPage() {
                 isReserved={isReserved}
                 setIsReserved={setIsReserved}
                 handleOnClick={handleOnClick}
+                availableReservations={availableReservations}
             />}
             {!isAvailable && <div>No avalialble reservaions</div>}
         </div>

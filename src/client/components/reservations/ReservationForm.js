@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./reservations.css";
+import "./reservations-form.css";
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
@@ -11,20 +11,16 @@ const ReservationForm = ({ newReservation, phone, setPhone,
   date, setDate,
   guestsNumber, setGuestsNumber,
   isReserved, setIsReserved,
-  handleOnClick
+  handleOnClick,
+  availableReservations
 }) => {
 
-  // Get today date to disable user for making reservations on date < todaydate
+  
   const newDate = new Date()
   const DD = newDate.getDate().toString()
   const MM = (newDate.getMonth() + 1).toString()
   const YYYY = newDate.getFullYear().toString()
   const todayDate = YYYY + "-" + MM + "-" + DD
-
-
-  console.log(todayDate);
-
-
 
   return (
     <div className={`reservation-form-container`} >
@@ -68,11 +64,10 @@ const ReservationForm = ({ newReservation, phone, setPhone,
             <br />
             <input
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e)=> setDate(e.target.value)}
               type="date"
               required
-              min={new Date()}
-            // pattern="\d{4}-\d{2}-\d{2}"
+              min={todayDate}
             />
             <hr />
             <input
@@ -81,21 +76,19 @@ const ReservationForm = ({ newReservation, phone, setPhone,
               placeholder="Number of reservation"
               type="number"
               min="1"
-              // max="1" it should be the available reservations number
+               max={availableReservations} 
               required
             />
             <hr />
-            <div className="d-grid gap-2">
-              <Button type="submit" variant="secondary" size="lg">
+            <div className="d-grid gap-2 ">
+              <Button  type="submit" variant="secondary" size="lg">
                 Book your seat
               </Button>
             </div>
           </form >
         </div>
       }
-      {/* need functionality for this parts 
-    {!available && <h1 className='no-reservation-message'> no available reservation </h1>
-      } */}
+
 
     </div>
   );

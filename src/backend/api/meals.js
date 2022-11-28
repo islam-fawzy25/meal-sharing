@@ -1,6 +1,6 @@
 
 const express = require("express");
-const { from, sum, as } = require("../database");
+const { from, sum, as ,andWhere} = require("../database");
 const router = express.Router();
 const knex = require("../database");
 
@@ -133,10 +133,9 @@ router.get("/availableReservationsForSingleMealToday/:id", async (request, respo
           const YYYY = obj.created_date.getFullYear().toString()
           const reservationDate = YYYY + "-" + MM + "-" + DD
 
-          if (reservationDate == todayDate) {
-            return obj
-          }
-          return res[0]
+           if (reservationDate == todayDate) {
+             return obj
+           }
         })
         response.send(dailyReservationsForsingleMeals)
       });
