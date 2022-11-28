@@ -10,7 +10,6 @@ const MealsCard = ({ meal, children }) => {
 
 
   return (
-    <div >
       <div className="meal-card">
         <Card style={{ width: "19rem" }} >
           <Card.Img className="meal-card-image" src={meal.img_url} />
@@ -33,7 +32,6 @@ const MealsCard = ({ meal, children }) => {
           </Card.Body>
         </Card>
       </div>
-    </div>
   );
 };
 

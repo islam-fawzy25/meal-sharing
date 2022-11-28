@@ -115,7 +115,7 @@ export default function SingleMealPage() {
 
     return (
         <div className="single-meal-container">
-            <div className="meal-card">
+            <div className="meal-by-id-card">
                 <MealById mealById={mealById} availableReservations={availableReservations} >
                     <div className="rating-component">
                         <SimpleRating mealId={Number(param.id)} />
