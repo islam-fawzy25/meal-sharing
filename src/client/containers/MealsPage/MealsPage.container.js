@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./mealsPage.css"
+import "./MealsPage.style.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
-import MealsCard from "../../components/meals/mealsCard/MealsCard";
+import MealsCard from "../../components/meals/mealsCard/MealsCard.component";
 import SimpleRating from "../../components/reviews/getReviews/rating.component"
 
 export default function MealsPage() {

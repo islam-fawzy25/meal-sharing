@@ -1,12 +1,12 @@
-// new feature// new endpoint for checking the available reservation for choosen date
+// new feature// new endpoint for checking the available reservation for choosen date for single meal
 // if not available reservation return error message frontend and avalible number of meals on that day
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./singlePage.css"
+import "./SinglePage.style.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
-import ReservationForm from "../../components/reservations/ReservationForm";
-import MealById from "../../components/meals/mealById/MealById";
+import ReservationForm from "../../components/reservations/ReservationForm.component";
+import MealById from "../../components/meals/mealById/MealById.component";
 import SimpleRating from "../../components/reviews/getReviews/rating.component"
 
 export default function SingleMealPage() {
@@ -24,7 +24,7 @@ export default function SingleMealPage() {
 
     const getAvailableReservationByMealId = async () => {
         try {
-            const data = await fetchFromDb(`/meals/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
+            const data = await fetchFromDb(`/reservations/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
             if (data[0] == undefined) {
                 const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
                 setAvailableReservations(data.max_reservation)

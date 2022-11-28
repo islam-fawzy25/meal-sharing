@@ -21,7 +21,7 @@ router.post("/", async (request, response) => {
                 description: request.body.description,
                 meal_id: request.body.meal_id,
                 stars: request.body.stars,
-                created_date: request.body.created_date,
+                created_date: new Date(request.body.date),
             })
         response.json(insertedReviews);
     } catch (error) {

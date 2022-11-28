@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import "./mealsCard.css";
+import "./MealsCard.style.css";
 import { Button } from "react-bootstrap";
 import SimpleRating from "../../reviews/getReviews/rating.component"
 // Rendering each meal  in detail into /path:id page

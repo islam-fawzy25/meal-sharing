@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import "./footer.css";
+import "./Footer.style.css";
 
 const Footer = () => {
     return (

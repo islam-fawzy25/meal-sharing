@@ -1,6 +1,6 @@
 import React from "react";
-import AddNewMeal from "../../components/meals/newMeal/AddNewMeal";
-import "./join-us.css"
+import AddNewMeal from "../../components/meals/newMeal/AddNewMeal.component";
+import "./JoinUs.style.css"
 
 
 export default function JoinUS() {
