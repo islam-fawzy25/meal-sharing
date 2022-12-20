@@ -1,16 +1,6 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="./src/client/images/meal-sharing.png" alt="Project logo"></a>
-</p>
+<img src="./src/client/images/meal-sharing-png" />
 
 <h3 align="center">Meal sharing api</h3>
-
-<div align="center">
-
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
-</div>
 
 ---
 
@@ -18,36 +8,24 @@
     <br> 
 </p>
 
-## 📝 Table of Contents
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
 
 
 <h3>Improvments</h3>
-<p>New features:<br> 
- - Building Login page <br> 
- - User page to delete and edit his meals and reservations<br> 
- - Only user how compelet his reservation can review the meal <br> 
-  <br> 
-   </p><br> 
 <p>Backend :<br> 
-- Add unit testing / jest and TDD
+- Add unit testing by jest and TDD
  </p>
 
 <p>Frontend :<br>
- - Add Typescript  <br> 
+ - Add Typescript and Eslint <br> 
+ - Implement review feature in front-end <br> 
  -  
 </p>
 ## 🧐 About <a name = "about"></a>
 
+Link to deployed website: 
+
+This project will be built out over 3 different classes:
 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
