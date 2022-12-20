@@ -54,7 +54,6 @@
 
 
 ## Deployment <a name = "deployment"></a>
-Soon!
 
 ### Prerequisites
 
