@@ -12,13 +12,17 @@
 <img src="./src/client/images/meal-sharing.png"/>
 
 <h3>Improvments</h3>
+<p> New feature:<br> 
+- User account <br> 
+- Login <br> 
+- User can delete or edit his meals or reservation from his account page<br> 
+</p>
 <p>Backend :<br> 
 - Add unit testing by jest and TDD
  </p>
 
 <p>Frontend :<br>
- - Add Typescript and Eslint <br> 
- - Implement review feature in front-end <br> 
+ - Add Typescript  <br> 
  -  
 </p>
 ## 🧐 About <a name = "about"></a>
