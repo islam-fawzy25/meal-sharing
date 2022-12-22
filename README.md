@@ -9,7 +9,7 @@
 </p>
 
 
-
+<img src="./src/client/images/meal-sharing.png"/>
 
 <h3>Improvments</h3>
 <p>Backend :<br> 
