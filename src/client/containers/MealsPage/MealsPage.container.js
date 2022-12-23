@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./MealsPage.style.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
-import MealsCard from "../../components/Meals/MealsCard/MealsCard.component";
-import SimpleRating from "../../components/Reviews/getReviews/rating.component"
+import MealsCard from "../../components/meals/MealsCard/MealsCard.component"
+import SimpleRating from "../../components/reviews/getReviews/rating.component"
 
 export default function MealsPage() {
     const [meals, setMeals] = useState([]);

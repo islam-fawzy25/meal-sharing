@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar/Nav.component";
-import Home from "./containers/Home/Home.container";
+import Home from "./containers/Home/Home.container"
 import "./App.css";
-import FooterComponent from "./components/Footer/Footer.component";
+import Footer from "./components/Footer/Footer.component";
 import About from './containers/About/About.container'
 import MealsPage from "./containers/MealsPage/MealsPage.container";
 import SingleMealPage from "./containers/SingleMealPage/SingleMeal.container";
@@ -24,7 +24,7 @@ function App() {
 
           <Route path="/joinus" component={JoinUS} />
         </Switch>
-        <FooterComponent />
+        <Footer />
       </Router>
   );
 }

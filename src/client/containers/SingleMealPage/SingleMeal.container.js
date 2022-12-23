@@ -6,9 +6,9 @@ import { useParams } from "react-router-dom";
 import "./SinglePage.style.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import ReservationForm from "../../components/Reservations/ReservationForm.component";
-import MealById from "../../components/Meals/MealById/MealById.component";
-import SimpleRating from "../../components/Reviews/getReviews/rating.component"
-import PostReviewForm from "../../components/Reviews/postReview/reviewPostForm/ReviewPostForm.component"
+import MealById from "../../components/meals/MealById/MealById.component";
+import SimpleRating from "../../components/reviews/getReviews/rating.component"
+import PostReviewForm from "../../components/reviews/postReview/reviewPostForm/ReviewPostForm.component"
 
 export default function SingleMealPage() {
     const param = useParams();
@@ -45,7 +45,6 @@ export default function SingleMealPage() {
         } catch (err) { throw err }
     }
 
-
     const eraseReservationInputs = () => {
         setDate("")
         setEmail("")
@@ -80,14 +79,9 @@ export default function SingleMealPage() {
     const newReview = async (e) => {
         try {
             e.preventDefault();
-         
-
             const response = await fetchFromDb("/reviews", "post", {
-                reviewTitle, reviewDescription,
-                reviewUserEmail, mealId, reviewUserName, reviewStars
+                reviewTitle, reviewDescription,reviewUserEmail, mealId, reviewUserName, reviewStars
             })
-            console.log(response);
-
             if (response.ok) {
                 setIsReviewed(true)
                 eraseReviewsInputs()

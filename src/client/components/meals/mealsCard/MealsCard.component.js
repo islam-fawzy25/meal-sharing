@@ -4,10 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./MealsCard.style.css";
 import { Button } from "react-bootstrap";
-import SimpleRating from "../../Reviews/getReviews/rating.component"
 // Rendering each meal  in detail into /path:id page
-const MealsCard = ({ meal, children }) => {
+import { useNavigate } from 'react-router-dom';
 
+const MealsCard = ({ meal, children }) => {
+ // const navigate = useNavigate();
 
   return (
       <div className="meal-card">

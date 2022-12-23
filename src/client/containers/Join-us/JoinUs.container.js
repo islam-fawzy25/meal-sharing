@@ -1,5 +1,5 @@
 import React from "react";
-import AddNewMeal from "../../components/Meals/NewMeal/AddNewMeal.component";
+import AddNewMeal from "../../components/meals/NewMeal/AddNewMeal.component";
 import "./JoinUs.style.css"
 
 

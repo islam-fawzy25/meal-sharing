@@ -87,6 +87,7 @@ router.post("/", async (request, response) => {
     max_reservation: request.body.maxReservation,
     price: request.body.price,
     created_date: new Date(request.body.date),
+    isActive:true
   });
   response.json(meals);
 });
