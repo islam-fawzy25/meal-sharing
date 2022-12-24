@@ -1,19 +1,16 @@
-// new feature// new endpoint for checking the available reservation for choosen date for single meal
-// if not available reservation return error message frontend and avalible number of meals on that day
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./SinglePage.style.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import ReservationForm from "../../components/Reservations/ReservationForm.component";
-import MealById from "../../components/meals/MealById/MealById.component";
-import SimpleRating from "../../components/reviews/getReviews/rating.component"
-import PostReviewForm from "../../components/reviews/postReview/reviewPostForm/ReviewPostForm.component"
+import MealById from "../../components/Meals/MealById/MealById.component";
+import SimpleRating from "../../components/Reviews/getReviews/rating.component"
+import PostReviewForm from "../../components/Reviews/postReview/reviewPostForm/ReviewPostForm.component"
+import useGet from "../../helper/useGet";
 
 export default function SingleMealPage() {
     const param = useParams();
     const mealId = Number(param.id)
-    const [mealById, setMealById] = useState({})
 
     // reservation form
     const [phone, setPhone] = useState();
@@ -25,12 +22,7 @@ export default function SingleMealPage() {
     const [availableReservations, setAvailableReservations] = useState([])
     const [isAvailable, setIsAvailable] = useState(true)
 
-    const getMealById = async () => {
-        try {
-            const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
-            setMealById(data)
-        } catch (err) { throw err }
-    }
+    const { data: mealById, error, loading } = useGet(`/api/meals/${Number(param.id)}`)
 
     const getAvailableReservationByMealId = async () => {
         try {
@@ -42,6 +34,8 @@ export default function SingleMealPage() {
             if (data[0] != undefined) {
                 setAvailableReservations((data[0].max_reservation) - parseInt(data[0].total_reservations))
             }
+            (data[0].max_reservation) - parseInt(data[0].total_reservations) == 0 ? setIsAvailable(false) : setIsAvailable(true)
+
         } catch (err) { throw err }
     }
 
@@ -80,7 +74,7 @@ export default function SingleMealPage() {
         try {
             e.preventDefault();
             const response = await fetchFromDb("/reviews", "post", {
-                reviewTitle, reviewDescription,reviewUserEmail, mealId, reviewUserName, reviewStars
+                reviewTitle, reviewDescription, reviewUserEmail, mealId, reviewUserName, reviewStars
             })
             if (response.ok) {
                 setIsReviewed(true)
@@ -101,7 +95,7 @@ export default function SingleMealPage() {
 
     useEffect(() => {
         (async () => {
-            await getMealById();
+            // await getMealById();
             await getAvailableReservationByMealId();
 
         })();
@@ -110,11 +104,14 @@ export default function SingleMealPage() {
     return (
         <div className="single-meal-container">
             <div className="meal-by-id-card">
-                <MealById mealById={mealById} availableReservations={availableReservations} >
-                    <div className="rating-component">
-                        <SimpleRating mealId={Number(param.id)} />
-                    </div>
-                </MealById>
+                {error && <h1>Error!</h1>}
+                {loading && <h1>Loading...</h1>}
+                {mealById &&
+                    <MealById mealById={mealById} availableReservations={availableReservations} >
+                        <div className="rating-component">
+                            <SimpleRating mealId={Number(param.id)} />
+                        </div>
+                    </MealById>}
             </div>
             <div>
                 <div>
@@ -135,7 +132,7 @@ export default function SingleMealPage() {
                         handleOnClick={handleOnClick}
                         availableReservations={availableReservations}
                     />}
-                    {!isAvailable && <div>No avalialble reservaions</div>}
+                    {!isAvailable && <h2>No avalialble reservaions</h2>}
                 </div>
                 <div>
                     <PostReviewForm

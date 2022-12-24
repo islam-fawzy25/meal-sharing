@@ -17,11 +17,9 @@ const AddNewMeal = () => {
   const newMeal = async (e) => {
     try {
       e.preventDefault();
-
       const res = await fetchFromDb("/meals", "post",
         { title, description, location, maxReservation, price, date, imageUrl }
       )
-      console.log(res);
       if (res.ok) {
         setNewMealCreated(true)
         eraseInputs()
@@ -44,14 +42,6 @@ const AddNewMeal = () => {
   const handleOnClick = () => {
     setNewMealCreated(false)
   }
-
-
-  // useEffect(()=>{
-  //   (async()=>{
-
-  //   })()
-  // },[])
-
 
   return (
     <>

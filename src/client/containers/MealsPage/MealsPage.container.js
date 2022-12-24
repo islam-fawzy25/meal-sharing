@@ -1,29 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./MealsPage.style.css"
-import { fetchFromDb } from "../../helper/fetch/fetch";
-import MealsCard from "../../components/meals/MealsCard/MealsCard.component"
-import SimpleRating from "../../components/reviews/getReviews/rating.component"
+import MealsCard from "../../components/Meals/MealsCard/MealsCard.component"
+import SimpleRating from "../../components/Reviews/getReviews/rating.component"
+import useGet from "../../helper/useGet";
 
 export default function MealsPage() {
-    const [meals, setMeals] = useState([]);
-
-    const getMeals = async () => {
-        try {
-            const data = await fetchFromDb("/meals", "get")
-            setMeals(data)
-        } catch (err) { throw err }
-    }
-
-    useEffect(() => {
-        (async () => {
-            await getMeals();
-        })();
-    }, []);
-
+const{data:meals,error,loading}=useGet('/api/meals')
     return (
         <>
             <div className="meal-card-container">
-                {meals.map((meal) => (
+                {error &&  <h1>Error!</h1>}
+                {loading &&  <h1>Loading...</h1>}
+                {meals && meals.map((meal) => (
                     <div key={meal.id}>
                         <MealsCard meal={meal} >
                             <SimpleRating mealId={meal.id} />
