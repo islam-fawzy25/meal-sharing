@@ -12,10 +12,16 @@
 <img src="./src/client/images/meal-sharing.png"/>
 
 <h3>Improvments</h3>
-<p> New feature:<br> 
+<p> New features:<br> 
 - User account <br> 
 - Login <br> 
 - User can delete or edit his meals or reservation from his account page<br> 
+- User can change a meal to not active from his account page<br> 
+- Search <br> 
+- Sort by price <br> 
+- Show meals with available reservations <br> 
+- Show meals with high rating review stars <br> 
+- Pagination <br> 
 </p>
 <p>Backend :<br> 
 - Add unit testing by jest and TDD
