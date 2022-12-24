@@ -24,6 +24,21 @@ export default function SingleMealPage() {
 
     const { data: mealById, error, loading } = useGet(`/api/meals/${Number(param.id)}`)
 
+    const deleteMeal = async () => {
+        //  const data = await fetchFromDb(`/meals/${Number(param.id)}`, "delete")
+        const response = await fetch(`/api/meals/${Number(param.id)}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        });
+        console.log(response);
+
+        const resData = 'resource deleted...';
+        return resData;
+    }
+
+
     const getAvailableReservationByMealId = async () => {
         try {
             const data = await fetchFromDb(`/reservations/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
@@ -35,7 +50,6 @@ export default function SingleMealPage() {
                 setAvailableReservations((data[0].max_reservation) - parseInt(data[0].total_reservations))
             }
             (data[0].max_reservation) - parseInt(data[0].total_reservations) == 0 ? setIsAvailable(false) : setIsAvailable(true)
-
         } catch (err) { throw err }
     }
 
@@ -95,11 +109,9 @@ export default function SingleMealPage() {
 
     useEffect(() => {
         (async () => {
-            // await getMealById();
             await getAvailableReservationByMealId();
-
         })();
-    }, [setIsReserved, isReserved]);
+    }, [setIsReserved, isReserved,deleteMeal]);
 
     return (
         <div className="single-meal-container">
@@ -112,6 +124,9 @@ export default function SingleMealPage() {
                             <SimpleRating mealId={Number(param.id)} />
                         </div>
                     </MealById>}
+                <button >Edit</button>
+                <button onClick={() => { deleteMeal() }}>Delete</button>
+
             </div>
             <div>
                 <div>

@@ -1,138 +1,96 @@
+// need to refactor this to be meal form dump component so i can use it for create and edit the meal too 
+// Sumbit button component to update and create  forms
+// date should be handle as today date  at backend endpoint
 import React, { useEffect, useState } from "react";
 import "./AddNewMeal.style.css"
-import { fetchFromDb } from "../../../helper/fetch/fetch";
 import { Button } from "react-bootstrap";
-import GenaricButton from "../../GenericButton/GenericButton.component";
 
-const AddNewMeal = () => {
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [imageUrl, setImageUrl] = useState();
-  const [location, setLocation] = useState();
-  const [maxReservation, setMaxReservation] = useState();
-  const [price, setPrice] = useState();
-  const [date, setDate] = useState(new Date())
-  const [newMealCreated, setNewMealCreated] = useState(false);
-
-  const newMeal = async (e) => {
-    try {
-      e.preventDefault();
-      const res = await fetchFromDb("/meals", "post",
-        { title, description, location, maxReservation, price, date, imageUrl }
-      )
-      if (res.ok) {
-        setNewMealCreated(true)
-        eraseInputs()
-        return
-      }
-      return
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const eraseInputs = () => {
-    setTitle("")
-    setDescription("")
-    setImageUrl("")
-    setLocation("")
-    setMaxReservation("")
-    setPrice("")
-  }
-  const handleOnClick = () => {
-    setNewMealCreated(false)
-  }
+const AddNewMeal = ({
+  title, setTitle,
+  description, setDescription,
+  imageUrl, setImageUrl,
+  location, setLocation,
+  maxReservation, setMaxReservation,
+  price, setPrice,
+  date, newMeal,
+  newMealCreated, setNewMealCreated,
+  handleOnClick
+}) => {
 
   return (
     <>
-      {
-        newMealCreated &&
-        <div className="new-meal-created-message-container">
-          <div className="new-meal-created-message">Your new meal was created successfully </div> <br />
-          <div className="create-new-meal">
-            <GenaricButton title="Create new meal" handleOnClick={handleOnClick} />
-          </div>
+      < div className='add-new-meal-container'>
+        <div className='add-new-meal-fourm'>
+          <form onSubmit={newMeal} >
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="title"
+              type="text"
+              minLength="2"
+              required
+            />
+            <hr />
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="description"
+              rows="4"
+              cols="23"
+              required
+            />
+            <hr />
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Location"
+              type="text"
+              minLength="4"
+              required
+            />
+            <hr />
+            <input
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              placeholder="Image Url"
+              type="text"
+              minLength="4"
+              required
+            />
+            <hr />
+            <label id="maxReservation">Maximum Reservation: </label>
+            <br />
+            <input
+              htmlFor="maxReservation"
+              value={maxReservation}
+              onChange={(e) => setMaxReservation(e.target.value)}
+              placeholder="max reservation"
+              type="number"
+              min="1"
+              required
+            />
+            <hr />
+            <label id="pric">Price: </label> <br />
+            <input
+              htmlFor="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="price"
+              type="number"
+              minLength="2"
+              min="10"
+              required
+            />
+            <hr />
+            <div className="d-grid gap-2">
+              <Button type="submit" variant="secondary" size="lg">
+                Add New Meal
+              </Button>
+            </div>
+          </form >
         </div>
-      }
-      {!newMealCreated &&
-        < div className='add-new-meal-container'>
-          <h3>Add your meal here</h3>
-          <div className='add-new-meal-fourm'>
-            <form onSubmit={newMeal} >
-              <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="title"
-                type="text"
-                minLength="2"
-                required
-              />
-              <hr />
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="description"
-                rows="4"
-                cols="23"
-                required
-              />
-              <hr />
-              <input
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Location"
-                type="text"
-                minLength="4"
-                required
-              />
-              <hr />
-              <input
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="Image Url"
-                type="text"
-                minLength="4"
-                required
-              />
-              <hr />
-              <label id="maxReservation">Maximum Reservation: </label>
-              <br />
-              <input
-                htmlFor="maxReservation"
-                value={maxReservation}
-                onChange={(e) => setMaxReservation(e.target.value)}
-                placeholder="max reservation"
-                type="number"
-                min="1"
-                required
-              />
-              <hr />
-              <label id="pric">Price: </label> <br />
-              <input
-                htmlFor="price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                placeholder="price"
-                type="number"
-                minLength="2"
-                min="10"
-                required
-              />
-              <hr />
-              <div className="d-grid gap-2">
-                <Button type="submit" variant="secondary" size="lg">
-                  Add New Meal
-                </Button>
-              </div>
-            </form >
-          </div>
-        </div>
-      }
-      {/* Miss functionality for this part */}
+      </div>
 
-      {/* {!isAddNewMeal && <div className="add-meal-message">Thanks for adding new meal
-        <GoHome />
-      </div>} */}
     </>
   );
 };

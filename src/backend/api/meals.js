@@ -103,5 +103,24 @@ router.get("/:id", async (request, response) => {
   }
 })
 
+// Delete meal 
+router.delete("/:id", async (request, response) => {
+  try {
+    const mealId = parseInt(request.params.id);
+    if (isNaN(mealId)) {
+      response.status(400).json("id must be an integer");
+      return;
+    }
+    const deleteSelectedMeal = await knex("meals").where("id", mealId).del();
+    if (!deleteSelectedMeal) {
+      response.status(400).send("Nothing found");
+      return;
+    }
+    response.status(201).send(" successfully deleted");
+
+  } catch (error) {
+    throw error;
+  }
+});
 
 module.exports = router;

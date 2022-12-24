@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+// add more css classes size bg-color ect
 import React from "react";
 import "./GenericButton.style.css"
 
