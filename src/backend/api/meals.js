@@ -67,7 +67,7 @@ router.get("/", async (request, response) => {
       }
 
     }
-    const meals = await knex('meals')
+    const meals = await knex('meals').where("isActive",true)
     response.status(200).send(meals)
     return
   } catch (error) {
@@ -103,21 +103,19 @@ router.get("/:id", async (request, response) => {
   }
 })
 
-// Delete meal 
-router.delete("/:id", async (request, response) => {
+// Update isActive to be false
+router.put("/:id", async (request, response) => {
   try {
     const mealId = parseInt(request.params.id);
     if (isNaN(mealId)) {
-      response.status(400).json("id must be an integer");
-      return;
+      
+      return response.status(400).json("id must be an integer");
     }
-    const deleteSelectedMeal = await knex("meals").where("id", mealId).del();
-    if (!deleteSelectedMeal) {
-      response.status(400).send("Nothing found");
-      return;
+    const selectedMeal = await knex("meals").where("id", mealId).update("isActive",false);
+    if (!selectedMeal) {
+      return  response.status(400).send("Nothing found");
     }
     response.status(201).send(" successfully deleted");
-
   } catch (error) {
     throw error;
   }

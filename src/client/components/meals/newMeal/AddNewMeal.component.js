@@ -1,7 +1,7 @@
 // need to refactor this to be meal form dump component so i can use it for create and edit the meal too 
 // Sumbit button component to update and create  forms
 // date should be handle as today date  at backend endpoint
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./AddNewMeal.style.css"
 import { Button } from "react-bootstrap";
 

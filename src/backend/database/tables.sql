@@ -4,11 +4,12 @@ id int unsigned auto_increment primary key ,
 title varchar(255) not null ,
 img_url varchar(255) not null ,
 description text not null ,
-location varchar(255) not null,
+location varchar(255) not null, -- To be City and country
 max_reservation int unsigned not null,
 price decimal(10,2) unsigned not null,
 created_date  date not null,
-isActive boolean
+isActive boolean  
+-- updated date => when isActive changed
 );
 
 

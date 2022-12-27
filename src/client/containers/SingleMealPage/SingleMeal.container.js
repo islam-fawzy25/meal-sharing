@@ -1,3 +1,4 @@
+// need pop-up message aftrer delete function run => go back to meals page
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./SinglePage.style.css"
@@ -11,7 +12,6 @@ import useGet from "../../helper/useGet";
 export default function SingleMealPage() {
     const param = useParams();
     const mealId = Number(param.id)
-
     // reservation form
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
@@ -25,19 +25,16 @@ export default function SingleMealPage() {
     const { data: mealById, error, loading } = useGet(`/api/meals/${Number(param.id)}`)
 
     const deleteMeal = async () => {
-        //  const data = await fetchFromDb(`/meals/${Number(param.id)}`, "delete")
         const response = await fetch(`/api/meals/${Number(param.id)}`, {
-            method: 'DELETE',
+            method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             }
         });
-        console.log(response);
 
         const resData = 'resource deleted...';
         return resData;
     }
-
 
     const getAvailableReservationByMealId = async () => {
         try {
