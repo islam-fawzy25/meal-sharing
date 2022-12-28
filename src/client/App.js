@@ -18,7 +18,7 @@ function App() {
 
           <Route exact path="/meals" component={MealsPage} />
 
-          <Route path="/meals/:id" component={SingleMealPage} />
+          <Route path="/meal/:id" component={SingleMealPage} />
 
           <Route path="/about" component={About} />
 

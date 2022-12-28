@@ -10,7 +10,7 @@ router.get("/", async (request, response) => {
 
     // implementation of filtered meals with  Max pric
     if ("maxPrice" in request.query) {
-      const maxPrice = parseInt(request.query.maxPrice);
+      const maxPrice = Number(request.query.maxPrice);
       if (isNaN(maxPrice)) {
         return response.status(400).send({ error: "Max Price must be integers" });
       }
@@ -28,7 +28,7 @@ router.get("/", async (request, response) => {
 
     // implementation of filtered meals with  limit
     if ("limit" in request.query) {
-      const limit = parseInt(request.query.limit);
+      const limit = Number(request.query.limit);
       if (isNaN(limit)) {
         response.status(400).send("Limit must be integer");
       }
@@ -106,16 +106,17 @@ router.get("/:id", async (request, response) => {
 // Update isActive to be false
 router.put("/:id", async (request, response) => {
   try {
-    const mealId = parseInt(request.params.id);
+    const mealId = Number(request.params.id);
     if (isNaN(mealId)) {
       
       return response.status(400).json("id must be an integer");
     }
-    const selectedMeal = await knex("meals").where("id", mealId).update("isActive",false);
+    const selectedMeal = await knex("meals").where("id", mealId)    
     if (!selectedMeal) {
       return  response.status(400).send("Nothing found");
     }
-    response.status(201).send(" successfully deleted");
+    const result = await knex("meals").where("id", mealId).update("isActive",!selectedMeal[0].isActive)
+    response.json(result)
   } catch (error) {
     throw error;
   }

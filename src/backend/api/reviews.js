@@ -37,7 +37,7 @@ router.post("/", async (request, response) => {
 
 router.get("/:id", async (request, response) => {
     try {
-        const reviewsId = parseInt(request.params.id);
+        const reviewsId = Number(request.params.id);
         if (isNaN(reviewsId)) {
             response.status(400).json({ error: "Reviews Id must be an integer" })
             return
@@ -60,7 +60,7 @@ router.get("/:id", async (request, response) => {
 
 router.put("/:id", async (request, response) => {
     try {
-        const reviewsId = parseInt(request.params.id);
+        const reviewsId = Number(request.params.id);
         if (isNaN(reviewsId)) {
             response.status(400).json({ error: "Review Id must be an integer" })
             return
@@ -81,7 +81,7 @@ router.put("/:id", async (request, response) => {
 
 router.delete("/:id", async (request, response) => {
     try {
-        const reviewsId = parseInt(request.params.id);
+        const reviewsId = Number(request.params.id);
         if (isNaN(reviewsId)) {
             response.status(400).json({ error: "Review Id must be an integer" })
             return

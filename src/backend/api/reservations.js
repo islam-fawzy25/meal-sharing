@@ -36,7 +36,7 @@ router.post("/", async (request, response) => {
 // 	GET	Returns reservations by id
 router.get("/:id", async (request, response) => {
   try{
-  const id = parseInt(request.params.id);
+  const id = Number(request.params.id);
 
   const reservations = await knex.raw(`
   SELECT *

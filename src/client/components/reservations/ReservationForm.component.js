@@ -15,13 +15,12 @@ const ReservationForm = ({ newReservation, phone, setPhone,
   availableReservations
 }) => {
 
-
   const newDate = new Date()
   const DD = newDate.getDate().toString()
   const MM = (newDate.getMonth() + 1).toString()
   const YYYY = newDate.getFullYear().toString()
   const todayDate = YYYY + "-" + MM + "-" + DD
-
+  
   return (
     <div className={`reservation-form-container`} >
       {isReserved && <div className="reservation-message">
@@ -39,7 +38,6 @@ const ReservationForm = ({ newReservation, phone, setPhone,
               type="text"
               minLength="2"
               maxLength="25"
-
               required
             />
             <hr />
@@ -88,7 +86,6 @@ const ReservationForm = ({ newReservation, phone, setPhone,
           </form >
         </div>
       }
-
 
     </div>
   );

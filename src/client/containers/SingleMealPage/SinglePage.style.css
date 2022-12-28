@@ -6,6 +6,8 @@
     display: flex;
     margin-top: 50px;
     margin-bottom: 500px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .meal-by-id-card{

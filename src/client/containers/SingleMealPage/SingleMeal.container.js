@@ -1,4 +1,4 @@
-// need pop-up message aftrer delete function run => go back to meals page
+// need pop-up message aftrer unactivated function run => go back to meals page
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./SinglePage.style.css"
@@ -24,16 +24,19 @@ export default function SingleMealPage() {
 
     const { data: mealById, error, loading } = useGet(`/api/meals/${Number(param.id)}`)
 
-    const deleteMeal = async () => {
-        const response = await fetch(`/api/meals/${Number(param.id)}`, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json'
-            }
-        });
-
-        const resData = 'resource deleted...';
-        return resData;
+    const switchMealActivation = async () => {
+        try {
+            const response = await fetch(`/api/meals/${Number(param.id)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+            console.log(response);
+            return
+        } catch (error) {
+            throw error
+        }
     }
 
     const getAvailableReservationByMealId = async () => {
@@ -41,12 +44,12 @@ export default function SingleMealPage() {
             const data = await fetchFromDb(`/reservations/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
             if (data[0] == undefined) {
                 const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
-                setAvailableReservations(data.max_reservation)
+                return setAvailableReservations(data.max_reservation)
             }
             if (data[0] != undefined) {
-                setAvailableReservations((data[0].max_reservation) - parseInt(data[0].total_reservations))
+                return setAvailableReservations((data[0].max_reservation) - Number(data[0].total_reservations))
             }
-            (data[0].max_reservation) - parseInt(data[0].total_reservations) == 0 ? setIsAvailable(false) : setIsAvailable(true)
+            return (data[0].max_reservation) - Number(data[0].total_reservations) == 0 ? setIsAvailable(false) : setIsAvailable(true)
         } catch (err) { throw err }
     }
 
@@ -108,26 +111,28 @@ export default function SingleMealPage() {
         (async () => {
             await getAvailableReservationByMealId();
         })();
-    }, [setIsReserved, isReserved,deleteMeal]);
+    }, [setIsReserved, isReserved]);
 
     return (
         <div className="single-meal-container">
             <div className="meal-by-id-card">
                 {error && <h1>Error!</h1>}
                 {loading && <h1>Loading...</h1>}
-                {mealById &&
-                    <MealById mealById={mealById} availableReservations={availableReservations} >
-                        <div className="rating-component">
-                            <SimpleRating mealId={Number(param.id)} />
-                        </div>
-                    </MealById>}
-                <button >Edit</button>
-                <button onClick={() => { deleteMeal() }}>Delete</button>
-
+                {!error && mealById &&
+                    <>
+                        <MealById mealById={mealById} availableReservations={availableReservations} >
+                            <div className="rating-component">
+                                <SimpleRating mealId={Number(param.id)} />
+                            </div>
+                        </MealById>
+                        <button >Edit</button>
+                        <button onClick={() => { switchMealActivation() }}>Delete</button>
+                    </>
+                }
             </div>
             <div>
                 <div>
-                    {isAvailable && <ReservationForm
+                    {!error && isAvailable && <ReservationForm
                         newReservation={newReservation}
                         phone={phone}
                         setPhone={setPhone}
@@ -147,22 +152,23 @@ export default function SingleMealPage() {
                     {!isAvailable && <h2>No avalialble reservaions</h2>}
                 </div>
                 <div>
-                    <PostReviewForm
-                        isReviewed={isReviewed}
-                        setIsReviewed={setIsReviewed}
-                        handleReviewOnClick={handleReviewOnClick}
-                        newReview={newReview}
-                        reviewTitle={reviewTitle}
-                        setReviewTitle={setReviewTitle}
-                        reviewDescription={reviewDescription}
-                        setReviewDescription={setReviewDescription}
-                        reviewUserEmail={reviewUserEmail}
-                        setReviewUserEmail={setReviewUserEmail}
-                        reviewUserName={reviewUserName}
-                        setReviewUserName={setReviewUserName}
-                        reviewStars={reviewStars}
-                        setReviewStars={setReviewStars}
-                    />
+                    {!error &&
+                        <PostReviewForm
+                            isReviewed={isReviewed}
+                            setIsReviewed={setIsReviewed}
+                            handleReviewOnClick={handleReviewOnClick}
+                            newReview={newReview}
+                            reviewTitle={reviewTitle}
+                            setReviewTitle={setReviewTitle}
+                            reviewDescription={reviewDescription}
+                            setReviewDescription={setReviewDescription}
+                            reviewUserEmail={reviewUserEmail}
+                            setReviewUserEmail={setReviewUserEmail}
+                            reviewUserName={reviewUserName}
+                            setReviewUserName={setReviewUserName}
+                            reviewStars={reviewStars}
+                            setReviewStars={setReviewStars}
+                        />}
                 </div>
             </div>
         </div>

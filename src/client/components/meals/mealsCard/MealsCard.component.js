@@ -24,7 +24,7 @@ const MealsCard = ({ meal, children }) => {
 
           <Card.Body>
             <Card.Link>
-              <Link to={`/meals/${meal.id}`}>
+              <Link to={`/meal/${meal.id}`}>
                 <Button variant="secondary">
                   Meal info
                 </Button>
