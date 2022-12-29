@@ -16,10 +16,11 @@ export default function JoinUS() {
     const newMeal = async (e) => {
         try {
             e.preventDefault();
-            const res = await fetchFromDb("/meals", "post",
+            const { response: res, error, status } = await fetchFromDb("/meals", "post",
                 { title, description, location, maxReservation, price, date, imageUrl }
             )
-            if (res.ok) {
+         
+            if (res.status === 200) {
                 setNewMealCreated(true)
                 eraseInputs()
                 return
@@ -68,14 +69,22 @@ export default function JoinUS() {
 
                 {!newMealCreated &&
                     <AddNewMeal
-                        title={title} setTitle={setTitle}
-                        description={description} setDescription={setDescription}
-                        imageUrl={imageUrl} setImageUrl={setImageUrl}
-                        location={location} setLocation={setLocation}
-                        maxReservation={maxReservation} setMaxReservation={setMaxReservation}
-                        price={price} setPrice={setPrice}
-                        date={date} newMeal={newMeal}
-                        newMealCreated={newMealCreated} setNewMealCreated={setNewMealCreated}
+                        title={title}
+                        setTitle={setTitle}
+                        description={description}
+                        setDescription={setDescription}
+                        imageUrl={imageUrl}
+                        setImageUrl={setImageUrl}
+                        location={location}
+                        setLocation={setLocation}
+                        maxReservation={maxReservation}
+                        setMaxReservation={setMaxReservation}
+                        price={price}
+                        setPrice={setPrice}
+                        date={date}
+                        newMeal={newMeal}
+                        newMealCreated={newMealCreated}
+                        setNewMealCreated={setNewMealCreated}
                         handleOnClick={handleOnClick}
                     />
                 }

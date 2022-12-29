@@ -30,6 +30,7 @@
     "app-root-path": "^2.1.0",
     "babel-loader": "^8.1.0",
     "babel-polyfill": "^6.26.0",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.6.0",
     "cookie-parser": "~1.4.3",

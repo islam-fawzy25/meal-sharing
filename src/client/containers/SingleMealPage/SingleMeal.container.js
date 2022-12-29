@@ -41,15 +41,15 @@ export default function SingleMealPage() {
 
     const getAvailableReservationByMealId = async () => {
         try {
-            const data = await fetchFromDb(`/reservations/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
+            const { data: data, error, status } = await fetchFromDb(`/reservations/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
+        
+            // new meal with no reservations // i will try to solve it from backend
             if (data[0] == undefined) {
-                const data = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
-                return setAvailableReservations(data.max_reservation)
+                const { data: mealData, error, status } = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
+                return setAvailableReservations(mealData.max_reservation)
             }
-            if (data[0] != undefined) {
-                return setAvailableReservations((data[0].max_reservation) - Number(data[0].total_reservations))
-            }
-            return (data[0].max_reservation) - Number(data[0].total_reservations) == 0 ? setIsAvailable(false) : setIsAvailable(true)
+            (data[0].max_reservation) - Number(data[0].total_reservations) == 0 ? setIsAvailable(false) : setIsAvailable(true)
+            return setAvailableReservations((data[0].max_reservation) - Number(data[0].total_reservations))
         } catch (err) { throw err }
     }
 
@@ -64,8 +64,9 @@ export default function SingleMealPage() {
     const newReservation = async (e) => {
         try {
             e.preventDefault();
-            const response = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
-            if (response.ok) {
+            const { data, error, status } = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
+            console.log(data + "reserva");
+            if (data) {
                 setIsReserved(true)
                 eraseReservationInputs()
             }
@@ -126,7 +127,7 @@ export default function SingleMealPage() {
                             </div>
                         </MealById>
                         <button >Edit</button>
-                        <button onClick={() => { switchMealActivation() }}>Delete</button>
+                        <button onClick={() => { switchMealActivation() }}>Deactive</button>
                     </>
                 }
             </div>

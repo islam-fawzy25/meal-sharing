@@ -1,7 +1,10 @@
 
 export async function fetchFromDb(endpoint, fetchMethod, postBody = {}) {
- // should i make two custom hooks one for fetch and one for post 
-  
+  try {
+
+    let error = false
+    let status
+    let data
     const fetchOptions = {
       method: fetchMethod,
       mode: 'cors',
@@ -14,12 +17,15 @@ export async function fetchFromDb(endpoint, fetchMethod, postBody = {}) {
       fetchOptions.body = JSON.stringify(postBody);
     }
     const response = await fetch(`/api${endpoint}`, fetchOptions);
-    if (!response.ok) {
-      throw "new ApiError(response.statusText, response.status)";
+    if (response.status != 200) {
+      return { response: "", error: true, status: response.status + " " + response.statusText }
     }
     if (fetchMethod === 'get') {
-      const dbData = await response.json();
-      return dbData;
+      data = await response.json();
+      return { data, error, status };;
     }
-    return response;
+    return { data: response, error, status };
+  } catch (error) {
+    return { data: "", error: true, status: error }
   }
+}

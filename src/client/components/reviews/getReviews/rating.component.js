@@ -9,15 +9,13 @@ export default function SimpleRating({ mealId }) {
   const [ratingValue, setRatingValue] = useState(0);
   const [reviewers, setReviewers] = useState(0);
 
-
   const getRaingStarts = (async () => {
     try {
-      const data = await fetchFromDb(`/reviews/${mealId}`, "get")
+      const {data,error,status} = await fetchFromDb(`/reviews/${mealId}`, "get")
       if (data.length > 0) {
         const getTotalstars = Number(data[0].total_stars) / Number(data[0].total_reviewers)
         setRatingValue(Math.round(getTotalstars))
         setReviewers(data[0].total_reviewers)
-
       }
       if (data.length == undefined) {
         setRatingValue(0)
@@ -31,7 +29,6 @@ export default function SimpleRating({ mealId }) {
         <Rating name="read-only" value={ratingValue} readOnly />
         <small> ({reviewers})</small>
       </Box>
-
     </div>
   );
 }

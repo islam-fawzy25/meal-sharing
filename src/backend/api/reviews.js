@@ -7,7 +7,7 @@ const knex = require("../database");
 router.get("/", async (request, response) => {
     try {
         const reviews = await knex("reviews");
-        response.json(reviews);
+        response.status(200).json(reviews);
     } catch (error) {
         response.status(500).send({ error: "Internal Server Error." });
     }
@@ -29,7 +29,7 @@ router.post("/", async (request, response) => {
                 user_name: request.body.reviewUserName,
                 user_email: request.body.reviewUserEmail
             })
-        response.json(insertedReviews);
+        response.status(201).json(insertedReviews);
     } catch (error) {
         response.status(500).send({ error: "Internal Server Error." });
     }
@@ -38,6 +38,7 @@ router.post("/", async (request, response) => {
 router.get("/:id", async (request, response) => {
     try {
         const reviewsId = Number(request.params.id);
+
         if (isNaN(reviewsId)) {
             response.status(400).json({ error: "Reviews Id must be an integer" })
             return
@@ -52,7 +53,9 @@ router.get("/:id", async (request, response) => {
            Where meal_id= ${reviewsId}
            GROUP BY  meal_id;
         `)
-        response.json(reviewWithId[0]);
+        console.log(reviewWithId[0]);
+
+        response.status(200).json(reviewWithId[0]);
     } catch (error) {
         response.status(500).send({ error: "Internal Server Error." });
     }
@@ -89,7 +92,6 @@ router.delete("/:id", async (request, response) => {
         const deleteReview = await knex('reviews')
             .where({ id: reviewsId })
             .del()
-
         response.json(deleteReview);
     } catch (error) {
         response.status(500).send({ error: "Internal Server Error." });
