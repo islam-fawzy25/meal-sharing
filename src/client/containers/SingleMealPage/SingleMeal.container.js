@@ -5,8 +5,9 @@ import "./SinglePage.style.css"
 import { fetchFromDb } from "../../helper/fetch/fetch";
 import ReservationForm from "../../components/Reservations/ReservationForm.component";
 import MealById from "../../components/Meals/MealById/MealById.component";
-import SimpleRating from "../../components/Reviews/getReviews/rating.component"
-import PostReviewForm from "../../components/Reviews/postReview/reviewPostForm/ReviewPostForm.component"
+import SimpleRating from "../../components/Reviews/GetReviews/Rating.component"
+import PostReviewForm from "../../components/Reviews/PostReview/ReviewPostForm/ReviewPostForm.component"
+import { postMethod, getMethod } from "../../helper/fetch/fetchMethods";
 import useGet from "../../helper/useGet";
 
 export default function SingleMealPage() {
@@ -14,7 +15,7 @@ export default function SingleMealPage() {
     const mealId = Number(param.id)
     // reservation form
     const [phone, setPhone] = useState();
-    const [email, setEmail] = useState();
+    const [email, setEmail] = useState(); 
     const [name, setName] = useState();
     const [date, setDate] = useState();
     const [guestsNumber, setGuestsNumber] = useState();
@@ -33,23 +34,31 @@ export default function SingleMealPage() {
                 }
             });
             console.log(response);
-            return
+            return response
         } catch (error) {
             throw error
         }
     }
-
+    const deleteMeal = async () => {
+        try {
+            const response = await fetch(`/api/meals/${Number(param.id)}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
+            return response
+        } catch (error) {
+            throw error
+        }
+    }
     const getAvailableReservationByMealId = async () => {
         try {
-            const { data: data, error, status } = await fetchFromDb(`/reservations/availableReservationsForSingleMealToday/${Number(param.id)}`, "get")
-        
-            // new meal with no reservations // i will try to solve it from backend
-            if (data[0] == undefined) {
-                const { data: mealData, error, status } = await fetchFromDb(`/meals/${Number(param.id)}`, "get")
-                return setAvailableReservations(mealData.max_reservation)
-            }
-            (data[0].max_reservation) - Number(data[0].total_reservations) == 0 ? setIsAvailable(false) : setIsAvailable(true)
-            return setAvailableReservations((data[0].max_reservation) - Number(data[0].total_reservations))
+            const { data, error, status } = await getMethod(`/api/meal-reservations/available-reservations-single-meal-today/${Number(param.id)}`)
+            const maxReservation = data[0].max_reservation
+            const totalReservations = data[0].total_reservations === undefined ? 0 : data[0].total_reservations
+            maxReservation - totalReservations == 0 ? setIsAvailable(false) : setIsAvailable(true)
+            return setAvailableReservations(maxReservation - totalReservations)
         } catch (err) { throw err }
     }
 
@@ -64,13 +73,13 @@ export default function SingleMealPage() {
     const newReservation = async (e) => {
         try {
             e.preventDefault();
-            const { data, error, status } = await fetchFromDb("/reservations", "post", { phone, name, email, mealId, date, guestsNumber })
-            console.log(data + "reserva");
-            if (data) {
-                setIsReserved(true)
-                eraseReservationInputs()
-            }
+            const { data, error, status } = await postMethod("/api/reservations",
+                { phone, name, email, mealId, date, guestsNumber })
+            if (error) { return setIsReserved(false) }
+            setIsReserved(true)
+            return eraseReservationInputs()
         } catch (error) {
+            setIsReserved(false)
             throw error;
         }
     };
@@ -88,14 +97,14 @@ export default function SingleMealPage() {
     const newReview = async (e) => {
         try {
             e.preventDefault();
-            const response = await fetchFromDb("/reviews", "post", {
+            const { data: response, error, status } = await postMethod("/api/reviews", {
                 reviewTitle, reviewDescription, reviewUserEmail, mealId, reviewUserName, reviewStars
             })
-            if (response.ok) {
-                setIsReviewed(true)
-                eraseReviewsInputs()
-            }
+            if (error) { return setIsReviewed(false) }
+            setIsReviewed(true)
+            return eraseReviewsInputs()
         } catch (error) {
+            setIsReviewed(false)
             throw error
         }
     }
@@ -112,7 +121,7 @@ export default function SingleMealPage() {
         (async () => {
             await getAvailableReservationByMealId();
         })();
-    }, [setIsReserved, isReserved]);
+    }, [isReserved]);
 
     return (
         <div className="single-meal-container">
@@ -128,6 +137,8 @@ export default function SingleMealPage() {
                         </MealById>
                         <button >Edit</button>
                         <button onClick={() => { switchMealActivation() }}>Deactive</button>
+                        <button onClick={() => { deleteMeal() }}>Delete</button>
+
                     </>
                 }
             </div>

@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function SimpleRating({setReviewStars,reviewStars}) {
-
   return (
     <div>
       <Box component="fieldset" mb={3} borderColor="transparent">
@@ -17,7 +16,6 @@ export default function SimpleRating({setReviewStars,reviewStars}) {
           }}
         />
       </Box>
-    
     </div>
   );
 }

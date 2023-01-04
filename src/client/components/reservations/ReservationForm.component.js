@@ -19,7 +19,7 @@ const ReservationForm = ({ newReservation, phone, setPhone,
   const DD = newDate.getDate().toString()
   const MM = (newDate.getMonth() + 1).toString()
   const YYYY = newDate.getFullYear().toString()
-  const todayDate = YYYY + "-" + MM + "-" + DD
+  const todayDate =  new Date().toISOString().split(["T"])
   
   return (
     <div className={`reservation-form-container`} >

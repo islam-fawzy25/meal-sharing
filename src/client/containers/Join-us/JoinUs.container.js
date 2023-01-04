@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AddNewMeal from "../../components/Meals/NewMeal/AddNewMeal.component";
 import "./JoinUs.style.css"
 import GenaricButton from "../../components/GenericButton/GenericButton.component";
-import { fetchFromDb } from "../../helper/fetch/fetch";
+import { postMethod } from "../../helper/fetch/fetchMethods";
 export default function JoinUS() {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
@@ -16,17 +16,16 @@ export default function JoinUS() {
     const newMeal = async (e) => {
         try {
             e.preventDefault();
-            const { response: res, error, status } = await fetchFromDb("/meals", "post",
-                { title, description, location, maxReservation, price, date, imageUrl }
-            )
-         
-            if (res.status === 200) {
-                setNewMealCreated(true)
-                eraseInputs()
-                return
+            const { data: res, error, status } = await postMethod("/api/meals",
+                { title, description, location, maxReservation, price, date, imageUrl })
+            if (res.status !== 201 || error) {
+                return setNewMealCreated(false)
             }
-            return
+            setNewMealCreated(true)
+            return eraseInputs()
+
         } catch (error) {
+            setNewMealCreated(false)
             throw error;
         }
     };
@@ -60,7 +59,7 @@ export default function JoinUS() {
                 {
                     newMealCreated &&
                     <div className="new-meal-created-message-container">
-                        <div className="new-meal-created-message">Your new meal was created successfully </div> <br />
+                        <div className="new-meal-created-message">Your meal created successfully </div> <br />
                         <div className="create-new-meal">
                             <GenaricButton title="Create new meal" handleOnClick={handleOnClick} />
                         </div>

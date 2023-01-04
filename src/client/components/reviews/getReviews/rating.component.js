@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { fetchFromDb } from "../../../helper/fetch/fetch";
-
+import { getMethod } from "../../../helper/fetch/fetchMethods";
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-
 
 export default function SimpleRating({ mealId }) {
   const [ratingValue, setRatingValue] = useState(0);
@@ -11,14 +9,12 @@ export default function SimpleRating({ mealId }) {
 
   const getRaingStarts = (async () => {
     try {
-      const {data,error,status} = await fetchFromDb(`/reviews/${mealId}`, "get")
-      if (data.length > 0) {
-        const getTotalstars = Number(data[0].total_stars) / Number(data[0].total_reviewers)
+      const { data, error, status } = await getMethod(`/api/reviews/${mealId}`)
+      if (data === undefined) {return setRatingValue(0)}
+      if (!error) {
+        const getTotalstars = Number(data.total_stars) / Number(data.total_reviewers)
         setRatingValue(Math.round(getTotalstars))
-        setReviewers(data[0].total_reviewers)
-      }
-      if (data.length == undefined) {
-        setRatingValue(0)
+        return setReviewers(data.total_reviewers)
       }
     } catch (err) { throw err }
   })();

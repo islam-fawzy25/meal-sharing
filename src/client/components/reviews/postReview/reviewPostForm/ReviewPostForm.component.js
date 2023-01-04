@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./ReviewPostForm.style.css";
 import { Button } from "react-bootstrap";
 import GenaricButton from "../../../GenericButton/GenericButton.component"
-import SimpleRating from "../controllredRating.component"
-
+import SimpleRating from "../ControllredRating.component"
 
 export default function PostReviewForm({
     isReviewed,
@@ -21,7 +20,6 @@ export default function PostReviewForm({
     reviewStars,
     setReviewStars,
 }) {
-
 
     return (
         <div className={`review-form-container`} >
@@ -88,8 +86,6 @@ export default function PostReviewForm({
                     </form >
                 </div>
             }
-
-
         </div>
     );
 };
