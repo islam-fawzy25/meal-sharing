@@ -1,4 +1,3 @@
-
 const express = require("express");
 const { from, sum, as, andWhere } = require("../database");
 const router = express.Router();
@@ -77,20 +76,22 @@ router.get("/", async (request, response) => {
 // POST	Adds a new meal
 router.post("/", async (request, response) => {
   try {
+    const newDate =  new Date().toISOString().split(["T"])
+    const todayDate =newDate[0]
     const idMeal = await knex("meals");
     await knex("meals").insert({
-      id: Math.max(0, ...idMeal.map((item) => item.id)) + 15, // UID  
+      id: Math.max(0, ...idMeal.map((item) => item.id)) + 5, // UUID  
       title: request.body.title,
       description: request.body.description,
       img_url: request.body.imageUrl,
       location: request.body.location,
       max_reservation: request.body.maxReservation,
       price: request.body.price,
-      created_date: new Date(request.body.date),
+      created_date: todayDate,
     });
     return response.sendStatus(201)
   } catch (error) {
-    return response.sendStatus(500)
+    return response.status(500)   
   }
 });
 
@@ -118,7 +119,7 @@ router.put("/:id", async (request, response) => {
     if (isNaN(mealId)) {
       return response.sendStatus(400)
     }
-    const selectedMeal = await knex("meals").where("id", mealId)
+    const selectedMeal = await knex("meals").where("id", mealId);
     if (!selectedMeal) {
       return response.sendStatus(400)
     }
@@ -148,6 +149,7 @@ router.put("/edit-meal/:id", async (request, response) => {
 // Delete  meal wiith reviews and reservations 
 router.delete("/:id", async (response, request) => {
   try {
+    console.log("ss");
     const mealId = Number(request.req.params.id);
     await knex("reservations").where("meal_id", mealId).del();
     await knex("reviews").where("meal_id", mealId).del();

@@ -25,6 +25,7 @@ export default function SingleMealPage() {
 
     const { data: mealById, error, loading } = useGet(`/api/meals/${Number(param.id)}`)
 
+        // need to handle after meal diactivated ->  go back to meals page
     const switchMealActivation = async () => {
         try {
             const response = await fetch(`/api/meals/${Number(param.id)}`, {
@@ -39,6 +40,7 @@ export default function SingleMealPage() {
             throw error
         }
     }
+    // need to handle after meal deleted ->  go back to meals page
     const deleteMeal = async () => {
         try {
             const response = await fetch(`/api/meals/${Number(param.id)}`, {
@@ -47,6 +49,7 @@ export default function SingleMealPage() {
                     'Content-type': 'application/json'
                 }
             });
+            console.log(response);
             return response
         } catch (error) {
             throw error

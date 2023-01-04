@@ -6,12 +6,8 @@ const knex = require("../database");
 router.get("/available-reservations-single-meal-today/:id", async (request, response) => {
   try {
     const mealId = Number(request.params.id);
-    //
-    const newDate = new Date()
-    const DD = newDate.getDate().toString()
-    const MM = (newDate.getMonth() + 1).toString()
-    const YYYY = newDate.getFullYear().toString()
-    const todayDate = YYYY + "-" + MM + "-" + DD
+    const newDate =  new Date().toISOString().split(["T"])
+    const todayDate =newDate[0]
     const mealById = await knex("meals").where("id", mealId)
   
     const mealReservations = await knex.raw(`

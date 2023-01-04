@@ -4,20 +4,21 @@ import "./JoinUs.style.css"
 import GenaricButton from "../../components/GenericButton/GenericButton.component";
 import { postMethod } from "../../helper/fetch/fetchMethods";
 export default function JoinUS() {
+
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [imageUrl, setImageUrl] = useState();
     const [location, setLocation] = useState();
     const [maxReservation, setMaxReservation] = useState();
     const [price, setPrice] = useState();
-    const [date, setDate] = useState(new Date())
     const [newMealCreated, setNewMealCreated] = useState(false);
 
     const newMeal = async (e) => {
         try {
             e.preventDefault();
             const { data: res, error, status } = await postMethod("/api/meals",
-                { title, description, location, maxReservation, price, date, imageUrl })
+                { title, description, location, maxReservation, price, imageUrl })
+                console.log(res);
             if (res.status !== 201 || error) {
                 return setNewMealCreated(false)
             }
@@ -80,7 +81,6 @@ export default function JoinUS() {
                         setMaxReservation={setMaxReservation}
                         price={price}
                         setPrice={setPrice}
-                        date={date}
                         newMeal={newMeal}
                         newMealCreated={newMealCreated}
                         setNewMealCreated={setNewMealCreated}
