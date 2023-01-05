@@ -1,3 +1,9 @@
+/*  Thoughts: 
+- sort by lowest price - highest price - highest rating - by location
+- highest rating last month 
+-  highest reservations
+
+*/
 const express = require("express");
 const { from, sum, as, andWhere } = require("../database");
 const router = express.Router();
@@ -13,8 +19,8 @@ router.get("/", async (request, response) => {
         return response.status(400).send({ error: "Max Price must be integers" });
       }
       const meals = await knex('meals').where("price", "<=", maxPrice);
-     return response.status(200).json(meals)
-      
+      return response.status(200).json(meals)
+
     }
 
     if ("title" in request.query) {
@@ -43,32 +49,10 @@ router.get("/", async (request, response) => {
 
     }
 
-    //Get meals that still has available reservations  // NOT IN USE
-    if ("availableReservations" in request.query) {
-      let availableReservations = request.query.availableReservations == "true";
-      if (availableReservations) {
-        const meals = await knex.raw(`
-            SELECT
-            COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations,
-            meals.max_reservation,
-            meals.title,
-            meals.id
-        FROM
-            meals
-                LEFT JOIN
-            reservations ON reservations.meal_id = meals.id
-        GROUP BY meals.id
-        HAVING max_reservation > total_reservations;
-            `)
-          .then((res) => response.status(200).send(res[0]));
-        return
-      }
-
-    }
     const meals = await knex('meals').where("isActive", true)
     return response.status(200).json(meals)
   } catch (error) {
-  return  response.sendStatus(500)
+    return response.sendStatus(500)
   }
 });
 
@@ -76,8 +60,8 @@ router.get("/", async (request, response) => {
 // POST	Adds a new meal
 router.post("/", async (request, response) => {
   try {
-    const newDate =  new Date().toISOString().split(["T"])
-    const todayDate =newDate[0]
+    const newDate = new Date().toISOString().split(["T"])
+    const todayDate = newDate[0]
     const idMeal = await knex("meals");
     await knex("meals").insert({
       id: Math.max(0, ...idMeal.map((item) => item.id)) + 5, // UUID  
@@ -91,7 +75,7 @@ router.post("/", async (request, response) => {
     });
     return response.sendStatus(201)
   } catch (error) {
-    return response.status(500)   
+    return response.status(500)
   }
 });
 
@@ -99,17 +83,12 @@ router.post("/", async (request, response) => {
 router.get("/:id", async (request, response) => {
   try {
     const mealId = Number(request.params.id);
-    if (isNaN(mealId)) {
-      return response.sendStatus(400)
-    }
+    if (isNaN(mealId)) { return response.sendStatus(400) }
     const selectedMeal = await knex("meals").where("id", mealId);
-    if (!selectedMeal) {
-      return response.sendStatus(404)
-    }
+    if (!selectedMeal) { return response.sendStatus(404) }
     return response.status(200).json(selectedMeal[0]);
-  } catch (error) {
-    return response.sendStatus(500)
   }
+  catch (error) { return response.sendStatus(500) }
 })
 
 // Update Active/ Deactive meal
@@ -133,7 +112,7 @@ router.put("/:id", async (request, response) => {
 router.put("/edit-meal/:id", async (request, response) => {
   try {
     const idMeal = Number(request.params.id);
-    const meals = await knex("meals").where("id", idMeal).update({
+    await knex("meals").where("id", idMeal).update({
       title: request.body.title,
       description: request.body.description,
       img_url: request.body.imageUrl,
@@ -149,10 +128,14 @@ router.put("/edit-meal/:id", async (request, response) => {
 // Delete  meal wiith reviews and reservations 
 router.delete("/:id", async (response, request) => {
   try {
-    console.log("ss");
     const mealId = Number(request.req.params.id);
-    await knex("reservations").where("meal_id", mealId).del();
-    await knex("reviews").where("meal_id", mealId).del();
+    if (isNaN(mealId)) {
+      return response.sendStatus(400)
+    }
+    const selectedMeal = await knex("meals").where("id", mealId);
+    if (!selectedMeal) {
+      return response.sendStatus(400)
+    }
     await knex("meals").where("id", mealId).del();
     return response.sendStatus(200)
   } catch (error) {

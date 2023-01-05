@@ -40,35 +40,4 @@ router.get("/available-reservations-single-meal-today/:id", async (request, resp
   }
 })
 
-
-
-// get available Reservations For Single Meal in general // NOT IN USE
-router.get("/availableReservationsForSingleMeal/:id", async (request, response) => {
-  try {
-    const mealId = Number(request.params.id);
-    const meals = await knex.raw(`
-      SELECT
-      COALESCE(SUM(reservations.number_of_guests), 0) AS total_reservations,
-      meals.max_reservation,
-      meals.title,
-      meals.id
-  FROM
-      meals
-          LEFT JOIN
-      reservations ON reservations.meal_id = meals.id
-  GROUP BY meals.id
-  HAVING max_reservation > total_reservations;
-      `)
-      .then((res) => {
-        const availableReservationsForsingleMeals = res[0].filter(obj => {
-          if (obj.id == mealId) { return obj }
-        })
-
-        return response.sendStatus(200).json(res[0])
-      });
-  } catch (error) {
-    return response.sendStatus(500)
-  }
-})
-
 module.exports = router;

@@ -1,4 +1,3 @@
-
 create table meals(
 id int unsigned auto_increment primary key ,
 title varchar(255) not null ,
@@ -7,6 +6,7 @@ description text not null ,
 location varchar(255) not null,
 max_reservation int unsigned not null,
 price int unsigned not null,
+vegetarian boolean default 0,
 created_date  date  not null,
 isActive boolean default 1,
 updated_date date default null,

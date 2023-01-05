@@ -49,7 +49,7 @@ export default function SingleMealPage() {
                     'Content-type': 'application/json'
                 }
             });
-            console.log(response);
+console.log(response);
             return response
         } catch (error) {
             throw error

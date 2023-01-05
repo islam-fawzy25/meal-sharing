@@ -59,8 +59,8 @@ router.put("/:id", async (request, response) => {
     try {
         const reviewsId = Number(request.params.id);
         if (isNaN(reviewsId)) {
-            response.status(400).json({ error: "Review Id must be an integer" })
-            return
+            return response.status(400).json({ error: "Review Id must be an integer" })
+           
         }
         await knex('reviews').where({ id: reviewsId })
             .update({
@@ -81,13 +81,12 @@ router.delete("/:id", async (request, response) => {
     try {
         const reviewsId = Number(request.params.id);
         if (isNaN(reviewsId)) {
-            return response.status(400).json({ error: "Review Id must be an integer" })
-
+            return response.status(400)
         }
         await knex('reviews').where({ id: reviewsId }).del()
         return response.sendStatus(200)
     } catch (error) {
-        return response.status(500)
+        return response.sendStatus(500)
     }
 });
 
