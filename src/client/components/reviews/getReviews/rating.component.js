@@ -9,7 +9,7 @@ export default function SimpleRating({ mealId }) {
 
   const getRaingStarts = (async () => {
     try {
-      const { data, error, status } = await getMethod(`/api/reviews/${mealId}`)
+      const { data, error, status } = await getMethod(`/api/meal-reviews/${mealId}`)
       if (data === undefined) {return setRatingValue(0)}
       if (!error) {
         const getTotalstars = Number(data.total_stars) / Number(data.total_reviewers)

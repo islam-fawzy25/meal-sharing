@@ -35,26 +35,6 @@ router.post("/", async (request, response) => {
     }
 })
 
-router.get("/:id", async (request, response) => {
-    try {
-        const reviewsId = Number(request.params.id);
-        if (isNaN(reviewsId)) { return response.sendStatus(404) }
-        const reviewWithId = await knex.raw(`
-        SELECT  
-        COALESCE(SUM(stars), 0) AS total_stars,
-        meal_id,
-    count( meal_id) As total_reviewers
-           FROM 
-           reviews 
-           Where meal_id= ${reviewsId}
-           GROUP BY  meal_id;
-        `)
-        return response.status(200).json(reviewWithId[0][0]);
-    } catch (error) {
-        return response.sendStatus(500)
-    }
-})
-// NOT IN USE
 router.put("/:id", async (request, response) => {
     try {
         const reviewsId = Number(request.params.id);
@@ -75,7 +55,6 @@ router.put("/:id", async (request, response) => {
         return response.sendStatus(500)
     }
 });
-// NOT IN USE
 
 router.delete("/:id", async (request, response) => {
     try {

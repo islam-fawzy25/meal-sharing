@@ -7,6 +7,7 @@ const mealsRouter = require("./api/meals");
 const reservationsRouter = require("./api/reservations")
 const reviewsRouter = require("./api/reviews")
 const mealReservationsRouter = require("./api/mealReservations")
+const mealReviewsRouter = require("./api/mealReviews")
 
 const buildPath = path.join(__dirname, "../../dist");
 const port = process.env.PORT || 3000;
@@ -26,6 +27,8 @@ router.use("/meals", mealsRouter);
 router.use("/reservations", reservationsRouter);
 router.use("/reviews", reviewsRouter);
 router.use("/meal-reservations", mealReservationsRouter) ;
+router.use("/meal-reviews", mealReviewsRouter) ;
+
 
 app.use(process.env.API_PATH, router);
 
