@@ -14,7 +14,7 @@ const ReservationForm = ({ newReservation, phone, setPhone,
   handleOnClick,
   availableReservations
 }) => {
-  const todayDate =  new Date().toISOString().split(["T"])
+  const todayDate = new Date().toLocaleDateString().split("/").reverse().join().replace(/,/g, "-")
   return (
     <div className={`reservation-form-container`} >
       {isReserved && <div className="reservation-message">
@@ -59,7 +59,7 @@ const ReservationForm = ({ newReservation, phone, setPhone,
               onChange={(e) => setDate(e.target.value)}
               type="date"
               required
-              min={todayDate[0]}
+              min={todayDate}
             />
             <hr />
             <input

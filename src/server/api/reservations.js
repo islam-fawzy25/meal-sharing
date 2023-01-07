@@ -17,6 +17,7 @@ router.get("/", async (request, response) => {
 //POST	Add a new reservation
 router.post("/", async (request, response) => {
   try {
+    console.log();
     const resrvationId= await knex("reservations");
     await knex("reservations").insert({
       id: Math.max(0, ...resrvationId.map((item) => item.id)) + 1,

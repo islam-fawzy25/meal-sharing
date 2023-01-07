@@ -18,7 +18,6 @@ export default function JoinUS() {
             e.preventDefault();
             const { data: res, error, status } = await postMethod("/api/meals",
                 { title, description, location, maxReservation, price, imageUrl })
-                console.log(res);
             if (res.status !== 201 || error) {
                 return setNewMealCreated(false)
             }

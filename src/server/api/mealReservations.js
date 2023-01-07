@@ -1,3 +1,4 @@
+// create new royter for get reservations by meal id -> meal-reservations/:mealid
 const express = require("express");
 const router = express.Router();
 const knex = require("../database");
@@ -6,10 +7,9 @@ const knex = require("../database");
 router.get("/available-reservations-single-meal-today/:id", async (request, response) => {
   try {
     const mealId = Number(request.params.id);
-    const newDate =  new Date().toISOString().split(["T"])
-    const todayDate =newDate[0]
+    const todayDate = new Date().toLocaleDateString().split("/").reverse().join().replace(/,/g, "-")
     const mealById = await knex("meals").where("id", mealId)
-  
+
     const mealReservations = await knex.raw(`
       SELECT
         reservations.created_date,
@@ -23,13 +23,11 @@ router.get("/available-reservations-single-meal-today/:id", async (request, resp
         where reservations.meal_id=${mealId} 
      GROUP BY  reservations.created_date;
        `)
+
     if (mealReservations[0].length === 0) { return response.status(200).json(mealById) } // if new meal with no reservations
     else {
       const availableReservationsToday = mealReservations[0].filter(obj => {
-        const DD = obj.created_date.getDate().toString()
-        const MM = (obj.created_date.getMonth() + 1).toString()
-        const YYYY = obj.created_date.getFullYear().toString()
-        const reservationDate = YYYY + "-" + MM + "-" + DD
+        const reservationDate = obj.created_date.toLocaleDateString().split("/").reverse().join().replace(/,/g, "-")
         if (reservationDate == todayDate) { return obj }
       })
       availableReservationsToday.length === 0 ? response.status(200).json(mealById) :

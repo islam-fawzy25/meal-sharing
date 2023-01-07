@@ -48,7 +48,6 @@ router.get("/", async (request, response) => {
       return response.status(200).send(meals)
 
     }
-
     const meals = await knex('meals').where("isActive", true)
     return response.status(200).json(meals)
   } catch (error) {
@@ -60,8 +59,7 @@ router.get("/", async (request, response) => {
 // POST	Adds a new meal
 router.post("/", async (request, response) => {
   try {
-    const newDate = new Date().toISOString().split(["T"])
-    const todayDate = newDate[0]
+    const todayDate = new Date().toLocaleDateString().split("/").reverse().join().replace(/,/g, "-")
     const idMeal = await knex("meals");
     await knex("meals").insert({
       id: Math.max(0, ...idMeal.map((item) => item.id)) + 5, // UUID  
